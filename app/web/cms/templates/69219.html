@@ -1,0 +1,29 @@
+<>
+  <effect
+    meta={{
+      value: {},
+      id_employee: 0,
+      id_user: 0,
+    }}
+    run={async () => {
+      meta.id_employee = parseInt(params.id);
+      meta.value = await db.employee.findUnique({
+        where: {
+          id_employee: meta.id_employee,
+        },
+      });
+      meta.id_user = meta.value.id_user;
+      api("/api/employee-data/delete", {
+        id_employee: meta.id_employee,
+        id_user: meta.id_user,
+      }).then((e) => {
+        console.log(e);
+        if (e.status == "SUCCESS") {
+          window.location.replace("/employee-data");
+        } else {
+          console.log(e);
+        }
+      });
+    }}
+  />
+</>

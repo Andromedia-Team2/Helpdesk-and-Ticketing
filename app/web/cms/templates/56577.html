@@ -1,0 +1,29 @@
+<>
+  <effect
+    meta={{
+      value: {},
+      id_vendor: 0,
+      id_user: 0,
+    }}
+    run={async () => {
+      meta.id_vendor = parseInt(params.id);
+      meta.value = await db.vendor.findUnique({
+        where: {
+          id_vendor: meta.id_vendor,
+        },
+      });
+      meta.id_user = meta.value.id_user;
+      api("/api/vendor-data/delete", {
+        id_vendor: meta.id_vendor,
+        id_user: meta.id_user,
+      }).then((e) => {
+        console.log(e);
+        if (e.status == "SUCCESS") {
+          window.location.replace("/vendor-data");
+        } else {
+          console.log(e);
+        }
+      });
+    }}
+  />
+</>

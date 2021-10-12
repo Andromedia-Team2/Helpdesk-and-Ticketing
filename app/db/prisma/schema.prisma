@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://magang:magang123$%^@db.plansys.co:5432/magang2?schema=public"
+}
+
+model client {
+  id_client     Int      @id @unique @default(autoincrement())
+  id_vendor     Int?
+  id_user       Int?     @unique
+  nama_client   String   @db.VarChar(150)
+  email_client  String   @db.VarChar(150)
+  lokasi_client String   @db.VarChar(150)
+  nomor_client  String   @db.VarChar(15)
+  users         users?   @relation(fields: [id_user], references: [id_user])
+  vendor        vendor?  @relation(fields: [id_vendor], references: [id_vendor])
+  ticket        ticket[]
+
+  @@index([id_user], name: "do___fk")
+  @@index([id_vendor], name: "has___fk")
+}
+
+model department {
+  id_department   Int        @id @unique @default(autoincrement())
+  nama_department String     @db.VarChar(150)
+  deskripsi       String     @db.VarChar(150)
+  employee        employee[]
+}
+
+model employee {
+  id_employee    Int              @id @unique @default(autoincrement())
+  id_department  Int?
+  id_user        Int?             @unique
+  nama_employee  String           @db.VarChar(150)
+  nomor_employee String           @db.VarChar(15)
+  email_employee String           @db.VarChar(150)
+  shift_kerja    String           @db.VarChar(150)
+  id_vendor      Int?
+  department     department?      @relation(fields: [id_department], references: [id_department])
+  users          users?           @relation(fields: [id_user], references: [id_user])
+  vendor         vendor?          @relation(fields: [id_vendor], references: [id_vendor])
+  history_ticket history_ticket[]
+
+  @@index([id_user], name: "do_fk")
+  @@index([id_vendor], name: "has____fk")
+  @@index([id_department], name: "has__fk")
+}
+
+model role {
+  id_role   Int     @id @unique @default(autoincrement())
+  nama_role String  @db.VarChar(50)
+  users     users[]
+}
+
+model users {
+  id_user  Int       @id @unique @default(autoincrement())
+  id_role  Int?
+  username String    @unique @db.VarChar(100)
+  password String    @db.VarChar(100)
+  role     role?     @relation(fields: [id_role], references: [id_role])
+  client   client?
+  employee employee?
+  vendor   vendor?
+
+  @@index([id_role], name: "has_fk")
+}
+
+model vendor {
+  id_vendor     Int        @id @unique @default(autoincrement())
+  id_user       Int?       @unique
+  nama_vendor   String     @db.VarChar(150)
+  email_vendor  String     @db.VarChar(150)
+  lokasi_vendor String     @db.VarChar(150)
+  nomor_vendor  String     @db.VarChar(15)
+  users         users?     @relation(fields: [id_user], references: [id_user])
+  client        client[]
+  employee      employee[]
+
+  @@index([id_user], name: "do__fk")
+}
+
+model history_ticket {
+  id_history_ticket Int          @id @unique @default(autoincrement())
+  id_ticket         Int
+  id_level_ticket   Int
+  id_employee       Int
+  employee          employee     @relation(fields: [id_employee], references: [id_employee])
+  level_ticket      level_ticket @relation(fields: [id_level_ticket], references: [id_level_ticket])
+  ticket            ticket       @relation(fields: [id_ticket], references: [id_ticket])
+
+  @@index([id_employee], name: "history_ticket_id_employee")
+  @@index([id_level_ticket], name: "history_ticket_id_level_ticket")
+  @@index([id_ticket], name: "history_ticket_id_ticket")
+}
+
+model jenis_ticket {
+  id_jenis_ticket        Int      @id @unique @default(autoincrement())
+  jenis_ticket           String   @db.VarChar(100)
+  deskripsi_jenis_ticket String   @db.VarChar(150)
+  ticket                 ticket[]
+}
+
+model level_ticket {
+  id_level_ticket Int              @id @unique @default(autoincrement())
+  level_ticket    String           @db.VarChar(100)
+  history_ticket  history_ticket[]
+}
+
+model status_ticket {
+  id_status_ticket       Int      @id @unique @default(autoincrement())
+  status_ticket          String   @db.VarChar(100)
+  deskripsi_level_ticket String   @db.VarChar(150)
+  ticket                 ticket[]
+}
+
+model ticket {
+  id_ticket        Int              @id @unique @default(autoincrement())
+  judul_ticket     String           @db.VarChar(150)
+  deskripsi_ticket String           @db.VarChar(150)
+  tanggal_masuk    DateTime         @db.Date
+  tanggal_solved   DateTime         @db.Date
+  attachment       String           @db.VarChar(150)
+  id_jenis_ticket  Int
+  id_status_ticket Int
+  id_client        Int
+  client           client           @relation(fields: [id_client], references: [id_client])
+  jenis_ticket     jenis_ticket     @relation(fields: [id_jenis_ticket], references: [id_jenis_ticket])
+  status_ticket    status_ticket    @relation(fields: [id_status_ticket], references: [id_status_ticket])
+  history_ticket   history_ticket[]
+
+  @@index([id_client], name: "ticket_id_client")
+  @@index([id_jenis_ticket], name: "ticket_id_jenis_ticket")
+  @@index([id_status_ticket], name: "ticket_id_status_ticket")
+}
