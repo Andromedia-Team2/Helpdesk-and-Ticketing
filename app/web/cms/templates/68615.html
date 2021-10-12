@@ -1,0 +1,29 @@
+<>
+  <effect
+    meta={{
+      value: {},
+      id_client: 0,
+      id_user: 0,
+    }}
+    run={async () => {
+      meta.id_client = parseInt(params.id);
+      meta.value = await db.client.findUnique({
+        where: {
+          id_client: meta.id_client,
+        },
+      });
+      meta.id_user = meta.value.id_user;
+      api("/api/client-data/delete", {
+        id_client: meta.id_client,
+        id_user: meta.id_user,
+      }).then((e) => {
+        console.log(e);
+        if (e.status == "SUCCESS") {
+          window.location.replace("/client-data");
+        } else {
+          console.log(e);
+        }
+      });
+    }}
+  />
+</>

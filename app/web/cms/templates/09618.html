@@ -1,0 +1,230 @@
+<>
+  <effect
+    meta={{
+      value: "",
+      action: {},
+      data: {
+        nama_employee: "",
+        email_employee: "",
+        shift_kerja: "",
+        nomor_employee: "",
+        id_vendor: "",
+        id_department: "",
+      },
+      departments: [],
+    }}
+    run={async () => {
+      meta.department = await db.department.findMany();
+      meta.action = {
+        onChange: (e, f) => {
+          runInAction(() => {
+            meta.data[f] = e;
+          });
+        },
+        onSetUsername: (e) => {
+          const value = e ? e.replace(/[^0-9a-zA-Z]+/gi, "") : "";
+
+          if (e !== value) {
+            e = value;
+          }
+
+          return value;
+        },
+      };
+    }}
+  />
+
+  <div
+    class="h-screen flex items-center justify-center"
+    style="width: 1440px; min-width: 1440px; max-width: 1440px; height: 1024px; max-height: 1024px; "
+  >
+    <div class="flex flex-1 self-stretch items-start justify-start">
+      <div class="flex flex-1 self-stretch items-center justify-start">
+        <div
+          class="flex flex-1 self-stretch flex-col items-center justify-center"
+          style="width: 1440px; min-width: 1440px; max-width: 1440px; height: 1024px; max-height: 1024px;"
+        >
+          <div
+            class="flex items-center justify-center p-2.5 bg-red-900 rounded-tl-2xl rounded-tr-2xl"
+            style="width: 699px; min-width: 699px; max-width: 699px; height: 62px; max-height: 62px;"
+          >
+            <div class="text-3xl font-medium tracking-wide leading-10 text-center text-white">
+              Employee Register Form
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col space-y-16 items-center justify-start px-8 pt-16 pb-8 bg-white border-2 rounded-bl-2xl rounded-br-2xl border-red-900"
+            style="width: 699px; min-width: 699px; max-width: 699px; "
+          >
+            <div class="w-full max-w-sm center" style="width: full ">
+              <div class="w-full max-w-sm center">
+                <form class="w-full max-w-sm center">
+                  {/*<div class="md:flex md:items-center mb-6">*/}
+                  {/*<div class="md:w-1/3 ">*/}
+                  {/*<label class="block text-black font-bold md:text-left mb-1 md:mb-0 pr-4 inline-full-name">*/}
+                  {/*ID Vendor*/}
+                  {/*</label>*/}
+                  {/*</div>*/}
+                  {/*<div class="md:w-2/3 ">*/}
+                  {/*<input*/}
+                  {/*class="  border-2 border-black rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white  "*/}
+                  {/*id="nameEmp"*/}
+                  {/*type=""*/}
+                  {/*placeholder="1"*/}
+                  {/*required*/}
+                  {/*onChange={(e) => {*/}
+                  {/*meta.action.onChange(e.target.value, "id_vendor");*/}
+                  {/*}}*/}
+                  {/*/>*/}
+                  {/*</div>*/}
+                  {/*</div>*/}
+
+                  <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3 ">
+                      <label class="block text-black font-bold md:text-left mb-1 md:mb-0 pr-4 inline-full-name">
+                        ID Department
+                      </label>
+                    </div>
+                    <div class="md:w-2/3 ">
+                      <select
+                        class="  border-2 border-black rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white  "
+                        name="id_department"
+                        onChange={(e) => {
+                          meta.action.onChange(e.target.value, "id_department");
+                        }}
+                      >
+                        {meta.departments?.map((p) => (
+                          <option
+                            key={p.id_department}
+                            value={p.id_department}
+                            style="-webkit-appearance: none; -moz-appearance: none; appearance: none; padding: 5px; text-indent: 5px;"
+                          >
+                            {p.nama_department}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3 ">
+                      <label class="block text-black font-bold md:text-left mb-1 md:mb-0 pr-4 inline-full-name">
+                        Name
+                      </label>
+                    </div>
+                    <div class="md:w-2/3 ">
+                      <input
+                        class="  border-2 border-black rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white  "
+                        id="nameEmp"
+                        type="text"
+                        placeholder="John Doe"
+                        required
+                        onChange={(e) => {
+                          meta.action.onChange(e.target.value, "nama_employee");
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                      <label class="block text-black font-bold md:text-left mb-1 md:mb-0 pr-4 inline-full-name">
+                        Work Shift
+                      </label>
+                    </div>
+                    <div class="md:w-2/3">
+                      <input
+                        class=" border-2 border-black rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white "
+                        id="workEmp"
+                        type="text"
+                        placeholder="Night"
+                        required
+                        onChange={(e) => {
+                          meta.action.onChange(e.target.value, "shift_kerja");
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                      <label class="block text-black font-bold md:text-left mb-1 md:mb-0 pr-4 inline-full-name">
+                        Email
+                      </label>
+                    </div>
+                    <div class="md:w-2/3">
+                      <input
+                        class="border-2 border-black rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white"
+                        id="emailEmp"
+                        type="text"
+                        placeholder="John@google.com"
+                        required
+                        onChange={(e) => {
+                          meta.action.onChange(
+                            e.target.value,
+                            "email_employee"
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                      <label class="block text-black font-bold md:text-left mb-1 md:mb-0 pr-4 inline-full-name">
+                        Phone
+                      </label>
+                    </div>
+                    <div class="md:w-2/3">
+                      <input
+                        class="border-2 border-black rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white"
+                        id="phoneEmp"
+                        type="text"
+                        placeholder="0816363958"
+                        required
+                        onChange={(e) => {
+                          meta.action.onChange(
+                            e.target.value,
+                            "nomor_employee"
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div class="md:flex md:items-center">
+                    <div class="md:w-1/3"></div>
+                    <div class="md:w-2/3">
+                      <button
+                        class="shadow bg-green-500  focus:shadow-outline focus:outline-none text-white font-bold py-4 px-6 rounded"
+                        type="button"
+                        onClick={async () => {
+                          alert("Registered !");
+
+                          const x = await db["users"].create({
+                            data: {
+                              id_role: 4,
+                              username: meta.action.onSetUsername(
+                                meta.data.nama_employee
+                              ),
+                              password: "5588",
+                            },
+                          });
+
+                          console.log(x);
+                          await db["employee"].create({
+                            data: { ...meta.data, id_user: x.id_user },
+                          });
+                        }}
+                      >
+                        Register
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</>

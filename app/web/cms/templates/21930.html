@@ -1,0 +1,154 @@
+<>
+  <effect
+    meta={{
+      value: {},
+      id_vendor: 0,
+      id_user: 0,
+      nama_vendor: "",
+      nomor_vendor: "",
+      email_vendor: "",
+      lokasi_vendor: "",
+    }}
+    run={async () => {
+      meta.id_vendor = parseInt(params.id);
+      meta.value = await db.vendor.findUnique({
+        where: {
+          id_vendor: meta.id_vendor,
+        },
+      });
+      meta.id_user = meta.value.id_user;
+      meta.nama_vendor = meta.value.nama_vendor;
+      meta.nomor_vendor = meta.value.nomor_vendor;
+      meta.email_vendor = meta.value.email_vendor;
+      meta.lokasi_vendor = meta.value.lokasi_vendor;
+      meta.action = {
+        namaVendorChange: (e) => {
+          runInAction(() => {
+            meta.nama_vendor = e.target.value;
+            console.log(meta.nama_vendor);
+          });
+        },
+        nomorVendorChange: (e) => {
+          runInAction(() => {
+            meta.nomor_vendor = e.target.value;
+            console.log(meta.nomor_vendor);
+          });
+        },
+        emailVendorChange: (e) => {
+          runInAction(() => {
+            meta.email_vendor = e.target.value;
+            console.log(meta.email_vendor);
+          });
+        },
+        lokasiVendorChange: (e) => {
+          runInAction(() => {
+            meta.lokasi_vendor = e.target.value;
+            console.log(meta.lokasi_vendor);
+          });
+        },
+        addData: (e) => {
+          api("/api/vendor-data/edit", {
+            id_vendor: meta.id_vendor,
+            id_user: meta.id_user,
+            nama_vendor: meta.nama_vendor,
+            email_vendor: meta.email_vendor,
+            lokasi_vendor: meta.lokasi_vendor,
+            nomor_vendor: meta.nomor_vendor,
+          }).then((e) => {
+            console.log(e);
+            if (e.status == "SUCCESS") {
+              window.location.replace("/vendor-data");
+            } else {
+              console.log(e);
+            }
+          });
+        },
+      };
+    }}
+  />
+  <div class="flex flex-col items-start m-6 h-full justify-start bg-gray-50">
+    <div class="flex flex-1 flex-col w-full space-y-4 items-start justify-start py-6 bg-white shadow-md rounded-xl px-6">
+      <div class="flex self-stretch items-center justify-between">
+        <div class="flex items-start justify-start">
+          <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+            VENDOR DATA - CREATE DATA
+          </div>
+        </div>
+      </div>
+      <hr class=" w-full pb-4"></hr>
+      <div class="flex flex-col space-y-6 w-full h-full items-center justify-start">
+        <div class="flex self-stretch items-start justify-start px-5">
+          <div class="flex flex-1 items-center justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Name
+            </div>
+            <input
+              type="text"
+              value={meta.nama_vendor}
+              onChange={(e) => meta.action.namaVendorChange(e)}
+              class="flex self-stretch text-gray-600 w-full items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+              placeholder="type your name here ..."
+            />
+          </div>
+        </div>
+        <div class="flex self-stretch items-start justify-start px-5">
+          <div class="flex flex-1 items-center justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Company
+            </div>
+            <input
+              type="text"
+              value={meta.lokasi_vendor}
+              onChange={(e) => meta.action.lokasiVendorChange(e)}
+              class="flex self-stretch text-gray-600 w-full items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+              placeholder="type your vendor name here ..."
+            />
+          </div>
+        </div>
+        <div class="flex self-stretch items-start justify-start px-5">
+          <div class="flex flex-1 items-center justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Email
+            </div>
+            <input
+              type="text"
+              value={meta.email_vendor}
+              onChange={(e) => meta.action.emailVendorChange(e)}
+              class="flex self-stretch text-gray-600 w-full items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+              placeholder="type your vendor email here ..."
+            />
+          </div>
+        </div>
+        <div class="flex self-stretch items-start justify-start px-5">
+          <div class="flex flex-1 items-center justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Phone
+            </div>
+            <input
+              type="text"
+              value={meta.nomor_vendor}
+              onChange={(e) => meta.action.nomorVendorChange(e)}
+              class="flex self-stretch text-gray-600 w-full items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+              placeholder="type your vendor phone name here ..."
+            />
+          </div>
+        </div>
+        <button
+          onClick={() => {
+            meta.action.addData();
+          }}
+          class="flex space-x-3 items-center justify-center px-6 py-2 bg-red-900 shadow rounded-xl"
+          style="max-width: 200px;"
+        >
+          <img
+            src="/fimgs/460_875.x1.svg"
+            style=" max-width: 15px; max-height: 20px;"
+          />
+          <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
+            Create New
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</>

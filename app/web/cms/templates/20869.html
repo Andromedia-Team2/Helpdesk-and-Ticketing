@@ -1,0 +1,20 @@
+<>
+  <effect
+    meta={{
+      id_dep: 0,
+    }}
+    run={async () => {
+      meta.id_dep = parseInt(params.id);
+      api("/api/department-data/delete", {
+        id_department: meta.id_dep,
+      }).then((e) => {
+        console.log(e);
+        if (e.status == "SUCCESS") {
+          window.location.replace("/department-data");
+        } else {
+          console.log(e);
+        }
+      });
+    }}
+  />
+</>
