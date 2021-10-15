@@ -1,0 +1,20 @@
+<>
+  <effect
+    meta={{
+      id_jenis_ticket: 0,
+    }}
+    run={async () => {
+      meta.id_jenis_ticket = parseInt(params.id);
+      api("/api/jenis-data/delete", {
+        id_jenis_ticket: meta.id_jenis_ticket,
+      }).then((e) => {
+        console.log(e);
+        if (e.status == "SUCCESS") {
+          window.location.replace("/jenis-data");
+        } else {
+          console.log(e);
+        }
+      });
+    }}
+  />
+</>

@@ -14,4 +14,7 @@ export default {
   tabelclient: () => [import("./components/tabel-client"), { c: "", s: "", h: "" }],
   tabelemployee: () => [import("./components/tabel-employee"), { c: "", s: "", h: "" }],
   tabeldepartment: () => [import("./components/tabel-department"), { c: "", s: "", h: "" }],
+  tabeljenis: () => [import("./components/tabel-jenis"), { c: "", s: "", h: "" }],
+  tabellevel: () => [import("./components/tabel-level"), { c: "", s: "", h: "" }],
+  tabelstatus: () => [import("./components/tabel-status"), { c: "", s: "", h: "" }],
 }
