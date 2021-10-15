@@ -188,11 +188,11 @@
     <div class="flex overflow-y-auto h-full">
       <aside
         id="myDIV"
-        class="z-0 w-64 hidden bg-white dark:bg-gray-800 md:block flex-shrink-0 shadow-md pt-6 overflow-y-auto"
+        class="z-0 hidden h-full bg-white dark:bg-gray-800 md:block flex-shrink-0 shadow-md pt-6 overflow-y-auto"
       >
         <div class="py-2 w-64 items-center justify-center text-gray-800 dark:text-gray-400">
           <div class="flex items-center w-full justify-center text-lg font-bold text-gray-800 dark:text-gray-200">
-            AndroDesk-Admin
+            AndroDesk-{window.user.role}
           </div>
           <ul class="mt-8 pl-3 w-full">
             <li class="relative hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full">
@@ -271,17 +271,26 @@
                     </a>
                   </li>
                   <li class="hover:bg-gray-200 dark:hover:text-gray-200">
-                    <a class="flex items-center w-full px-4 py-2 " href="#">
+                    <a
+                      class="flex items-center w-full px-4 py-2 "
+                      href="/jenis-data"
+                    >
                       Ticket Type
                     </a>
                   </li>
                   <li class="hover:bg-gray-200 dark:hover:text-gray-200">
-                    <a class="flex items-center w-full px-4 py-2 " href="#">
+                    <a
+                      class="flex items-center w-full px-4 py-2 "
+                      href="/status-data"
+                    >
                       Ticket Status
                     </a>
                   </li>
                   <li class="hover:bg-gray-200 rounded-d-md dark:hover:text-gray-200">
-                    <a class="flex items-center w-full px-4 py-2 " href="#">
+                    <a
+                      class="flex items-center w-full px-4 py-2 "
+                      href="/level-data"
+                    >
                       Ticket Level
                     </a>
                   </li>
@@ -493,22 +502,25 @@
               </div>
             </li>
           </ul>
-          <div class="px-6 my-4 mt-16">
-            <button
-              onClick={() => {
-                meta.action.logout();
-              }}
-              class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-900 border border-transparent rounded-lg active:bg-red-950 hover:bg-red-800 focus:outline-none focus:shadow-outline-red"
-            >
-              Sign Out
-              <span class="ml-2" aria-hidden="true">
-                X
-              </span>
-            </button>
-          </div>
+        </div>
+        <div class="sticky bottom-0 bg-white px-6 py-4 mt-44">
+          <button
+            onClick={() => {
+              meta.action.logout();
+            }}
+            class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-900 border border-transparent rounded-lg active:bg-red-950 hover:bg-red-800 focus:outline-none focus:shadow-outline-red"
+          >
+            Sign Out
+            <span class="ml-2" aria-hidden="true">
+              X
+            </span>
+          </button>
         </div>
       </aside>
       <main class="flex flex-col overflow-y-auto w-full">{children}</main>
+    </div>
+    <div class="flex flex-1 items-center md:pl-64 justify-center py-2 bg-white text-xs font-bold text-gray-500">
+      © 2021. Crafted by ANDROMEDIA INTERNSHIP TEAM - 2
     </div>
   </div>
 </>
