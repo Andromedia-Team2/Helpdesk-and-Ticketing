@@ -11,22 +11,4 @@
   />
 
   <div>{window.user}</div>
-  <table id="dtable">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>username</th>
-        <th>password</th>
-      </tr>
-    </thead>
-    <tbody>
-      {meta.value?.data?.map((userData, idx) => (
-        <tr>
-          <td>{idx + 1}</td>
-          <td>{userData.username}</td>
-          <td>{userData.password}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
 </>

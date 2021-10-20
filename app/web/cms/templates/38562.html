@@ -3,6 +3,7 @@
     meta={{
       username: "",
       password: "",
+      showMessage: false,
       message: "Error",
       login: (e) => {
         console.log(e.target.value);
@@ -32,12 +33,7 @@
               window.location.replace("/coba");
             } else {
               meta.message = e.message;
-              var x = document.getElementById("myWarning");
-              if (x.style.display == "none") {
-                x.style.display = "block";
-              } else {
-                x.style.display = "none";
-              }
+              meta.showMessage = true;
             }
           });
         },
@@ -64,12 +60,14 @@
               </div>
             </div>
           </div>
-          <div
-            id="myWarning"
-            class="flex hidden items-center w-full justify-center bg-red-300 text-red-900 px-4 py-2"
-          >
-            {meta.message}
-          </div>
+          {meta.showMessage && (
+            <div
+              id="myWarning"
+              class="flex items-center w-full justify-center bg-red-300 text-red-900 px-4 py-2"
+            >
+              {meta.message}
+            </div>
+          )}
         </div>
         <div class="flex flex-col space-y-2 items-center justify-center bg-red-900 rounded-bl-2xl rounded-br-2xl pb-8">
           <div class="flex flex-col w-full items-start justify-start px-2">

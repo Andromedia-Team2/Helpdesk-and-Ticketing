@@ -6,7 +6,8 @@ var $ = require('jquery');
 require('datatables.net')(window, $);
 declare const window: BaseWindow
 
-export default () => {
+export default (x) => {
+    console.log(x.state.name);
     api("/api/get-department").then((res) => {
         $('#dtable').DataTable({
             data: res.data,
