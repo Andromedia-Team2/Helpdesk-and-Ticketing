@@ -1,0 +1,1 @@
+{"title":"get-ticket","type":"cms-template","lang":"","status":"SYSTEM","parent_id":"66283","content":{"type":"API","structure":"","server_on_load":"async ({template, params, render, db, req, reply, user, log, ext, isDev }: Server) => {\nreply.send({\n  hello: \"world\"\n})\n}"},"slug":"api/get-ticket","site":"*","id":"89442"}
