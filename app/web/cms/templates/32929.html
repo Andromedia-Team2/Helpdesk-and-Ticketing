@@ -3,40 +3,7 @@
   <div class="flex items-start justify-start">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start bg-gray-50">
       <div class="flex flex-1 flex-col items-start justify-start">
-        <regist-vendor />
         <div class="flex flex-1 self-stretch space-x-2.5 items-start justify-start">
-          <div class="flex flex-col items-center justify-between py-6 pl-6 bg-white shadow">
-            <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
-              <div class="flex self-stretch items-center justify-center p-3">
-                <div class="text-2xl font-medium tracking-wide leading-loose text-gray-800">
-                  Client
-                </div>
-              </div>
-              <div class="flex self-stretch flex-col space-y-4 items-start justify-start">
-                <div class="flex self-stretch space-x-2 items-start justify-start p-3 rounded-tl-2xl rounded-bl-2xl">
-                  <div class="flex items-start justify-start">
-                    <div style="background-image: url('/fimgs/bg-c732d37592dd584eba435e0a8e2b8df6661e261e');background-size:100% 100%;background-repeat:no-repeat;" />
-                  </div>
-                  <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-600">
-                    Dashboard
-                  </div>
-                </div>
-                <div class="flex self-stretch items-center justify-start p-3 bg-red-900 rounded-tl-2xl rounded-bl-2xl">
-                  <div class="flex space-x-2 items-start justify-start">
-                    <div style="background-image: url('/fimgs/bg-d6e37801d5f12ce9642235006550e55946d49a3f');background-size:100% 100%;background-repeat:no-repeat;" />
-                    <div class="text-lg font-medium tracking-wide leading-relaxed text-white">
-                      Ticket
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center justify-center px-4 py-2 bg-red-900 rounded-lg">
-              <div class="text-base font-medium tracking-wide leading-normal text-white">
-                Sign Out
-              </div>
-            </div>
-          </div>
           <div class="flex flex-1 flex-col items-center justify-start px-3 py-6">
             <div class="flex flex-col space-y-10 items-start justify-start">
               <div
@@ -61,53 +28,61 @@
                     <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
                       Ticket Information
                     </div>
-                    <div class="flex flex-col space-y-6 items-start justify-start">
-                      <div
-                        class="flex space-x-6 items-start justify-start"
-                        style="width: 984px; min-width: 984px; max-width: 984px; height: 90px; min-height: 90px; max-height: 90px;"
-                      >
+                    <div class="flex flex-col items-start justify-start">
+                      <div class="flex items-start justify-start">
                         <div
-                          class="flex flex-col items-start justify-start"
-                          style="width: 480px; min-width: 480px; max-width: 480px; height: 90px; min-height: 90px; max-height: 90px;"
+                          class="flex space-x-6 items-start justify-start"
+                          style="width: 984px; min-width: 984px; max-width: 984px; height: 90px; min-height: 90px; max-height: 90px;"
                         >
-                          <div class="flex items-start justify-start p-2.5">
-                            <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                              Name
+                          <div
+                            class="flex flex-col items-start justify-start"
+                            style="width: 480px; min-width: 480px; max-width: 480px; height: 90px; min-height: 90px; max-height: 90px;"
+                          >
+                            {/**/}
+
+                            <div class="flex items-start justify-start p-2.5">
+                              <div class="text-lg tracking-wide leading-relaxed text-gray-500">
+                                Name
+                              </div>
+                            </div>
+                            <div
+                              class="flex items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
+                              style="width: 480px; min-width: 480px; max-width: 480px; height: 43px; min-height: 43px; max-height: 43px;"
+                            >
+                              <div class="text-lg tracking-wide leading-relaxed text-gray-700">
+                                <input
+                                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border rounded-lg border-gray-500"
+                                  id="username"
+                                  type="text"
+                                  placeholder="Han Solo"
+                                />
+                              </div>
                             </div>
                           </div>
                           <div
-                            class="flex items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
-                            style="width: 480px; min-width: 480px; max-width: 480px; height: 43px; min-height: 43px; max-height: 43px;"
+                            class="flex flex-col items-start justify-start"
+                            style="width: 480px; min-width: 480px; max-width: 480px; height: 90px; min-height: 90px; max-height: 90px;"
                           >
-                            <div class="text-lg tracking-wide leading-relaxed text-gray-700">
-                              Han Solo
+                            <div class="flex items-start justify-start p-2.5">
+                              <div class="text-lg tracking-wide leading-relaxed text-gray-500">
+                                Ticket Type
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div
-                          class="flex flex-col items-start justify-start"
-                          style="width: 480px; min-width: 480px; max-width: 480px; height: 90px; min-height: 90px; max-height: 90px;"
-                        >
-                          <div class="flex items-start justify-start p-2.5">
-                            <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                              Ticket Type
+                            <div
+                              class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
+                              style="width: 480px; min-width: 480px; max-width: 480px; height: 43px; min-height: 43px; max-height: 43px;"
+                            >
+                              <div class="text-lg tracking-wide leading-relaxed text-gray-700">
+                                Maintenance Ticket
+                              </div>
+                              <img
+                                src="/fimgs/538_1535.x1.svg"
+                                style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-2cc07aa4f15443e480020f7ccbf834c608b09a16');background-size:100% 100%;background-repeat:no-repeat;"
+                              />
                             </div>
-                          </div>
-                          <div
-                            class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
-                            style="width: 480px; min-width: 480px; max-width: 480px; height: 43px; min-height: 43px; max-height: 43px;"
-                          >
-                            <div class="text-lg tracking-wide leading-relaxed text-gray-700">
-                              Maintenance Ticket
-                            </div>
-                            <img
-                              src="/fimgs/538_1535.x1.svg"
-                              style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-2cc07aa4f15443e480020f7ccbf834c608b09a16');background-size:100% 100%;background-repeat:no-repeat;"
-                            />
                           </div>
                         </div>
                       </div>
-                      <div />
                     </div>
                   </div>
                   <div class="flex flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg">
@@ -158,7 +133,10 @@
                               Subject
                             </div>
                           </div>
-                          <div class="flex space-x-8 items-center justify-start">
+                          <div
+                            class="flex space-x-8 items-center justify-start"
+                            style="width: 936px; min-width: 936px; max-width: 936px; height: 51px; min-height: 51px; max-height: 51px;"
+                          >
                             <div class="flex items-start justify-start">
                               <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
                                 <div class="text-lg tracking-wide leading-relaxed text-gray-700">
