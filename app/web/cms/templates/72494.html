@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center m-6 h-full justify-start bg-gray-50">
+<div class="flex flex-col items-center m-6 h-stretch justify-start bg-gray-50">
   <div class="flex flex-1 flex-col w-full space-y-4 items-start justify-start py-6 bg-white shadow-md rounded-xl px-6">
     <div class="flex self-stretch space-x-4 items-center justify-start bg-white shadow ">
       <img
@@ -35,13 +35,23 @@
           <div class="flex items-center  justify-start text-md text-gray-800">
             Ticket Type
           </div>
-
-          <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
-            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
-              <option>Administration Request</option>
-              <option>Maintenance Ticket</option>
-              <option>Complain and Sugestion</option>
-            </select>
+          <div class="inline-block relative w-full">
+            <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
+              <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
+                <option>Administration Request</option>
+                <option>Maintenance Ticket</option>
+                <option>Complain and Sugestion</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  class="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -120,31 +130,31 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="flex space-x-6 items-center  ">
-      <button
-        // onClick={() => {
-        //   meta.action.addData();
-        // }}
-        class="flex space-x-3 items-center justify-center px-6 py-2 border-px-4 border-black-500 shadow rounded-full"
-        style="max-width: 200px;"
-      >
-        <div class="text-sm font-medium tracking-wide leading-relaxed">
-          Cancel
-        </div>
-      </button>
+  <div class="flex space-x-6 items-center mt-8">
+    <button
+      // onClick={() => {
+      //   meta.action.addData();
+      // }}
+      class="flex space-x-3 items-center justify-center px-6 py-2 border-px-4 bg-white border-black-500 shadow rounded-full"
+      style="max-width: 200px;"
+    >
+      <div class="text-sm font-medium tracking-wide leading-relaxed bg-white">
+        Cancel
+      </div>
+    </button>
 
-      <button
-        // onClick={() => {
-        //   meta.action.addData();
-        // }}
-        class="flex space-x-3 items-center justify-center px-6 py-2 bg-green-500 shadow rounded-full"
-        style="max-width: 200px;"
-      >
-        <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
-          Create Ticket
-        </div>
-      </button>
-    </div>
+    <button
+      // onClick={() => {
+      //   meta.action.addData();
+      // }}
+      class="flex space-x-3 items-center justify-center px-6 py-2 bg-green-500 shadow rounded-full"
+      style="max-width: 200px;"
+    >
+      <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
+        Create Ticket
+      </div>
+    </button>
   </div>
 </div>
