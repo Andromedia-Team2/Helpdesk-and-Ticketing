@@ -50,7 +50,8 @@ export default () => {
                         <th className="px-4 py-3">Action</th>
                     </tr>
                 </thead>
-                <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 "></tbody>
+                <tbody className="bg-white divide-y dark:divide-gr
+                ay-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 "></tbody>
             </table>
         </div>
     )
