@@ -11,7 +11,7 @@ export default () => {
         $('#dtable').DataTable({
             data: res.data,
             aoColumns: [
-                { mData: 'id_vendor' },
+                
                 { mData: 'lokasi_vendor' },
                 { mData: 'nama_vendor' },
                 { mData: 'email_vendor' },
@@ -42,7 +42,7 @@ export default () => {
             <table className="stripe w-full whitespace-no-wrap" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th className="py-3">Vendor ID</th>
+                        
                         <th className="py-3">Company</th>
                         <th className="py-3">Name</th>
                         <th className="py-3">Email</th>
