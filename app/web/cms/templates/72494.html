@@ -19,17 +19,20 @@
           Ticket Information
         </div>
         <div class="flex flex-col space-y-6 items-start justify-start">
-          <div class="flex space-x-6 items-start justify-start">
+          <div class="flex space-x-6 items-stretch justify-start">
             <div class="flex flex-col items-start justify-start">
               <div class="flex items-start justify-start p-2.5">
                 <div class="text-lg tracking-wide leading-relaxed text-gray-500">
                   Name
                 </div>
               </div>
-              <div class="flex items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                <div class="text-lg tracking-wide leading-relaxed text-gray-700">
-                  Han Solo
-                </div>
+              <div class="flex items-center justify-start py-2 pl-2  border-px-3 leading-tight focus:outline-none focus:bg-white  ">
+                <input
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border rounded-lg border-gray-500"
+                  id="username"
+                  type="text"
+                  placeholder="Han Solo"
+                />
               </div>
             </div>
             <div class="flex flex-col items-start justify-start">
@@ -38,11 +41,23 @@
                   Ticket Type
                 </div>
               </div>
-              <div class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                <div class="text-lg tracking-wide leading-relaxed text-gray-700">
-                  Maintenance Ticket
+              <div class="flex items-center justify-start py-2 pl-2  border-px-3 leading-tight focus:outline-none focus:bg-white  rounded-lg border-gray-500">
+                <div class="inline-block relative w-64 ">
+                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
+                    <option>Administration Request</option>
+                    <option>Maintenance Ticket</option>
+                    <option>Complain and Sugestion</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      class="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </div>
-                <div style="background-image: url('/fimgs/bg-2cc07aa4f15443e480020f7ccbf834c608b09a16');background-size:100% 100%;background-repeat:no-repeat;" />
               </div>
             </div>
           </div>
@@ -108,7 +123,25 @@
                 <div class="text-lg tracking-wide leading-relaxed text-gray-700">
                   Han Solo
                 </div>
+                <div>
+                  <button
+                    // onClick={() => {
+                    //   meta.action.addData();
+                    // }}
+                    class="flex space-x-3 items-center justify-center px-6 py-2 bg-red-900 shadow rounded-xl"
+                    style="max-width: 200px;"
+                  >
+                    <img
+                      src="/fimgs/460_875.x1.svg"
+                      style=" max-width: 15px; max-height: 20px;"
+                    />
+                    <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
+                      Add More
+                    </div>
+                  </button>
+                </div>
               </div>
+
               <div class="flex items-start justify-start p-2.5">
                 <div class="text-lg tracking-wide leading-relaxed text-gray-500">
                   Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf, .zip,
@@ -121,6 +154,32 @@
           <div />
         </div>
       </div>
+    </div>
+
+    <div class="flex space-x-6 items-start justify-start center">
+      <button
+        // onClick={() => {
+        //   meta.action.addData();
+        // }}
+        class="flex space-x-3 items-center justify-center px-6 py-2 border-px-4 border-black-500 shadow rounded-full"
+        style="max-width: 200px;"
+      >
+        <div class="text-sm font-medium tracking-wide leading-relaxed">
+          Cancel
+        </div>
+      </button>
+
+      <button
+        // onClick={() => {
+        //   meta.action.addData();
+        // }}
+        class="flex space-x-3 items-center justify-center px-6 py-2 bg-green-500 shadow rounded-full"
+        style="max-width: 200px;"
+      >
+        <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
+          Create Ticket
+        </div>
+      </button>
     </div>
   </div>
 </div>
