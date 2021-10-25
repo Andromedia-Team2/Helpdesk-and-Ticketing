@@ -1,209 +1,128 @@
-<div class="flex flex-col items-start m-6 h-full justify-start bg-gray-50">
+<div class="flex flex-col items-center m-6 h-full justify-start bg-gray-50">
   <div class="flex flex-1 flex-col w-full space-y-4 items-start justify-start py-6 bg-white shadow-md rounded-xl px-6">
-    <div class="flex flex-col items-start justify-start  w-full ">
-      <div class="flex self-stretch space-x-4 items-center justify-start bg-white shadow">
-        <img
-          src="/fimgs/585_1268.x1.svg"
-          class="transform rotate-180"
-          style=" max-width: 60px; max-height: 60px;background-image: url('/fimgs/bg-fb1910df1029f20b110a9988c1936352f60a74c4');background-size:100% ;"
-        />
-        <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
-          MY TICKET - OPEN TICKET
-        </div>
+    <div class="flex self-stretch space-x-4 items-center justify-start bg-white shadow ">
+      <img
+        src="/fimgs/585_1268.x1.svg"
+        class="transform rotate-180"
+        style=" max-width: 60px; max-height: 60px;background-image: url('/fimgs/bg-fb1910df1029f20b110a9988c1936352f60a74c4');background-size:100% ;"
+      />
+      <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
+        MY TICKET - OPEN TICKET
       </div>
     </div>
-
-    <div class="flex flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg md:w-full">
-      <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+    <div class="flex flex-col self-stretch  items-start justify-start bg-white shadow px-4 py-3">
+      <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800 ">
         Ticket Information
       </div>
-      <div class="flex flex-col space-y-6 items-start justify-start">
-        <div
-          class="flex space-x-6 items-start justify-start"
-          style="width: 984px;  height: 90px;"
-        >
-          <div
-            class="flex flex-col items-start justify-start"
-            style="width: 480px;height: 90px;"
-          >
-            <div class="flex items-start justify-start p-2.5">
-              <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                Name
-              </div>
-            </div>
-            <div
-              class="flex items-center justify-start py-2 pl-2  border-px-3 leading-tight focus:outline-none focus:bg-white  "
-              style="width: 480px; height: 43px; "
-            >
-              <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border rounded-lg border-gray-500"
-                id="username"
-                type="text"
-                placeholder="Han Solo"
-              />
-            </div>
+      <br />
+      <div class="flex  w-full items-center justify-start ">
+        <div class="flex flex-col self-stretch items-start justify-start space-y-6 mr-6 w-full">
+          <div class="flex items-center  justify-start text-md text-gray-800">
+            Name
           </div>
-          <div class="flex flex-col items-start justify-start">
-            <div class="flex items-start justify-start p-2.5">
-              <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                Ticket Type
-              </div>
-            </div>
-            <div
-              class="flex items-center justify-start py-2 pl-2  border-px-3 leading-tight focus:outline-none focus:bg-white  rounded-lg border-gray-500"
-              style="width: 450px; height: 43px; "
-            >
-              <div
-                class="inline-block relative w-64 "
-                style="width: 480px; height: 43px; "
-              >
-                <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
-                  <option>Administration Request</option>
-                  <option>Maintenance Ticket</option>
-                  <option>Complain and Sugestion</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    class="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+
+          <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border rounded-lg border-gray-500"
+              id="username"
+              type="text"
+              placeholder="Han Solo"
+            />
           </div>
         </div>
-        <div />
+
+        <div class="flex flex-col self-stretch items-start justify-start space-y-6 mr-6 w-full">
+          <div class="flex items-center  justify-start text-md text-gray-800">
+            Ticket Type
+          </div>
+
+          <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
+            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
+              <option>Administration Request</option>
+              <option>Maintenance Ticket</option>
+              <option>Complain and Sugestion</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="flex self-stretch space-x-4 items-center justify-start bg-white shadow w-full">
-      <div class="flex flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg">
-        <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+    <div class="flex flex-col self-stretch  items-start justify-start bg-white shadow px-4 py-3">
+      <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800 ">
+        Message
+      </div>
+      <br />
+
+      <div class="flex flex-col self-stretch items-start justify-start space-y-6 mr-6 w-full">
+        <div class="flex items-center  justify-start text-md text-gray-800">
+          Subject
+        </div>
+
+        <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
+          <input
+            class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded-lg border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="username"
+            type="text"
+            placeholder="Lorem Ipsum"
+          />
+        </div>
+      </div>
+      <br />
+      <div class="flex flex-col self-stretch items-start justify-start space-y-6 mr-6 w-full">
+        <div class="flex items-center  justify-start text-md text-gray-800">
           Message
         </div>
-        <div class="flex flex-col space-y-6 items-start justify-start">
-          <div class="flex flex-col items-start justify-start">
-            <div class="flex items-start justify-start p-2.5">
-              <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                Subject
-              </div>
-            </div>
-            <div
-              class="flex items-center justify-start py-2 pl-2  border-px-3 leading-tight focus:outline-none focus:bg-white  "
-              style="width: 984px;  height: 43px; "
-            >
-              <input
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded-lg border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="username"
-                type="text"
-                placeholder="Lorem Ipsum"
-              />
-            </div>
-          </div>
-          <div class="flex space-x-6 items-start justify-start">
-            <div class="flex flex-col items-start justify-start">
-              <div class="flex flex-col items-start justify-start p-2.5">
-                <div
-                  class="text-lg tracking-wide leading-relaxed text-gray-500"
-                  style="width: 984px;"
-                >
-                  Message
-                </div>
-                <textarea
-                  class="flex self-stretch text-gray-600 w-full h-48 items-center justify-start py-2 pl-4 pr-5  border rounded-lg border-gray-500 text-sm "
-                  placeholder="Enter Your Text Here"
-                />
-              </div>
-            </div>
-          </div>
-          <div />
+
+        <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
+          <textarea
+            class="flex self-stretch text-gray-600 w-full h-48 items-center justify-start py-2 pl-4 pr-5  border rounded-lg border-gray-500 text-sm "
+            placeholder="Enter Your Text Here"
+          />
         </div>
       </div>
     </div>
 
-    <div class="flex self-stretch space-x-4 items-center justify-start bg-white shadow w-full">
-      <div class="flex flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg">
-        <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
-          Attachments
-        </div>
-        <div class="flex flex-col space-y-6 items-start justify-start">
-          <div class="flex space-x-6 items-start justify-start">
-            <div class="flex flex-col items-start justify-start">
-              <div class="flex items-start justify-start p-2.5">
-                <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                  Subject
-                </div>
-              </div>
-              <div class="flex items-start justify-start">
-                <div class="flex items-center justify-center px-2.5 py-1 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
-                  <div class="text-lg tracking-wide leading-relaxed text-gray-700">
-                    Select File
-                  </div>
-                </div>
-                <div class="flex  items-center justify-startpx-2.5 py-1 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500">
-                  <div class="text-lg tracking-wide leading-relaxed text-gray-700 ">
-                    No File Selected
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    // onClick={() => {
-                    //   meta.action.addData();
-                    // }}
-                    class="flex space-x-3 items-center justify-center px-6 py-2 bg-red-900 shadow rounded-3xl  ml-8 "
-                    style="max-width: 200px;"
-                  >
-                    <img
-                      src="/fimgs/460_875.x1.svg"
-                      style=" max-width: 15px; max-height: 20px;"
-                    />
-                    <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
-                      Add More
-                    </div>
-                  </button>
-                </div>
-              </div>
-
-              <div class="flex items-start justify-start p-2.5">
-                <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                  Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf, .zip,
-                  .csv, .sql, .tar, .gz
-                </div>
-              </div>
-            </div>
+    <div class="flex flex-col space-y-6 w-full h-full items-center justify-start">
+      <div class="flex self-stretch items-start justify-start px-5">
+        <div class="flex flex-1 items-center justify-start ">
+          <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+            Department Name
           </div>
-          <div class="flex space-x-6 items-start justify-start"></div>
-          <div />
+          <input
+            type="text"
+            value={meta.nama_department}
+            onChange={(e) => meta.action.namaDepartmentChange(e)}
+            class="flex self-stretch text-gray-600 w-full items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+            placeholder="type your department name here ..."
+          />
         </div>
       </div>
-    </div>
-
-    <div class="flex space-x-6 items-start justify-start center">
-      <button
-        // onClick={() => {
-        //   meta.action.addData();
-        // }}
-        class="flex space-x-3 items-center justify-center px-6 py-2 border-px-4 border-black-500 shadow rounded-full"
-        style="max-width: 200px;"
-      >
-        <div class="text-sm font-medium tracking-wide leading-relaxed">
-          Cancel
+      <div class="flex self-stretch items-start justify-start px-5">
+        <div class="flex flex-1 items-start justify-start ">
+          <div class="flex items-start w-48 justify-start font-bold text-md text-gray-800">
+            Description
+          </div>
+          <textarea
+            value={meta.deskripsi}
+            onChange={(e) => meta.action.deskripsiChange(e)}
+            class="flex self-stretch text-gray-600 w-full h-48 items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+            placeholder="type your department description here ..."
+          />
         </div>
-      </button>
-
+      </div>
       <button
-        // onClick={() => {
-        //   meta.action.addData();
-        // }}
-        class="flex space-x-3 items-center justify-center px-6 py-2 bg-green-500 shadow rounded-full"
+        onClick={() => {
+          meta.action.addData();
+        }}
+        class="flex space-x-3 items-center justify-center px-6 py-2 bg-red-900 shadow rounded-xl"
         style="max-width: 200px;"
       >
+        <img
+          src="/fimgs/460_875.x1.svg"
+          style=" max-width: 15px; max-height: 20px;"
+        />
         <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
-          Create Ticket
+          Create New
         </div>
       </button>
     </div>
