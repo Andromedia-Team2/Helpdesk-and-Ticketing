@@ -54,4 +54,12 @@ export default {
     import("./components/tabelticket"),
     { c: "", s: "", h: "" },
   ],
+  tabelticketlistven: () => [
+    import("./components/tabelticketlistven"),
+    { c: "", s: "", h: "" },
+  ],
+  tabelticketlistemp: () => [
+    import("./components/tabelticketlistemp"),
+    { c: "", s: "", h: "" },
+  ],
 };

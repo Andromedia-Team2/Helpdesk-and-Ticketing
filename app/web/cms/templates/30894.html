@@ -25,14 +25,46 @@
     </div>
 
     <hr class=" w-full "></hr>
-
     <div class="flex self-stretch space-x-4 items-center justify-start  ">
-      <div class="text-l font-medium tracking-wide leading-loose  text-gray-600 items-center justify-left">
-        Ticket Type :
-      </div>
+      <div class=" flex self-stretch  items-center justify-start grid grid-cols-3 gap-2 ">
+        <div>
+          <div class="flex self-stretch  items-center justify-start place-self-end ">
+            <div class="text-l  w-full  tracking-wide leading-loose  text-gray-600 items-center justify-left ml-18">
+              Ticket Type :
+            </div>
+            <div class="text-l flex-none  font-medium tracking-wide leading-loose  text-gray-800 left-start  ">
+              Maintance Ticket
+            </div>
+          </div>
+        </div>
 
-      <div class="text-l font-medium tracking-wide leading-loose text-bold text-gray-800 ">
-        Maintenance ticket
+        <div class="place-self-auto ..."> </div>
+        <div>
+          <div class="flex self-stretch  items-center justify-start place-self-end ">
+            <div class="text-l  w-full  tracking-wide leading-loose  text-gray-600 items-center justify-left ">
+              if ticket is resolved, click here:
+            </div>
+            <div class="flex  w-stretch items-center justify-start px-2 ">
+              <button
+                // onClick={() => {
+                //   meta.action.addData();
+                // }}
+                class="flex space-x-3 items-center justify-center px-6 bg-red-900 shadow rounded-full"
+                style="max-width: 200px;"
+              >
+                <div class="font-medium tracking-wide leading-loose text-bold text-white ">
+                  Send
+                </div>
+                {/*<div class="flex-none color-white">*/}
+                <img
+                  src="/fimgs/712_1163.x1.svg"
+                  style=" max-width: 15px; max-height: 15px; space-y-6 w-full; "
+                />
+                {/*</div>*/}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
