@@ -1,9 +1,12 @@
 <>
-  <div class="flex self-stretch flex-col items-start justify-start bg-white">
+  <div class="flex self-stretch h-full flex-col items-start justify-start bg-white">
     <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
       <div class="flex self-stretch items-center justify-between px-6 py-3 bg-red-900">
         <div class="flex self-stretch items-center justify-start">
-          <div style="background-image: url('/fimgs/bg-d85fc350692ee29674224712218fca8fba339450');background-size:100% 100%;background-repeat:no-repeat;" />
+          <img
+            src="/fimgs/29_256.x1.svg"
+            style="width: 76.37px; height: 25px; left: 0px;top: 5.5px;"
+          />
         </div>
         <div class="flex space-x-2 items-center justify-start">
           <div class="flex items-start justify-start">
@@ -23,13 +26,13 @@
               </div>
             </div>
           </div>
-          <div class="flex self-stretch flex-col items-start justify-start bg-white shadow rounded-lg">
+          <div class="flex self-stretch w-full flex-col items-start justify-start bg-white shadow rounded-lg">
             <div class="flex items-start justify-start px-3 py-2">
               <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
                 Ticket Information
               </div>
             </div>
-            <div class="flex self-stretch flex-col items-center justify-start p-3">
+            <div class="flex self-stretch w-full flex-col items-center justify-start p-3">
               <div
                 class="flex self-stretch flex-col items-start justify-start"
                 style="width: 366px; min-width: 366px; max-width: 366px; height: 78px; min-height: 78px; max-height: 78px;"
@@ -40,8 +43,8 @@
                   </div>
                 </div>
                 <div
-                  class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
-                  style="width: 366px; min-width: 366px; max-width: 366px; height: 37px; min-height: 37px; max-height: 37px;"
+                  class="flex self-stretch w-full items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
+                  style=" height: 37px; min-height: 37px; max-height: 37px;"
                 >
                   <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border rounded-lg border-gray-500"
@@ -57,24 +60,20 @@
                 </div>
               </div>
               <div
-                class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
+                class="flex self-stretch items-center justify-start py-2  pr-2.5 border rounded-lg border-gray-500"
                 style="width: 366px; min-width: 366px; max-width: 366px; height: 37px; min-height: 37px; max-height: 37px;"
               >
-                <div class="flex flex-col w-full items-center justify-start border-px-3  ">
-                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
+                <div class="flex w-full items-center justify-start border-px-3  ">
+                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500  pr-8  focus:outline-none focus:shadow-outline rounded-lg border-gray-500">
                     <option>Administration Request</option>
                     <option>Maintenance Ticket</option>
                     <option>Complain and Sugestion</option>
                   </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg
-                      class="fill-current h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                  </div>
+                  {/*<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">*/}
+                  <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                  {/*</div>*/}
                 </div>
               </div>
             </div>
@@ -114,7 +113,7 @@
                       Message
                     </div>
                   </div>
-                  <div class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
+                  <div class="flex self-stretch items-start justify-start py-2  pr-2.5 border rounded-lg border-gray-500">
                     <textarea
                       class="flex self-stretch text-gray-600 w-full h-48 items-center justify-start py-2 pl-4 pr-5  border rounded-lg border-gray-500 text-sm "
                       placeholder="Enter Your Text Here"
@@ -151,7 +150,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full">
+                <button
+                  class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
+                  onClick={() => {
+                    alert("sdzx");
+                  }}
+                >
                   <img
                     src="/fimgs/460_875.x1.svg"
                     style=" max-width: 11.25px;px; max-height: 15px; space-y-6 w-full; "
@@ -159,7 +163,7 @@
                   <div class="text-sm font-medium tracking-wide leading-tight text-white">
                     Add
                   </div>
-                </div>
+                </button>
               </div>
               <div class="text-xs tracking-wide leading-none text-gray-500">
                 Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf, .zip,
@@ -185,9 +189,9 @@
             >
               <div class="text-sm font-medium tracking-wide leading-tight text-white">
                 <button
-                // onClick={() => {
-                //   meta.action.addData();
-                // }}
+                  onClick={() => {
+                    alert("dvdv");
+                  }}
                 >
                   Create Ticket
                 </button>
