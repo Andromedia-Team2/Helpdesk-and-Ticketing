@@ -6,19 +6,21 @@
           MY TICKET
         </div>
       </div>
-      <button class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-xl">
-        <a
-          href="/regist-ticket/add"
-          class=" flex space-x-3 items-center justify-center text-sm font-medium text-white"
-        >
-          <img
-            src="/fimgs/460_875.x1.svg"
-            class="mr-2"
-            style=" max-width: 15px; max-height: 20px;"
-          />
-          New Ticket
-        </a>
-      </button>
+      {user.role === "Client" && (
+        <button class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-xl">
+          <a
+            href="/ticket-data/add"
+            class=" flex space-x-3 items-center justify-center text-sm font-medium text-white"
+          >
+            <img
+              src="/fimgs/460_875.x1.svg"
+              class="mr-2"
+              style=" max-width: 15px; max-height: 20px;"
+            />
+            New Ticket
+          </a>
+        </button>
+      )}
     </div>
     <hr class=" w-full pb-4"></hr>
     <div class="w-full">

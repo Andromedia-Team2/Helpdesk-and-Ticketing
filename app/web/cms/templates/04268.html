@@ -1,0 +1,726 @@
+<>
+  <effect
+    meta={{
+      guarrantedUrl: [],
+      nama: "",
+      loc: "",
+      showNotif: false,
+      showSide: true,
+      showProfil: false,
+      showMaster: false,
+      showUser: false,
+      showTicket: false,
+      showReport: false,
+      changeStatus: (e) => {},
+      changeSide: (e) => {},
+      changeProfil: (e) => {},
+      changeMaster: (e) => {},
+      changeUser: (e) => {},
+      changeTicket: (e) => {},
+      changeReport: (e) => {},
+      logout: (e) => {
+        console.log(e.target.value);
+      },
+    }}
+    run={async () => {
+      if (user.role == "Vendor") {
+        meta.nama = user.dataUser.nama_vendor;
+        meta.loc = user.dataUser.lokasi_vendor;
+        meta.guarrantedUrl = [
+          "/coba",
+          "/department-data",
+          "/department-data/add",
+          "/jenis-data",
+          "/status-data",
+          "/level-data",
+          "/vendor-data-alt",
+          "/employee-data",
+          "/employee-data/add",
+          "/client-data",
+          "/ticket-data",
+          "/ticket-list-vendor",
+          "/ticket-list-employee",
+          "/ticket-data/add",
+          "/view-ticket-client",
+          "/view-ticket-admin",
+          "/view-vendor",
+          "/view-employee",
+          "/cotest",
+          "/test",
+          "/vitic",
+        ];
+      } else if (user.role == "Client") {
+        meta.nama = user.dataUser.nama_client;
+        meta.loc = user.dataUser.lokasi_client;
+        meta.guarrantedUrl = [
+          "/coba",
+          "/department-data",
+          "/department-data/add",
+          "/jenis-data",
+          "/status-data",
+          "/level-data",
+          "/vendor-data-alt",
+          "/employee-data",
+          "/employee-data/add",
+          "/client-data",
+          "/ticket-data",
+          "/ticket-list-vendor",
+          "/ticket-list-employee",
+          "/ticket-data/add",
+          "/view-ticket-client",
+          "/view-ticket-admin",
+          "/view-vendor",
+          "/view-employee",
+          "/cotest",
+          "/test",
+          "/vitic",
+        ];
+      } else if (user.role == "Employee") {
+        meta.nama = user.dataUser.nama_employee;
+        meta.loc = user.dataUser.vendor.lokasi_vendor;
+        meta.guarrantedUrl = [
+          "/coba",
+          "/department-data",
+          "/department-data/add",
+          "/jenis-data",
+          "/status-data",
+          "/level-data",
+          "/vendor-data-alt",
+          "/employee-data",
+          "/employee-data/add",
+          "/client-data",
+          "/ticket-data",
+          "/ticket-list-vendor",
+          "/ticket-list-employee",
+          "/ticket-data/add",
+          "/view-ticket-client",
+          "/view-ticket-admin",
+          "/view-vendor",
+          "/view-employee",
+          "/cotest",
+          "/test",
+          "/vitic",
+        ];
+      } else if (user.role == "Super Admin") {
+        meta.nama = "Super Admin";
+        meta.loc = "PT. ANDROMEDIA";
+      } else {
+        navigate("/login");
+      }
+      meta.action = {
+        changeStatus: (e) => {
+          meta.showNotif = e;
+        },
+        changeSide: (e) => {
+          meta.showSide = e;
+        },
+        changeProfil: (e) => {
+          meta.showProfil = e;
+        },
+        changeMaster: (e) => {
+          meta.showMaster = e;
+          let img = document.getElementById("master");
+          if (e == true) {
+            img.setAttribute("style", "transform: rotate(0deg);");
+          } else {
+            img.setAttribute("style", "transform: rotate(270deg);");
+          }
+        },
+        changeUser: (e) => {
+          meta.showUser = e;
+          let img = document.getElementById("user");
+          if (e == true) {
+            img.setAttribute("style", "transform: rotate(0deg);");
+          } else {
+            img.setAttribute("style", "transform: rotate(270deg);");
+          }
+        },
+        changeTicket: (e) => {
+          meta.showTicket = e;
+          let img = document.getElementById("ticket");
+          if (e == true) {
+            img.setAttribute("style", "transform: rotate(0deg);");
+          } else {
+            img.setAttribute("style", "transform: rotate(270deg);");
+          }
+        },
+        changeReport: (e) => {
+          meta.showReport = e;
+          let img = document.getElementById("report");
+          if (e == true) {
+            img.setAttribute("style", "transform: rotate(0deg);");
+          } else {
+            img.setAttribute("style", "transform: rotate(270deg);");
+          }
+        },
+        logout: (e) => {
+          api("/api/logout").then((e) => {
+            console.log(e);
+            //mengara ke home page
+            window.location.replace("/login");
+          });
+        },
+      };
+    }}
+  />
+  {user.role !== "guest" && meta.guarrantedUrl.includes(location.pathname) && (
+    <div class="flex flex-1 h-screen w-full bg-gray-50 dark:bg-gray-900">
+      {meta.showSide && (
+        <aside
+          id="myDIV"
+          class="z-0 h-full bg-white dark:bg-gray-800 hidden md:block flex-shrink-0 shadow-md overflow-y-auto"
+        >
+          <div class="pb-2 w-64 items-center justify-center text-gray-800 dark:text-gray-400">
+            <div class="flex flex-col items-center justify-center pb-10 pt-10">
+              <img
+                src="/fimgs/825_1267.x1.png"
+                class="shadow rounded-full my-2.5"
+                style="width: 70px; min-width: 80px; max-width: 70px; height: 70px; min-height: 80px; max-height: 70px;background-image: url('/fimgs/bg-74045356e80158be1f7f7952badbbe6483629bb0');background-size:100% 100%;background-repeat:no-repeat;"
+              />
+              <div class="flex items-center w-full justify-center text-lg font-bold text-gray-800 dark:text-gray-200">
+                {meta.nama}
+              </div>
+              <div class="flex items-center w-full tracking-wider justify-center text-sm font-medium text-gray-500 dark:text-gray-200">
+                {meta.loc}
+              </div>
+            </div>
+            <div class="flex mx-4">
+              <hr class=" w-full" />
+            </div>
+            <ul class="mt-12 pl-3 w-full">
+              <li class="relative hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full">
+                <a
+                  class="flex px-4 py-3 items-center w-full text-sm font-semibold"
+                  href="/coba"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                  </svg>
+                  <span class="ml-4 text-base">Dashboard</span>
+                </a>
+              </li>
+              <li class="relative">
+                <button
+                  class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                  aria-haspopup="true"
+                  onClick={() => {
+                    if (meta.showMaster == false) {
+                      meta.action.changeStatus(false);
+                      meta.action.changeProfil(false);
+                      meta.action.changeMaster(true);
+                      meta.action.changeUser(false);
+                      meta.action.changeTicket(false);
+                      meta.action.changeReport(false);
+                    } else {
+                      meta.action.changeMaster(false);
+                    }
+                  }}
+                >
+                  <span class="inline-flex items-center">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span class="ml-4 text-base">Master Data</span>
+                  </span>
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    id="master"
+                    style="transform: rotate(270deg);"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="pl-4 pr-4">
+                  {meta.showMaster && (
+                    <ul
+                      id="myMaster"
+                      class="mt-2 w-full overflow-hidden text-sm font-medium text-gray-800  bg-gray-50 rounded-md dark:text-gray-400 dark:bg-gray-900 shadow-inner"
+                      aria-label="submenu"
+                    >
+                      <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/department-data"
+                        >
+                          Department
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/jenis-data"
+                        >
+                          Ticket Type
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/status-data"
+                        >
+                          Ticket Status
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 rounded-d-md dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/level-data"
+                        >
+                          Ticket Level
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </li>
+              <li class="relative">
+                <button
+                  class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                  aria-haspopup="true"
+                  onClick={() => {
+                    if (meta.showUser == false) {
+                      meta.action.changeStatus(false);
+                      meta.action.changeProfil(false);
+                      meta.action.changeMaster(false);
+                      meta.action.changeUser(true);
+                      meta.action.changeTicket(false);
+                      meta.action.changeReport(false);
+                    } else {
+                      meta.action.changeUser(false);
+                    }
+                  }}
+                >
+                  <span class="inline-flex items-center">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    <span class="ml-4 text-base">User Data</span>
+                  </span>
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    id="user"
+                    style="transform: rotate(270deg);"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="pl-4 pr-4">
+                  {meta.showUser && (
+                    <ul
+                      id="myUser"
+                      class="mt-2 w-full overflow-hidden text-sm font-medium text-gray-800  bg-gray-50 rounded-md dark:text-gray-400 dark:bg-gray-900 shadow-inner"
+                      aria-label="submenu"
+                    >
+                      <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/vendor-data"
+                        >
+                          Vendor Data
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/employee-data"
+                        >
+                          Employee Data
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a
+                          class="flex items-center w-full px-4 py-2 "
+                          href="/client-data"
+                        >
+                          Client Data
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </li>
+              <li class="relative">
+                <button
+                  class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                  aria-haspopup="true"
+                  onClick={() => {
+                    if (meta.showTicket == false) {
+                      meta.action.changeStatus(false);
+                      meta.action.changeProfil(false);
+                      meta.action.changeMaster(false);
+                      meta.action.changeUser(false);
+                      meta.action.changeTicket(true);
+                      meta.action.changeReport(false);
+                    } else {
+                      meta.action.changeTicket(false);
+                    }
+                  }}
+                >
+                  <span class="inline-flex items-center">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                    </svg>
+                    <span class="ml-4 text-base">Ticket</span>
+                  </span>
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    id="ticket"
+                    style="transform: rotate(270deg);"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="pl-4 pr-4">
+                  {meta.showTicket && (
+                    <ul
+                      id="myTicket"
+                      class="mt-2 w-full overflow-hidden text-sm font-medium text-gray-800  bg-gray-50 rounded-md dark:text-gray-400 dark:bg-gray-900 shadow-inner"
+                      aria-label="submenu"
+                    >
+                      <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                        <a class="flex items-center w-full px-4 py-2 " href="#">
+                          Ticket Data
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a class="flex items-center w-full px-4 py-2 " href="#">
+                          Create Ticket
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a class="flex items-center w-full px-4 py-2 " href="#">
+                          Ticket History
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 rounded-d-md dark:hover:text-gray-200">
+                        <a class="flex items-center w-full px-4 py-2 " href="#">
+                          Ticket by Category
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </li>
+              <li class="relative">
+                <button
+                  class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                  aria-haspopup="true"
+                  onClick={() => {
+                    if (meta.showReport == false) {
+                      meta.action.changeStatus(false);
+                      meta.action.changeProfil(false);
+                      meta.action.changeMaster(false);
+                      meta.action.changeUser(false);
+                      meta.action.changeTicket(false);
+                      meta.action.changeReport(true);
+                    } else {
+                      meta.action.changeReport(false);
+                    }
+                  }}
+                >
+                  <span class="inline-flex items-center">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                    </svg>
+                    <span class="ml-4 text-base">Report</span>
+                  </span>
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    id="report"
+                    style="transform: rotate(270deg);"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="pl-4 pr-4">
+                  {meta.showReport && (
+                    <ul
+                      id="myReport"
+                      class="mt-2 w-full overflow-hidden text-sm font-medium text-gray-800  bg-gray-50 rounded-md dark:text-gray-400 dark:bg-gray-900 shadow-inner"
+                      aria-label="submenu"
+                    >
+                      <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                        <a class="flex items-center w-full px-4 py-2 " href="#">
+                          Report Ticket
+                        </a>
+                      </li>
+                      <li class="hover:bg-gray-200 dark:hover:text-gray-200">
+                        <a class="flex items-center w-full px-4 py-2 " href="#">
+                          Report User
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      )}
+      <div class="flex flex-col overflow-y-auto h-full w-full">
+        <header class="z-10 bg-red-900 w-full">
+          <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:pr-6 lg:pl-1">
+            <div class="relative flex items-center justify-between h-16">
+              <div class="flex-1 flex items-start justify-center items-stretch">
+                <button
+                  class="px-4 py-2 text-white text-2xl rounded-lg hover:bg-red-800"
+                  onClick={() => {
+                    if (meta.showSide == false) {
+                      meta.action.changeSide(true);
+                      meta.action.changeStatus(false);
+                      meta.action.changeProfil(false);
+                      meta.action.changeMaster(false);
+                      meta.action.changeUser(false);
+                      meta.action.changeTicket(false);
+                      meta.action.changeReport(false);
+                    } else {
+                      meta.action.changeSide(false);
+                      meta.action.changeStatus(false);
+                      meta.action.changeProfil(false);
+                      meta.action.changeMaster(false);
+                      meta.action.changeUser(false);
+                      meta.action.changeTicket(false);
+                      meta.action.changeReport(false);
+                    }
+                  }}
+                >
+                  <svg
+                    class="w-6 h-6"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="flex w-full flex-col items-center md:items-start justify-center pl-8">
+                  <img
+                    src="/fimgs/I232_123_87_289.x1.svg"
+                    style="max-width: 135px; max-height: 135px"
+                  />
+                </div>
+              </div>
+              <div class="ml-3 relative">
+                <div>
+                  <button
+                    class="text-xl text-white px-2 py-2 focus:outline-none rounded-lg hover:bg-red-800"
+                    onClick={() => {
+                      if (meta.showNotif == false) {
+                        meta.action.changeStatus(true);
+                        meta.action.changeProfil(false);
+                        meta.action.changeMaster(false);
+                        meta.action.changeUser(false);
+                        meta.action.changeTicket(false);
+                        meta.action.changeReport(false);
+                      } else {
+                        meta.action.changeStatus(false);
+                      }
+                    }}
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                    </svg>
+                  </button>
+                </div>
+                {meta.showNotif && (
+                  <div
+                    id="myNotif"
+                    class="absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >
+                    <p class="p-2 text-sm text-gray-700">Not Results ...</p>
+                  </div>
+                )}
+              </div>
+              <div class="ml-3 relative">
+                <div>
+                  <button
+                    class="text-xl text-white px-2 py-2 focus:outline-none rounded-lg hover:bg-red-800"
+                    onClick={() => {
+                      if (
+                        localStorage.theme == "dark" ||
+                        (!("theme" in localStorage) &&
+                          window.matchMedia("(prefers-color-scheme: dark)")
+                            .matches)
+                      ) {
+                        document.documentElement.classList.add("dark");
+                      } else {
+                        document.documentElement.classList.remove("dark");
+                      }
+                    }}
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="ml-3 relative">
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (meta.showProfil == false) {
+                        meta.action.changeStatus(false);
+                        meta.action.changeProfil(true);
+                        meta.action.changeMaster(false);
+                        meta.action.changeUser(false);
+                        meta.action.changeTicket(false);
+                        meta.action.changeReport(false);
+                      } else {
+                        meta.action.changeProfil(false);
+                      }
+                    }}
+                    class="flex text-sm rounded-full focus:outline-none px-2"
+                  >
+                    <span class="sr-only">Open user menu</span>
+                    <img
+                      class="h-8 w-8 rounded-full"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      alt=""
+                    />{" "}
+                    <div class="hidden md:block ">
+                      <div class="flex items-center justify-center h-8 font-bold px-2 text-white">
+                        {meta.nama}
+                      </div>
+                    </div>
+                  </button>
+                </div>
+                {meta.showProfil && (
+                  <div
+                    id="myProfil"
+                    class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      id="user-menu-item-0"
+                    >
+                      <i class="fas fa-user mr-2"></i>
+                      Your Profile
+                    </a>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      id="user-menu-item-1"
+                    >
+                      <i class="fas fa-cog mr-2"></i>
+                      Settings
+                    </a>
+                    <a
+                      href="#"
+                      onClick={() => {
+                        meta.action.logout();
+                      }}
+                      class="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      id="user-menu-item-2"
+                    >
+                      <i class="fas fa-sign-out-alt mr-2"></i>
+                      Sign out
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </header>
+        <main class="flex flex-col overflow-y-auto w-full h-full">
+          {children}
+        </main>
+
+        <div class="flex flex-1 items-center justify-center py-2 bg-white text-xs font-bold text-gray-500">
+          © 2021. Crafted by ANDROMEDIA INTERNSHIP TEAM - 2
+        </div>
+      </div>
+    </div>
+  )}
+</>
