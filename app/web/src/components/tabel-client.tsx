@@ -7,11 +7,17 @@ require('datatables.net')(window, $);
 declare const window: BaseWindow
 
 export default () => {
+    var no = 0;
     api("/api/get-client").then((res) => {
         $('#dtable').DataTable({
             data: res.data,
             aoColumns: [
-                { mData: 'id_client' },
+                { mData: null,
+                    mRender: function (data, type, full) {
+                      no = no + 1;
+                      return (no);
+                    } 
+                },
                 { mData: 'lokasi_client' },
                 { mData: 'nama_client' },
                 { mData: 'email_client' },
@@ -39,10 +45,10 @@ export default () => {
 
     return (
         <div>
-            <table className="stripe w-full whitespace-no-wrap" id="dtable">
+            <table className="stripe w-full" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        
+                        <th className="py-3">No</th>
                         <th className="py-3">Company</th>
                         <th className="py-3">Name</th>
                         <th className="py-3">Email</th>
@@ -50,8 +56,7 @@ export default () => {
                         <th className="px-4 py-3">Action</th>
                     </tr>
                 </thead>
-                <tbody className="bg-white divide-y dark:divide-gr
-                ay-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 "></tbody>
+                <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 "></tbody>
             </table>
         </div>
     )

@@ -4,11 +4,11 @@
       value: {},
     }}
     run={async () => {
-      meta.value = await api("/api/get-user");
+      meta.value = await api("/api/get-ticket");
       //console.log(data);
       //console.log(user.user);
     }}
   />
 
-  <div>{window.user}</div>
+  <div>{user}</div>
 </>
