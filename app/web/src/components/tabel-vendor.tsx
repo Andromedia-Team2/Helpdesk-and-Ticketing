@@ -39,7 +39,7 @@ export default () => {
 
     return (
         <div>
-            <table className="stripe w-full whitespace-no-wrap" id="dtable">
+            <table className="table table-striped table-bordered" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         

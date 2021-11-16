@@ -12,7 +12,7 @@
     }}
     run={async () => {
       meta.departments = await api("/api/get-department");
-      meta.id_vendor = window.user.dataUser.id_vendor;
+      meta.id_vendor = user.dataUser.id_vendor;
       console.log(meta.id_vendor);
       meta.action = {
         namaDepartmentChange: (e, f) => {

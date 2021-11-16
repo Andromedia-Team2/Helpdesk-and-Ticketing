@@ -46,16 +46,16 @@
       style="width: 350px; max-width: 350px;"
     >
       <div class="self-stretch flex-col items-center justify-center shadow-xl rounded-2xl">
-        <div class="flex flex-col items-center justify-center bg-white border-2 rounded-tl-2xl rounded-tr-2xl border-red-900">
-          <div class="flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center justify-center bg-red-900 rounded-tl-2xl rounded-tr-2xl">
+          <div class="flex flex-col items-center justify-center mt-2 mb-2">
             <div class="flex flex-col items-center justify-center p-2.5">
               <img
-                src="/fimgs/425_841.x1.png"
+                src="/fimgs/685_1161.x1.png"
                 style="max-width: 174px; max-height: 60px;"
               />
             </div>
             <div class="flex items-start justify-center pb-2">
-              <div class="text-3xl font-medium tracking-wide leading-10 text-center text-gray-800">
+              <div class="text-3xl font-medium tracking-wide leading-10 text-center text-white">
                 Login
               </div>
             </div>
@@ -63,28 +63,34 @@
           {meta.showMessage && (
             <div
               id="myWarning"
-              class="flex items-center w-full justify-center bg-red-300 text-red-900 px-4 py-2"
+              class="flex self-stretch space-x-3 items-center justify-start p-2 bg-red-500"
             >
-              {meta.message}
+              <img
+                src="/fimgs/bg-d33b6a536277025a01a7d58c228b7b52a21525b5"
+                style="max-width: 20px;max-height: 20px;"
+              />
+              <div class="text-sm tracking-wide leading-tight text-white">
+                {meta.message}
+              </div>
             </div>
           )}
         </div>
-        <div class="flex flex-col space-y-2 items-center justify-center bg-red-900 rounded-bl-2xl rounded-br-2xl pb-8">
-          <div class="flex flex-col w-full items-start justify-start px-2">
-            <div class="flex self-stretch flex-col space-y-2 items-start justify-start p-2.5">
-              <div class="text-lg tracking-wide pt-4 leading-relaxed text-white">
+        <div class="flex flex-col space-y-2 items-center justify-center bg-white rounded-bl-2xl rounded-br-2xl pb-8">
+          <div class="flex flex-col w-full items-start justify-start px-2 pb-2">
+            <div class="flex self-stretch flex-col space-y-2 items-start justify-start px-2.5">
+              <div class="text-lg font-medium tracking-wide pt-4 leading-relaxed text-gray-800">
                 Username
               </div>
               <input
                 type="text"
                 value={meta.username}
                 onChange={(e) => meta.action.usernameChange(e)}
-                class="flex self-stretch items-center font-medium justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm"
+                class="flex self-stretch items-center font-medium justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline"
                 placeholder="type your username here ..."
               />
             </div>
             <div class="flex self-stretch flex-col space-y-2 items-start justify-start p-2.5">
-              <div class="text-lg tracking-wide leading-relaxed text-white">
+              <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-800">
                 Password
               </div>
               <div class="flex items-start w-full justify-start">
@@ -92,13 +98,10 @@
                   type="password"
                   value={meta.password}
                   onChange={(e) => meta.action.passwordChange(e)}
-                  class="flex items-center justify-start w-full py-2 pl-4 text-sm font-medium pr-5 bg-white rounded-tl-lg rounded-bl-lg"
+                  class="flex items-center justify-start w-full py-2 pl-4 text-sm font-medium pr-5 bg-white rounded-tl-lg rounded-bl-lg focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline"
                   placeholder="type your password here ..."
                 />
-                <div
-                  class="flex items-start justify-start p-2 bg-white rounded-tr-lg rounded-br-lg"
-                  style="width: 36px; min-width: 36px; max-width: 36px; height: 36px; min-height: 36px; max-height: 36px;"
-                >
+                <div class="flex items-start justify-start p-2 bg-white rounded-tr-lg rounded-br-lg focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline">
                   <img
                     src="/fimgs/I425_855_196_154.x1.png"
                     style="max-width: 20px; max-height: 20px;"
@@ -106,12 +109,15 @@
                 </div>
               </div>
             </div>
+            <div class="flex w-full items-start px-2.5 justify-end text-red-500 font-medium text-xs">
+              forgot your password?
+            </div>
           </div>
           <button
             onClick={() => {
               meta.action.login();
             }}
-            class="flex items-center justify-center px-4 py-1 bg-green-500 shadow rounded-2xl"
+            class="flex items-center justify-center px-4 py-1 bg-red-900 shadow rounded-2xl"
           >
             <div class="text-md px-4 font-medium tracking-wide leading-relaxed text-white">
               Login

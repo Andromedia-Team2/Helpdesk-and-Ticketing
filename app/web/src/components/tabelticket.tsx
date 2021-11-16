@@ -17,23 +17,37 @@ export default () => {
         { 
           mData: null,
           mRender: function (data, type, full) {
-            return (no + 1);
+            no = no + 1;
+            return (no);
           } 
-        },
-        {
-          mData: "judul_ticket",
         },
         {
           mData: null,
           mRender: function (data, type, full) {
-            return (full.jenis_ticket.jenis_ticket);
+            return (full.ticket.judul_ticket);
+          }
+        },
+        {
+          mData: null,
+          mRender: function (data, type, full) {
+            return (full.ticket.jenis_ticket.jenis_ticket);
           }
         },
          {
-          mData: "tanggal_masuk",
+          mData: null,
+          mRender: function (data, type, full) {
+            return (full.tanggalMasuk_ticket);
+          }
         },
          {
-          mData: "tanggal_solved",
+          mData: null,
+          mRender: function (data, type, full) {
+            if (full.tanggalSolved_ticket	 != null){
+              return (full.tanggalSolved_ticket	);
+            }else{
+              return ("Not Solved")
+            }
+          }
         },
         {
           "mData": null,
@@ -42,13 +56,13 @@ export default () => {
           "sWidth": "15%",
           mRender: function (data, type, full) {
             if (full.status_ticket.status_ticket == "OPEN") {
-              return "<div class='flex items-center justify-center text-xs mx-4 my-4 py-2 bg-green-500 text-white rounded-lg'><b>" + full.status_ticket.status_ticket + "</b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-green-500 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
             } else if (full.status_ticket.status_ticket == "ASSIGNED") {
-              return "<div class='flex items-center justify-center text-xs mx-4 my-4 py-2 bg-yellow-500 text-white rounded-lg'><b>" + full.status_ticket.status_ticket + "</b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-yellow-500 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
             } else if (full.status_ticket.status_ticket == "IN PROGRESS") {
-              return "<div class='flex items-center justify-center text-xs mx-4 my-4 py-2 bg-red-500 text-white rounded-xl'><b>" + full.status_ticket.status_ticket + "</b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-red-500 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
             } else {
-              return "<div class='flex items-center justify-center text-xs mx-4 my-4 py-2 bg-gray-800 text-white rounded-lg'><b>" + full.status_ticket.status_ticket + "</b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-gray-800 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
             }
           }, 
         },
