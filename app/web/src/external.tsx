@@ -62,4 +62,8 @@ export default {
     import("./components/tabelticketlistemp"),
     { c: "", s: "", h: "" },
   ],
+  chart: () => [
+    import("./components/my-chart"),
+    { c: "", s: "", h: "" },
+  ],
 };

@@ -1,48 +1,383 @@
 <>
-  <div class="flex self-stretch flex-col w-fullitems-start justify-start bg-gray-50">
-    <div class="flex flex-1 self-stretch flex-col items-start justify-between">
+  <effect meta={{}} run={async () => {}} />
+  <div class="flex flex-col items-start justify-start bg-gray-50">
+    <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
       <div class="flex self-stretch items-center justify-between px-6 py-3 bg-red-900">
         <div class="flex self-stretch items-center justify-start">
-          <div style="background-image: url('/fimgs/bg-d85fc350692ee29674224712218fca8fba339450');background-size:100% 100%;background-repeat:no-repeat; width: 76.37px; height: 25px;" />
+          <img
+            src="/fimgs/587_1287.x3.png"
+            style="width: 76.37px; min-width: 76.37px; max-width: 76.37px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-d85fc350692ee29674224712218fca8fba339450');background-size:100% 100%;background-repeat:no-repeat;"
+          />
         </div>
         <div class="flex space-x-2 items-center justify-start">
           <div class="flex items-start justify-start">
-            <div style="background-image: url('/fimgs/bg-c1b4b8f40587a3e0f3882294b7b48f9b1dfeb080');background-size:100% 100%;background-repeat:no-repeat; width: 30px; height: 30px;" />
+            <img
+              src="/fimgs/587_1289.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-c1b4b8f40587a3e0f3882294b7b48f9b1dfeb080');background-size:100% 100%;background-repeat:no-repeat;"
+            />
           </div>
           <div class="text-xs font-medium tracking-wide leading-none text-right text-white">
             hello, user!
           </div>
         </div>
       </div>
-
-      <div class=" flex self-stretch items-start justify-between px-6 bg-white shadow h-full">
+      <div class="flex flex-1 self-stretch flex-col space-y-5 items-start justify-start px-6">
+        <div class="flex self-stretch items-start justify-between">
+          <div class="flex items-center justify-start bg-white shadow rounded-lg">
+            <div class="flex flex-col space-y-1 items-start justify-start p-2">
+              <div class="text-sm font-medium tracking-wide leading-tight text-gray-500">
+                Open
+              </div>
+              <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
+                1
+              </div>
+            </div>
+            <div />
+          </div>
+          <div class="flex items-center justify-start bg-white shadow rounded-lg">
+            <div class="flex flex-col space-y-1 items-start justify-start p-2">
+              <div class="text-sm font-medium tracking-wide leading-tight text-gray-500">
+                In Progress
+              </div>
+              <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
+                4
+              </div>
+            </div>
+            <div />
+          </div>
+          <div class="flex items-center justify-start bg-white shadow rounded-lg">
+            <div class="flex flex-col space-y-1 items-start justify-start p-2">
+              <div class="text-sm font-medium tracking-wide leading-tight text-gray-500">
+                Resolved
+              </div>
+              <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
+                3
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div class="flex flex-col items-start justify-start">
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+            <div class="flex self-stretch items-center justify-start">
+              <div class="flex items-start justify-start p-2">
+                <div class="text-sm tracking-wide leading-tight text-gray-700">
+                  Ticket by level:
+                </div>
+              </div>
+              <div class="flex flex-1 items-center justify-start border rounded-lg border-gray-500">
+                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                  <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                    November 2021
+                  </div>
+                </div>
+                <div class="flex flex-col items-center justify-center transform -rotate-90">
+                  <div
+                    class="transform rotate-90"
+                    style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="border-gray-500" />
+            <div class="flex flex-1 self-stretch items-start justify-between">
+              <div class="flex space-x-14 justify-center transform -rotate-45">
+                <div class="transform rotate-45 bg-green-300 rounded-full" />
+                <div class="transform -rotate-45 bg-warmGray-300 rounded-full" />
+                <div class="transform -rotate-45 bg-yellow-300 rounded-full" />
+                <div class="transform rotate-90 bg-red-300 rounded-full" />
+                <div class="text-xs tracking-wide leading-none text-gray-700">
+                  50%
+                </div>
+                <div class="text-xs tracking-wide leading-none text-gray-700">
+                  25%
+                </div>
+                <div class="text-xs tracking-wide leading-none text-gray-700">
+                  25%
+                </div>
+              </div>
+              <div class="flex flex-col space-y-3 items-start justify-start">
+                <div class="flex space-x-2 items-center justify-start">
+                  <div class="shadow" />
+                  <div class="flex space-x-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-700">
+                      Low
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      : 2 ticket
+                    </div>
+                  </div>
+                </div>
+                <div class="flex space-x-2 items-center justify-start">
+                  <div class="shadow" />
+                  <div class="flex space-x-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-700">
+                      Medium
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      : 4 ticket
+                    </div>
+                  </div>
+                </div>
+                <div class="flex space-x-2 items-center justify-start">
+                  <div class="shadow" />
+                  <div class="flex space-x-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-700">
+                      High
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      : 2 ticket
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+          <div class="flex self-stretch items-center justify-start">
+            <div class="flex items-start justify-start p-2">
+              <div class="text-sm tracking-wide leading-tight text-gray-700">
+                Ticket by type:
+              </div>
+            </div>
+            <div class="flex flex-1 items-center justify-start border rounded-lg border-gray-500">
+              <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                  November 2021
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center transform -rotate-90">
+                <div
+                  class="transform rotate-90"
+                  style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="border-gray-500" />
+          <div class="flex flex-1 self-stretch flex-col items-center justify-between">
+            <div class="flex space-x-28 justify-center pr-24 pt-8">
+              <div class="transform rotate-90 bg-green-300 rounded-full" />
+              <div class="bg-warmGray-300 rounded-full" />
+              <div class="bg-yellow-300 rounded-full" />
+              <div class="text-xs tracking-wide leading-none text-gray-700">
+                75%
+              </div>
+              <div class="text-xs tracking-wide leading-none text-gray-700">
+                25%
+              </div>
+            </div>
+            <div class="flex flex-col space-y-3 items-start justify-start">
+              <div class="flex space-x-2 items-center justify-start">
+                <div class="shadow" />
+                <div class="flex space-x-2 items-start justify-start">
+                  <div class="text-xs tracking-wide leading-none text-gray-700">
+                    Technical support
+                  </div>
+                  <div class="text-xs tracking-wide leading-none text-gray-600">
+                    : 6 ticket
+                  </div>
+                </div>
+              </div>
+              <div class="flex space-x-2 items-center justify-start">
+                <div class="shadow" />
+                <div class="flex space-x-2 items-start justify-start">
+                  <div class="text-xs tracking-wide leading-none text-gray-700">
+                    Administration request
+                  </div>
+                  <div class="text-xs tracking-wide leading-none text-gray-600">
+                    : 2 ticket
+                  </div>
+                </div>
+              </div>
+              <div class="flex space-x-2 items-center justify-start">
+                <div class="shadow" />
+                <div class="flex space-x-2 items-start justify-start">
+                  <div class="text-xs tracking-wide leading-none text-gray-700">
+                    Complain and suggestion
+                  </div>
+                  <div class="text-xs tracking-wide leading-none text-gray-600">
+                    : 0 ticket
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-3 bg-white shadow rounded-lg">
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="flex flex-col items-center justify-start">
+              <div class="text-sm tracking-wide leading-tight text-center text-gray-700">
+                Total Tickets
+              </div>
+            </div>
+            <div class="flex items-center justify-start border rounded-lg border-gray-500">
+              <div class="flex items-start justify-start px-4 py-2 rounded-lg">
+                <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                  2021
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center transform -rotate-90">
+                <div
+                  class="transform rotate-90"
+                  style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                />
+              </div>
+            </div>
+            <div class="flex items-start justify-start">
+              <div class="flex flex-col items-start justify-start">
+                <div class="flex items-start justify-center px-2 py-1 bg-green-500 rounded-tl-lg rounded-bl-lg">
+                  <div class="text-xs font-medium tracking-wide leading-none text-center text-white">
+                    Open
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start">
+                <div class="flex items-start justify-center px-2 py-1 bg-yellow-500">
+                  <div class="text-xs font-medium tracking-wide leading-none text-center text-white">
+                    Assigned
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start">
+                <div class="flex items-start justify-center px-2 py-1 bg-red-500">
+                  <div class="text-xs font-medium tracking-wide leading-none text-center text-white">
+                    On Progress
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start">
+                <div class="flex items-start justify-center px-2 py-1 bg-gray-800 rounded-tr-lg rounded-br-lg">
+                  <div class="text-xs font-medium tracking-wide leading-none text-center text-white">
+                    Resolved
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border-gray-500" />
+          <div class="flex self-stretch space-x-7 items-start justify-start">
+            <div class="flex flex-col items-start justify-between">
+              <div class="flex flex-col items-start justify-start p-2">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                  4
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start p-2">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                  3
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start p-2">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                  2
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start p-2">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                  1
+                </div>
+              </div>
+              <div class="flex flex-col items-start justify-start p-2">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                  0
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-1 items-end justify-between pt-6">
+              <div class="flex flex-col items-center justify-end">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-700">
+                  . . . .
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-between">
+                <div class="flex space-x-3 items-end justify-start">
+                  <div />
+                  <div />
+                  <div />
+                </div>
+                <div class="text-xs tracking-wide leading-none text-center text-gray-700">
+                  Aug
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-between">
+                <div class="flex space-x-3 items-end justify-start">
+                  <div />
+                  <div />
+                  <div />
+                </div>
+                <div class="text-xs tracking-wide leading-none text-center text-gray-700">
+                  Sep
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-between">
+                <div class="flex space-x-3 items-end justify-start">
+                  <div />
+                  <div />
+                  <div />
+                </div>
+                <div class="text-xs tracking-wide leading-none text-center text-gray-700">
+                  Okt
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-between">
+                <div class="flex space-x-3 items-end justify-start">
+                  <div />
+                  <div />
+                  <div />
+                </div>
+                <div class="text-xs tracking-wide leading-none text-center text-gray-700">
+                  Nov
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-end">
+                <div class="text-xs tracking-wide leading-none text-center text-gray-700">
+                  Des
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex self-stretch items-start justify-between px-6 bg-white shadow">
         <div class="flex flex-col items-center justify-start p-2">
           <div class="flex items-start justify-start">
-            <div style="background-image: url('/fimgs/bg-af4aa54b96b313fda81dd5c44ee5980413d61055');background-size:100% 100%;background-repeat:no-repeat;width: 30px; height: 30px;" />
+            <img
+              src="/fimgs/773_1208.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-af4aa54b96b313fda81dd5c44ee5980413d61055');background-size:100% 100%;background-repeat:no-repeat;"
+            />
           </div>
           <div class="text-xs font-medium tracking-wide leading-none text-red-900">
             Dashboard
           </div>
         </div>
         <div class="flex flex-col items-center justify-start p-2">
-          <div class="flex items-start justify-start">
-            <div style="background-image: url('/fimgs/bg-1d94f457cadc8b9b13cd053b9f54595c3b033488');background-size:100% 100%;background-repeat:no-repeat; width: 30px; height: 30px;" />
-          </div>
+          <img
+            src="/fimgs/773_1192.x3.png"
+            class="flex items-start justify-start"
+            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
+          />
           <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
             New Ticket
           </div>
         </div>
         <div class="flex flex-col items-center justify-start p-2">
-          <div class="flex items-start justify-start">
-            <div style="background-image: url('/fimgs/bg-7e05c4753e5e7c1e517f1949a4ed95c909c0e016');background-size:100% 100%;background-repeat:no-repeat;width: 30px; height: 30px;" />
-          </div>
+          <img
+            src="/fimgs/773_1188.x3.png"
+            class="flex items-start justify-start"
+            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
+          />
           <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
             My Ticket
           </div>
         </div>
         <div class="flex flex-col items-center justify-start p-2">
           <div class="flex items-start justify-start">
-            <div style="background-image: url('/fimgs/bg-3516cc63bd3d1a27be4f332540d80ec325f6c342');background-size:100% 100%;background-repeat:no-repeat;width: 30px; height: 30px;" />
+            <img
+              src="/fimgs/773_1214.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-3516cc63bd3d1a27be4f332540d80ec325f6c342');background-size:100% 100%;background-repeat:no-repeat;"
+            />
           </div>
           <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
             Profile

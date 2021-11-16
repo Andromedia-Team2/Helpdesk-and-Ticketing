@@ -37,6 +37,7 @@
     "@playwright/test": "^1.14.1",
     "@prisma/client": "^3.2.1",
     "autoprefixer": "^10.2.5",
+    "chart.js": "^3.6.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.1.0",
     "globby": "^11.0.3",
@@ -45,6 +46,7 @@
     "postcss": "^8.2.8",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.2.1",
+    "react-chartjs-2": "^3.3.0",
     "tslib": "1.14.1",
     "typescript": "^4.2.3"
   },
