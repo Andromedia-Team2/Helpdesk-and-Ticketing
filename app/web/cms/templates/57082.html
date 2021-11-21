@@ -1,0 +1,255 @@
+<>
+  <effect
+    meta={
+      {
+        // value: {},
+        // nama: "",
+        // nomor: "",
+        // email: "",
+        // lokasi: "",
+        // username: "",
+      }
+    }
+    run={async () => {
+      // meta.nama = meta.value.nama;
+      // meta.nomor = meta.value.nomor;
+      // meta.email = meta.value.email;
+      // meta.lokasi = meta.value.lokasi;
+      // meta.username = meta.value.username;
+
+      meta.action = {
+        cancel: (e) => {
+          window.location.replace("/m/view-profile");
+        },
+        // editData: (e) => {
+        //   api("/api/vendor-data/edit", {
+        //     nama_vendor: meta.nama_vendor,
+        //     email_vendor: meta.email_vendor,
+        //     lokasi_vendor: meta.lokasi_vendor,
+        //     nomor_vendor: meta.nomor_vendor,
+        //   }).then((e) => {
+        //     console.log(e);
+        //     if (e.status == "SUCCESS") {
+        //       window.location.replace("/vendor-data");
+        //     } else {
+        //       console.log(e);
+        //     }
+        //   });
+        // },
+      };
+    }}
+  />
+  <div class="flex flex-col items-start justify-start bg-gray-50">
+    <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+      <div class="flex self-stretch items-center justify-between px-6 py-3 bg-red-900">
+        <div class="flex self-stretch items-center justify-start">
+          <img
+            src="/fimgs/1036_1769.x3.png"
+            style="width: 76.37px; min-width: 76.37px; max-width: 76.37px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-d85fc350692ee29674224712218fca8fba339450');background-size:100% 100%;background-repeat:no-repeat;"
+          />
+        </div>
+        <div class="flex space-x-2 items-center justify-start">
+          <div class="flex items-start justify-start">
+            <img
+              src="/fimgs/1036_1772.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-c1b4b8f40587a3e0f3882294b7b48f9b1dfeb080');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="text-xs font-medium tracking-wide leading-none text-right text-white">
+            hello, user!
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
+        <div class="flex self-stretch items-start justify-start p-2">
+          <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+            PROFILE - EDIT PROFILE
+          </div>
+        </div>
+        <div class="flex self-stretch flex-col items-center justify-start p-6 bg-white shadow rounded-lg">
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="flex self-stretch items-center justify-center ">
+              <img
+                src="/fimgs/1036_1928.x1.svg"
+                class="flex flex-col items-center justify-center p-2.5 rounded-full"
+                style="width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"
+              />
+            </div>
+            <div class="flex self-stretch flex-col space-y-2 items-start justify-start">
+              <div class="flex self-stretch flex-col items-start justify-start">
+                <div class="flex self-stretch items-start justify-start p-2.5">
+                  <label class="text-sm tracking-wide leading-tight text-gray-500">
+                    Display Name
+                  </label>
+                </div>
+                <input
+                  class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                  placeholder="Han Solo"
+                  // value={meta.nama}
+                  // onChange={(e) => meta.action.namaChange(e)}
+                  required
+                />
+              </div>
+              <div class="flex self-stretch flex-col items-start justify-start">
+                <div class="flex self-stretch items-start justify-start p-2.5">
+                  <label class="text-sm tracking-wide leading-tight text-gray-500">
+                    Email
+                  </label>
+                </div>
+                <input
+                  class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                  placeholder="han.solo@startrek.com"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-6 bg-white shadow rounded-lg">
+          <div class="flex self-stretch flex-col items-start justify-start">
+            <div class="flex self-stretch flex-col items-start justify-start">
+              <div class="flex self-stretch flex-col items-start justify-start">
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start p-2.5">
+                    <label class="text-sm tracking-wide leading-tight text-gray-500">
+                      Company
+                    </label>
+                  </div>
+                  <input
+                    class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    placeholder="Startrek Ent."
+                    required
+                  />
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start p-2.5">
+                    <label class="text-sm tracking-wide leading-tight text-gray-500">
+                      Phone
+                    </label>
+                  </div>
+                  <input
+                    class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    placeholder="081649246857"
+                    required
+                  />
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start p-2.5">
+                    <label class="text-sm tracking-wide leading-tight text-gray-500">
+                      Address
+                    </label>
+                  </div>
+                  <input
+                    class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
+                    required
+                  />
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch flex-col items-start justify-start">
+                    <div class="flex self-stretch items-start justify-start p-2.5">
+                      <label class="text-sm tracking-wide leading-tight text-gray-500">
+                        Username
+                      </label>
+                    </div>
+                    <input
+                      class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                      placeholder="startrek11"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="flex self-stretch items-end justify-start">
+                  <div class="flex flex-1 flex-col space-y-2 items-start justify-start">
+                    <div class="flex self-stretch items-start justify-start p-2.5">
+                      <label class="text-sm tracking-wide leading-tight text-gray-500">
+                        Password
+                      </label>
+                    </div>
+                    <div class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700 w-full">
+                        11startrek
+                      </div>
+                      <div class="flex items-start justify-start p-1 rounded-tr-lg rounded-br-lg">
+                        <img
+                          src="/fimgs/I1036_1822_196_154.x1.svg"
+                          style="width: 20px; min-width: 20px; max-width: 20px; height: 20px; min-height: 20px; max-height: 20px;background-image: url('/fimgs/bg-6130b0b2d196028c462a76cb07bc8cb599a2bc89');background-size:100% 100%;background-repeat:no-repeat;"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex self-stretch space-x-6 items-start justify-center">
+            <div class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500">
+              <button
+                onClick={() => {
+                  meta.action.cancel();
+                }}
+              >
+                <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
+                  cancel
+                </div>
+              </button>
+            </div>
+            <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
+              <button>
+                <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                  save changes
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex self-stretch items-start justify-between px-6 bg-white shadow">
+        <div class="flex flex-col items-center justify-start p-2">
+          <div class="flex items-start justify-start">
+            <img
+              src="/fimgs/1036_1830.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-e3f3637260cb516e379328e4426bf83f03764fd3');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+            Dashboard
+          </div>
+        </div>
+        <div class="flex flex-col items-center justify-start p-2">
+          <div class="flex items-start justify-start">
+            <img
+              src="/fimgs/1036_1834.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-1d94f457cadc8b9b13cd053b9f54595c3b033488');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+            New Ticket
+          </div>
+        </div>
+        <div class="flex flex-col items-center justify-start p-2">
+          <div class="flex items-start justify-start">
+            <img
+              src="/fimgs/1036_1838.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-7e05c4753e5e7c1e517f1949a4ed95c909c0e016');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+            My Ticket
+          </div>
+        </div>
+        <div class="flex flex-col items-center justify-start p-2">
+          <div class="flex items-start justify-start">
+            <img
+              src="/fimgs/1036_1842.x3.png"
+              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-efda21034fe8cd3322b2fb4f7a83721f10359914');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="text-xs font-medium tracking-wide leading-none text-red-900">
+            Profile
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</>
