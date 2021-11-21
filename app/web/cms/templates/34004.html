@@ -1,5 +1,72 @@
 <>
-  <effect meta={{}} run={async () => {}} />
+  <effect
+    meta={{
+      value: {},
+      nama: "",
+      nomor: "",
+      email: "",
+      lokasi: "",
+      username: "",
+    }}
+    run={async () => {
+      meta.nama = meta.value.nama;
+      meta.nomor = meta.value.nomor;
+      meta.email = meta.value.email;
+      meta.lokasi = meta.value.lokasi;
+      meta.username = meta.value.username;
+
+      meta.action = {
+        namaChange: (e) => {
+          runInAction(() => {
+            meta.nama = e.target.value;
+            console.log(meta.nama);
+          });
+        },
+        nomorChange: (e) => {
+          runInAction(() => {
+            meta.nomor = e.target.value;
+            console.log(meta.nomor);
+          });
+        },
+        emailChange: (e) => {
+          runInAction(() => {
+            meta.email = e.target.value;
+            console.log(meta.email);
+          });
+        },
+        lokasiChange: (e) => {
+          runInAction(() => {
+            meta.lokasi = e.target.value;
+            console.log(meta.lokasi);
+          });
+        },
+        usernameChange: (e) => {
+          runInAction(() => {
+            meta.username = e.target.value;
+            console.log(meta.username);
+          });
+        },
+        cancel: (e) => {
+          window.location.replace("/view-profile");
+        },
+        // editData: (e) => {
+        //   api("/api/vendor-data/edit", {
+        //     nama_vendor: meta.nama_vendor,
+        //     email_vendor: meta.email_vendor,
+        //     lokasi_vendor: meta.lokasi_vendor,
+        //     nomor_vendor: meta.nomor_vendor,
+        //   }).then((e) => {
+        //     console.log(e);
+        //     if (e.status == "SUCCESS") {
+        //       window.location.replace("/vendor-data");
+        //     } else {
+        //       console.log(e);
+        //     }
+        //   });
+        // },
+      };
+    }}
+  />
   <div class="flex flex-col items-start justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start bg-white">
       <div class="flex flex-1 self-stretch items-start justify-start pt-6">
@@ -33,12 +100,13 @@
                             </div>
                           </div>
                           <input
-                            class="flex items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
-                            style="width: 480px; min-width: 480px; max-width: 480px;"
+                            class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
+                            style="width: 540px; min-width: 540px; max-width: 540px;"
                             type="text"
-                            // value={meta.jenis_ticket}
-                            // onChange={(e) => meta.action.jenisTicketChange(e)}
+                            value={meta.nama}
+                            onChange={(e) => meta.action.namaChange(e)}
                             placeholder="Jhon Doe"
+                            required
                           />
                         </div>
                         <div class="flex self-stretch flex-col items-start justify-start">
@@ -48,12 +116,13 @@
                             </div>
                           </div>
                           <input
-                            class="flex items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
-                            style="width: 480px; min-width: 480px; max-width: 480px;"
+                            class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
+                            style="width: 540px; min-width: 540px; max-width: 540px;"
                             type="text"
-                            // value={meta.jenis_ticket}
-                            // onChange={(e) => meta.action.jenisTicketChange(e)}
+                            value={meta.email}
+                            onChange={(e) => meta.action.emailChange(e)}
                             placeholder="service@majujaya.com"
+                            required
                           />
                         </div>
                       </div>
@@ -72,9 +141,10 @@
                             class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                             style="width: 540px; min-width: 540px; max-width: 540px;"
                             type="text"
-                            // value={meta.jenis_ticket}
-                            // onChange={(e) => meta.action.jenisTicketChange(e)}
+                            value={meta.lokasi}
+                            onChange={(e) => meta.action.lokasiChange(e)}
                             placeholder="service@majujaya.com"
+                            required
                           />
                         </div>
                         <div class="flex flex-col items-start justify-start">
@@ -86,10 +156,11 @@
                           <input
                             class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                             style="width: 540px; min-width: 540px; max-width: 540px;"
-                            type="text"
-                            // value={meta.jenis_ticket}
-                            // onChange={(e) => meta.action.jenisTicketChange(e)}
+                            type="number"
+                            value={meta.nomor}
+                            onChange={(e) => meta.action.nomorChange(e)}
                             placeholder="081649246857"
+                            required
                           />
                         </div>
                       </div>
@@ -103,9 +174,10 @@
                           class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                           style="width: 540px; min-width: 540px; max-width: 540px;"
                           type="text"
-                          // value={meta.jenis_ticket}
-                          // onChange={(e) => meta.action.jenisTicketChange(e)}
+                          // value={meta....}
+                          // onChange={(e) => meta.action.....Change(e)}
                           placeholder="Jl Tarian Raya Tmr Kompl Kelapa Gading Bl W-1/24, Dki Jakarta"
+                          required
                         />
                       </div>
                       <div class="flex flex-col space-y-2 items-start justify-start">
@@ -119,9 +191,10 @@
                             class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                             style="width: 540px; min-width: 540px; max-width: 540px;"
                             type="text"
-                            // value={meta.jenis_ticket}
-                            // onChange={(e) => meta.action.jenisTicketChange(e)}
+                            value={meta.username}
+                            onChange={(e) => meta.action.usernameChange(e)}
                             placeholder="majujaya9"
+                            required
                           />
                         </div>
                         <div class="flex self-stretch flex-col items-start justify-start">
@@ -150,12 +223,22 @@
                   </div>
                 </div>
                 <div class="flex self-stretch space-x-3 items-start justify-center">
-                  <div class="flex items-center justify-center px-4 py-2 shadow border rounded-lg border-gray-500">
+                  <button
+                    class="flex items-center justify-center px-4 py-2 shadow border rounded-lg border-gray-500"
+                    onClick={() => {
+                      meta.action.cancel();
+                    }}
+                  >
                     <div class="text-base font-medium tracking-wide leading-normal text-gray-700">
                       Cancel
                     </div>
-                  </div>
-                  <div class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-lg">
+                  </button>
+                  <button
+                    class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-lg"
+                    onClick={() => {
+                      // meta.action.editData();
+                    }}
+                  >
                     <img
                       src="/fimgs/54_303.x1.svg"
                       style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;background-image: url('/fimgs/bg-4b5f4d54397127c487748990b6bb3cb4f5610492');background-size:100% 100%;background-repeat:no-repeat;"
@@ -163,7 +246,7 @@
                     <div class="text-base font-medium tracking-wide leading-normal text-white">
                       Save Changes
                     </div>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>

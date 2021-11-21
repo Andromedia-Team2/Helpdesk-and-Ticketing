@@ -1,5 +1,21 @@
 <>
-  <effect meta={{}} run={async () => {}} />
+  <effect
+    meta={{
+      logout: (e) => {
+        console.log(e.target.value);
+      },
+    }}
+    run={async () => {
+      meta.action = {
+        change: (e) => {
+          window.location.replace("/change-pass");
+        },
+        edit: (e) => {
+          window.location.replace("/edit-profile");
+        },
+      };
+    }}
+  />
   <div class="flex flex-col items-start justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start bg-white">
       <div class="flex flex-1 self-stretch items-start justify-start pt-6">
@@ -13,10 +29,10 @@
           </div>
           <div class="flex self-stretch space-x-9 items-start justify-start px-6">
             <div class="flex flex-col space-y-2 items-center justify-start px-6 py-8 bg-white shadow rounded-lg">
-              <div class="flex items-start justify-start ">
+              <div class="flex items-start justify-start rounded-full shadow">
                 <img
                   src="/fimgs/54_92.x1.svg"
-                  style="shadow width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"
+                  style=" width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"
                 />
               </div>
               <div class="text-3xl font-medium tracking-wide leading-10 text-center text-gray-700">
@@ -25,7 +41,12 @@
               <div class="text-xl tracking-wide leading-loose text-center text-gray-500">
                 service@majujaya.com
               </div>
-              <div class="flex space-x-3 items-start justify-start px-4 py-2 bg-green-500 shadow rounded-full">
+              <button
+                class="flex space-x-3 items-start justify-start px-4 py-2 bg-green-500 shadow rounded-full "
+                onClick={() => {
+                  meta.action.edit();
+                }}
+              >
                 <img
                   src="/fimgs/54_96.x1.svg"
                   style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-1fd48536d17bf3ef8c5ab852da4061da678916e4');background-size:100% 100%;background-repeat:no-repeat;"
@@ -35,7 +56,7 @@
                     Edit Profile
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
             <div class="flex flex-1 flex-col space-y-3 items-start justify-start px-6 py-2 bg-white shadow rounded-lg">
               <div class="flex self-stretch items-center justify-start">
@@ -54,8 +75,8 @@
                           Company
                         </div>
                       </div>
-                      <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                        <div class="text-lg tracking-wide leading-relaxed text-gray-700">
+                      <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg bg-gray-300 border-gray-500">
+                        <div class="text-lg tracking-wide leading-relaxed text-gray">
                           PT. Maju Jaya
                         </div>
                       </div>
@@ -66,8 +87,8 @@
                           Phone
                         </div>
                       </div>
-                      <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                        <div class="text-lg tracking-wide leading-relaxed text-gray-700">
+                      <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg bg-gray-300 border-gray-500">
+                        <div class="text-lg tracking-wide leading-relaxed text-gray">
                           089831548197
                         </div>
                       </div>
@@ -78,8 +99,8 @@
                           Address
                         </div>
                       </div>
-                      <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                        <div class="text-lg tracking-wide leading-relaxed text-gray-700">
+                      <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg bg-gray-300 border-gray-500">
+                        <div class="text-lg tracking-wide leading-relaxed text-gray">
                           Jl Tarian Raya Tmr Kompl Kelapa Gading Bl W-1/24, Dki
                           Jakarta
                         </div>
@@ -92,8 +113,8 @@
                             Username
                           </div>
                         </div>
-                        <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                          <div class="text-lg tracking-wide leading-relaxed text-gray-700">
+                        <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 bg-gray-300 ">
+                          <div class="text-lg tracking-wide leading-relaxed text-gray">
                             majujaya9
                           </div>
                         </div>
@@ -122,7 +143,12 @@
                         class="flex flex-col items-end justify-start"
                         style="width: 236px; min-width: 236px; max-width: 236px;"
                       >
-                        <div class="flex space-x-3 items-start justify-end px-4 py-2 bg-red-900 shadow rounded-full">
+                        <button
+                          class="flex space-x-3 items-start justify-end px-4 py-2 bg-red-900 shadow rounded-full"
+                          onClick={() => {
+                            meta.action.change();
+                          }}
+                        >
                           <img
                             src="/fimgs/54_136.x1.svg"
                             style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-1fd48536d17bf3ef8c5ab852da4061da678916e4');background-size:100% 100%;background-repeat:no-repeat;"
@@ -132,7 +158,7 @@
                               Change Password
                             </div>
                           </div>
-                        </div>
+                        </button>
                       </div>
                     </div>
                   </div>
