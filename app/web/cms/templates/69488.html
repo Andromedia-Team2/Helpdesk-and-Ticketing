@@ -1,10 +1,63 @@
 <>
   <effect
-    meta={{}}
+    meta={{
+      password: "",
+      newPassword: "",
+      confimrPassword: "",
+      message: "",
+    }}
     run={async () => {
+      let modal = document.getElementById("my-modal");
+      let success = document.getElementById("my-success");
+      let loading = document.getElementById("my-loading");
+      let failed = document.getElementById("my-failed");
       meta.action = {
+        passwordChange: (e) => {
+          runInAction(() => {
+            meta.password = e.target.value;
+            console.log(meta.password);
+          });
+        },
+        newChange: (e) => {
+          runInAction(() => {
+            meta.newPassword = e.target.value;
+            console.log(meta.newPassword);
+          });
+        },
+        confirmChange: (e) => {
+          runInAction(() => {
+            meta.confirmPassword = e.target.value;
+            console.log(meta.confirmPassword);
+          });
+        },
+        offModal: (e) => {
+          modal.style.display = "none";
+          failed.style.display = "none";
+        },
         cancel: (e) => {
           window.location.replace("/view-profile");
+        },
+        editData: (e) => {
+          modal.style.display = "block";
+          loading.style.display = "block";
+          api("/api/password/edit", {
+            id_user: parseInt(user.dataUser.id_user),
+            password: meta.password,
+            newPassword: meta.newPassword,
+            confirmPassword: meta.confirmPassword,
+          }).then((e) => {
+            console.log(e);
+            if (e.status == "SUCCESS") {
+              loading.style.display = "none";
+              success.style.display = "block";
+              window.location.replace("/view-profile");
+            } else {
+              meta.message = e.message;
+              failed.style.display = "block";
+              loading.style.display = "none";
+              console.log(e);
+            }
+          });
         },
       };
     }}
@@ -52,37 +105,14 @@
                       </span>
                       <input
                         type="password"
-                        // value={meta.jenis_ticket}
-                        // onChange={(e) => meta.action.jenisTicketChange(e)}
+                        value={meta.password}
+                        onChange={(e) => meta.action.passwordChange(e)}
+                        placeholder="Password"
+                        required
                         style="width: 480px; min-width: 480px; max-width: 480px;"
                         class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                       />
                     </div>
-
-                    {/*<div class="flex flex-col items-start justify-start">*/}
-                    {/*<input*/}
-                    {/*type="password"*/}
-                    {/*// value={meta.jenis_ticket}*/}
-                    {/*// onChange={(e) => meta.action.jenisTicketChange(e)}*/}
-                    {/*style="width: 480px; min-width: 480px; max-width: 480px;"*/}
-                    {/*class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"*/}
-                    {/*/>*/}
-                    {/*<svg*/}
-                    {/*xmlns="http://www.w3.org/2000/svg"*/}
-                    {/*width="24"*/}
-                    {/*height="24"*/}
-                    {/*viewBox="0 0 24 24"*/}
-                    {/*>*/}
-                    {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
-                    {/*</svg>*/}
-                    {/*</div>*/}
-
-                    {/*<i class="fas fa-eye"></i>*/}
-
-                    {/*<img*/}
-                    {/*src="/fimgs/I1026_2112_196_154.x1.svg"*/}
-                    {/*style="width: 20px; min-width: 20px; max-width: 20px; height: 20px; min-height: 20px; max-height: 20px;background-image: url('/fimgs/bg-6130b0b2d196028c462a76cb07bc8cb599a2bc89');background-size:100% 100%;background-repeat:no-repeat;"*/}
-                    {/*/>*/}
                   </div>
                   <div class="flex flex-col items-start justify-start">
                     <div class="flex items-start justify-start p-2.5">
@@ -108,8 +138,10 @@
                       </span>
                       <input
                         type="password"
-                        // value={meta.jenis_ticket}
-                        // onChange={(e) => meta.action.jenisTicketChange(e)}
+                        value={meta.newPassword}
+                        onChange={(e) => meta.action.newChange(e)}
+                        placeholder="New Password"
+                        required
                         style="width: 480px; min-width: 480px; max-width: 480px;"
                         class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                       />
@@ -139,8 +171,10 @@
                       </span>
                       <input
                         type="password"
-                        // value={meta.jenis_ticket}
-                        // onChange={(e) => meta.action.jenisTicketChange(e)}
+                        value={meta.confirmPassword}
+                        onChange={(e) => meta.action.confirmChange(e)}
+                        placeholder="Confirm Password"
+                        required
                         style="width: 480px; min-width: 480px; max-width: 480px;"
                         class="flex items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-lg tracking-wide leading-relaxed text-gray-700"
                       />
@@ -166,7 +200,7 @@
                   <button
                     class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-lg"
                     onClick={() => {
-                      alert("dfdgg");
+                      meta.action.editData();
                     }}
                   >
                     <img
@@ -183,9 +217,82 @@
           </div>
         </div>
       </div>
-      <div class="flex self-stretch items-start justify-center px-2 py-1 bg-gray-50">
-        <div class="text-xs tracking-wide leading-none text-gray-500">
-          © 2021. Crafted by ANDROMEDIA INTERNSHIP TEAM - 2
+    </div>
+  </div>
+  <div
+    class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal"
+  >
+    <div class="relative top-48 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div id="my-success" class="mt-3 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+          <svg
+            class="h-10 w-10 text-red-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Successful!</h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Password has been successfully updated!
+          </p>
+        </div>
+      </div>
+      <div id="my-loading" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full">
+          <div class="loader ease-linear rounded-full border-5 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Processing ...
+        </h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Please wait a moment for the saving process
+          </p>
+        </div>
+      </div>
+      <div id="my-failed" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+          <svg
+            class="h-10 w-10 text-red-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Failed!</h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">{meta.message}</p>
+        </div>
+        <div class="px-3 py-3 w-full">
+          <button
+            class="flex w-full space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-lg"
+            onClick={() => {
+              meta.action.offModal();
+            }}
+          >
+            <div class="text-base font-medium tracking-wide leading-normal text-white">
+              I'm understand
+            </div>
+          </button>
         </div>
       </div>
     </div>
