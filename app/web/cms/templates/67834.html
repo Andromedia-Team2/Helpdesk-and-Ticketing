@@ -4,7 +4,7 @@
       guarrantedUrl: [],
       nama: "",
       showNotif: false,
-      showSide: true,
+      showSide: false,
       showProfil: false,
       showMaster: false,
       showUser: false,
@@ -47,6 +47,7 @@
           "/ticket-data/view/" + params.id,
           "/view-profile",
           "/edit-profile",
+          "/change-pass",
         ];
       } else if (user.role == "Client") {
         meta.nama = user.dataUser.nama_client;
@@ -57,6 +58,7 @@
           "/ticket-data/view/" + params.id,
           "/view-profile",
           "/edit-profile",
+          "/change-pass",
         ];
       } else if (user.role == "Employee") {
         meta.nama = user.dataUser.nama_employee;
@@ -66,6 +68,7 @@
           "/ticket-data/view/" + params.id,
           "/view-profile",
           "/edit-profile",
+          "/change-pass",
         ];
       } else if (user.role == "Super Admin") {
         meta.nama = "Super Admin";

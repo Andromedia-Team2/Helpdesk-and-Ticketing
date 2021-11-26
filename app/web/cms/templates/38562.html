@@ -10,6 +10,9 @@
       },
     }}
     run={async () => {
+      let modal = document.getElementById("my-modal");
+      let success = document.getElementById("my-success");
+      let loading = document.getElementById("my-loading");
       meta.action = {
         usernameChange: (e) => {
           runInAction(() => {
@@ -24,14 +27,20 @@
           });
         },
         login: (e) => {
+          modal.style.display = "block";
+          loading.style.display = "block";
           api("/api/login", {
             username: meta.username,
             password: meta.password,
           }).then((e) => {
             console.log(e);
             if (e.status == "SUCCESS") {
+              loading.style.display = "none";
+              success.style.display = "block";
               window.location.replace("/coba");
             } else {
+              modal.style.display = "none";
+              loading.style.display = "none";
               meta.message = e.message;
               meta.showMessage = true;
             }
@@ -123,6 +132,52 @@
               Login
             </div>
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal"
+  >
+    <div class="relative top-48 flex items-center mx-auto p-5 border w-96 h-56 shadow-lg rounded-md bg-white">
+      <div id="my-success" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+          <svg
+            class="h-10 w-10 text-red-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Login Successful!
+        </h3>
+        <div class="mt-6 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            You will immediately be directed to the dashboard
+          </p>
+        </div>
+      </div>
+      <div id="my-loading" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full">
+          <div class="loader ease-linear rounded-full border-5 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Loging in ...
+        </h3>
+        <div class="mt-6 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            You will immediately be directed to the dashboard
+          </p>
         </div>
       </div>
     </div>
