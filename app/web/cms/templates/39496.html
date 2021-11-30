@@ -11,13 +11,50 @@
       id_level_ticket: 0,
       chat: false,
       message: "",
+      msg: "",
       attachment: "",
+      photo: "/uploads/profiles/default.png",
+
+      validationCheck() {
+        this.msg =
+          this.message === "" || this.message === null
+            ? "Your message is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.msg;
+      },
+
+      validationCheck1() {
+        this.msg =
+          this.id_department === "" ||
+          this.id_department === null ||
+          this.id_department === 0
+            ? "Your department name is empty. Make sure all forms are filled and try again."
+            : this.id_level_ticket === "" ||
+              this.id_level_ticket === null ||
+              this.id_level_ticket === 0
+            ? "Your level ticket is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.msg;
+      },
+
+      async upload(file) {
+        const formData = _FormData();
+
+        formData.append("path", "attachment");
+        formData.append("file", file);
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        return await response.json();
+      },
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
       let success = document.getElementById("my-success");
       let loading = document.getElementById("my-loading");
       let initiate = document.getElementById("my-initiate");
+      let failed = document.getElementById("my-failed");
       modal.style.display = "block";
       initiate.style.display = "block";
       meta.id_ticket = parseInt(params.id);
@@ -44,23 +81,9 @@
           initiate.style.display = "none";
           meta.value = e;
         });
-      /*meta.value = await db.history_ticket.findUnique({
-        where: {
-          id_ticket: meta.id_ticket,
-        },
-        include: {
-          level_ticket: true,
-          status_ticket: true,
-          client: true,
-          employee: true,
-          department: true,
-          ticket: {
-            include: {
-              jenis_ticket: true,
-            },
-          },
-        },
-      });*/
+      meta.value?.client?.foto_profile !== null
+        ? (meta.photo = "/uploads/" + meta.value?.client?.foto_profile)
+        : (meta.photo = "/uploads/profiles/default.png");
       meta.talks = await db.percakapan.findMany({
         where: {
           id_history_ticket: meta.value?.id_history_ticket,
@@ -117,26 +140,37 @@
             console.log(meta.attachment);
           });
         },
-        assignData: (e) => {
-          modal.style.display = "block";
-          loading.style.display = "block";
-          api("/api/assign", {
-            id_ticket: meta.id_ticket,
-            id_level_ticket: meta.id_level_ticket,
-            id_status_ticket: 2,
-            id_department: meta.id_department,
-          }).then((e) => {
-            console.log(e);
-            if (e.status == "SUCCESS") {
-              loading.style.display = "none";
-              success.style.display = "block";
-              window.location.reload();
-            } else {
-              modal.style.display = "none";
-              loading.style.display = "none";
-              console.log(e);
-            }
+        tryAgain: () => {
+          runInAction(() => {
+            modal.style.display = "none";
+            failed.style.display = "none";
           });
+        },
+        assignData: (e) => {
+          let error_msg = meta.validationCheck1();
+          modal.style.display = "block";
+          if (error_msg) {
+            failed.style.display = "block";
+          } else {
+            loading.style.display = "block";
+            api("/api/assign", {
+              id_ticket: meta.id_ticket,
+              id_level_ticket: meta.id_level_ticket,
+              id_status_ticket: 2,
+              id_department: meta.id_department,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                loading.style.display = "none";
+                success.style.display = "block";
+                window.location.reload();
+              } else {
+                modal.style.display = "none";
+                loading.style.display = "none";
+                console.log(e);
+              }
+            });
+          }
         },
         resolveData: (e) => {
           modal.style.display = "block";
@@ -159,27 +193,32 @@
           });
         },
         addMessage: (e) => {
+          let error_msg = meta.validationCheck();
           modal.style.display = "block";
-          loading.style.display = "block";
-          api("/api/message", {
-            tanggal_waktu_percakapan: new Date(),
-            isi_percakapan: meta.message,
-            attachment: meta.attachment,
-            id_history_ticket: parseInt(meta.value.id_history_ticket),
-            id_user: parseInt(user.dataUser.id_user),
-            id_employee: meta.id_employee,
-          }).then((e) => {
-            console.log(e);
-            if (e.status == "SUCCESS") {
-              loading.style.display = "none";
-              success.style.display = "block";
-              window.location.reload();
-            } else {
-              modal.style.display = "none";
-              loading.style.display = "none";
+          if (error_msg) {
+            failed.style.display = "block";
+          } else {
+            loading.style.display = "block";
+            api("/api/message", {
+              tanggal_waktu_percakapan: new Date(),
+              isi_percakapan: meta.message,
+              attachment: meta.attachment,
+              id_history_ticket: parseInt(meta.value.id_history_ticket),
+              id_user: parseInt(user.dataUser.id_user),
+              id_employee: meta.id_employee,
+            }).then((e) => {
               console.log(e);
-            }
-          });
+              if (e.status == "SUCCESS") {
+                loading.style.display = "none";
+                success.style.display = "block";
+                window.location.reload();
+              } else {
+                modal.style.display = "none";
+                loading.style.display = "none";
+                console.log(e);
+              }
+            });
+          }
         },
       };
     }}
@@ -256,9 +295,9 @@
                 <div class="flex flex-1 space-x-6 items-center justify-start">
                   <div class="flex items-start justify-center shadow rounded-full">
                     <img
-                      src="/fimgs/825_1267.x1.png"
+                      src={meta.photo}
                       class="shadow rounded-full"
-                      style="width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px;background-image: url('/fimgs/bg-74045356e80158be1f7f7952badbbe6483629bb0');background-size:100% 100%;background-repeat:no-repeat;"
+                      style="width: 60px; height: 60px;"
                     />
                   </div>
                   <div class="flex flex-1 flex-col items-start justify-start">
@@ -302,21 +341,22 @@
             </div>
             <div class="flex flex-col self-stretch space-y-2 md:space-y-0 md:space-x-2 md:flex-row">
               <div class="flex flex-col space-y-4 items-start justify-start">
-                <img
-                  src="/fimgs/548_1020.x1.png"
-                  style="width: 276px; min-width: 276px; max-width: 276px; height: 161px; min-height: 161px; max-height: 161px;background-image: url('/fimgs/bg-62768f691e4efd5728e33100aa3376a517301aef');background-size:100% 100%;background-repeat:no-repeat;"
-                />
+                {meta.value?.ticket?.attachment !== null &&
+                  meta.value?.ticket?.attachment !== "" && (
+                    <img
+                      src={
+                        meta.value?.ticket?.attachment
+                          ? "/uploads/" + meta.value?.ticket?.attachment
+                          : "/fimgs/548_1020.x1.png"
+                      }
+                      style="width: 276px; min-width: 276px; max-width: 276px; height: 161px; min-height: 161px; max-height: 161px;"
+                    />
+                  )}
                 <div class="text-base tracking-wide leading-normal text-gray-700">
-                  image 1.png
-                </div>
-              </div>
-              <div class="flex flex-col space-y-4 items-start justify-start">
-                <img
-                  src="/fimgs/548_1020.x1.png"
-                  style="width: 276px; min-width: 276px; max-width: 276px; height: 161px; min-height: 161px; max-height: 161px;background-image: url('/fimgs/bg-62768f691e4efd5728e33100aa3376a517301aef');background-size:100% 100%;background-repeat:no-repeat;"
-                />
-                <div class="text-base tracking-wide leading-normal text-gray-700">
-                  image 1.png
+                  {meta.value?.ticket?.attachment !== null &&
+                  meta.value?.ticket?.attachment !== ""
+                    ? meta.value?.ticket?.attachment
+                    : "No attachment ..."}
                 </div>
               </div>
             </div>
@@ -339,8 +379,7 @@
                         </div>
                         <div class="flex self-stretch items-center justify-between w-full">
                           <select
-                            class="flex self-stretch items-center w-full justify-between py-2 px-4 border rounded-lg border-gray-300 focus:outline-none focus:shadow-outline focus:border-gray-400"
-                            name="id_department"
+                            class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
                             onChange={(e) => {
                               meta.action.namaDepartmentChange(
                                 e.target.value,
@@ -348,12 +387,15 @@
                               );
                             }}
                           >
+                            <option key="" value="">
+                              Select department ...
+                            </option>
                             {meta.departments?.data?.map((p) => (
                               <option
                                 key={p.id_department}
                                 value={p.id_department}
                               >
-                                {p.nama_department}
+                                {p.nama_department} Department
                               </option>
                             ))}
                           </select>
@@ -367,8 +409,7 @@
                         </div>
                         <div class="flex self-stretch items-center justify-between w-full">
                           <select
-                            class="flex self-stretch items-center w-full justify-between py-2 px-4 border rounded-lg border-gray-300 focus:outline-none focus:shadow-outline focus:border-gray-400"
-                            name="id_level_ticket"
+                            class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
                             onChange={(e) => {
                               meta.action.levelChange(
                                 e.target.value,
@@ -376,6 +417,9 @@
                               );
                             }}
                           >
+                            <option key="" value="">
+                              Select priority ...
+                            </option>
                             {meta.levels?.data?.map((p) => (
                               <option
                                 key={p.id_level_ticket}
@@ -415,7 +459,7 @@
             meta.talks?.map((p) => (
               <div class="flex self-stretch flex-col space-y-6 items-start justify-start shadow rounded-lg">
                 {p.id_user === user.dataUser.id_user && (
-                  <div class="flex self-stretch flex-col space-y-6 items-start justify-start bg-gray-100  p-6">
+                  <div class="flex self-stretch flex-col space-y-6 items-start justify-start bg-white  p-6">
                     <div class="flex self-stretch flex-col items-start justify-start">
                       <div class="flex self-stretch items-end justify-start">
                         <div class="flex flex-1 space-x-6 items-center justify-start">
@@ -438,17 +482,35 @@
                               <div class="text-lg tracking-wide leading-relaxed text-center text-gray-500">
                                 {p.users.id_role === 3 &&
                                   meta.value?.client?.email_client}
+
                                 {p.users.id_role === 4 &&
                                   meta.value?.employee?.email_employee}
                               </div>
                             </div>
                           </div>
                           <div class="flex items-start justify-center shadow rounded-full">
-                            <img
-                              src="/fimgs/825_1267.x1.png"
-                              class="shadow rounded-full"
-                              style="width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px;background-image: url('/fimgs/bg-f03f7930b9c83ab63b514ca720f899ba4cf4aa7e');background-size:100% 100%;background-repeat:no-repeat;"
-                            />
+                            {p.users.id_role === 3 && (
+                              <img
+                                src={
+                                  meta.value?.client?.foto_profile
+                                    ? meta.value?.client?.foto_profile
+                                    : meta.photo
+                                }
+                                class="shadow rounded-full"
+                                style="width: 60px; height: 60px;"
+                              />
+                            )}
+                            {p.users.id_role === 4 && (
+                              <img
+                                src={
+                                  meta.value?.employee?.foto_profile
+                                    ? meta.value?.employee?.foto_profile
+                                    : meta.photo
+                                }
+                                class="shadow rounded-full"
+                                style="width: 60px; height: 60px;"
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
@@ -468,11 +530,28 @@
                       <div class="flex self-stretch items-end justify-start">
                         <div class="flex flex-1 space-x-6 items-center justify-start">
                           <div class="flex items-start justify-center shadow rounded-full">
-                            <img
-                              src="/fimgs/825_1267.x1.png"
-                              class="shadow rounded-full"
-                              style="width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px;background-image: url('/fimgs/bg-f03f7930b9c83ab63b514ca720f899ba4cf4aa7e');background-size:100% 100%;background-repeat:no-repeat;"
-                            />
+                            {p.users.id_role === 3 && (
+                              <img
+                                src={
+                                  meta.value?.client?.foto_profile
+                                    ? meta.value?.client?.foto_profile
+                                    : meta.photo
+                                }
+                                class="shadow rounded-full"
+                                style="width: 60px; height: 60px;"
+                              />
+                            )}
+                            {p.users.id_role === 4 && (
+                              <img
+                                src={
+                                  meta.value?.employee?.foto_profile
+                                    ? meta.value?.employee?.foto_profile
+                                    : meta.photo
+                                }
+                                class="shadow rounded-full"
+                                style="width: 60px; height: 60px;"
+                              />
+                            )}
                           </div>
                           <div class="flex flex-1 flex-col items-start justify-start">
                             <div class="flex self-stretch items-start justify-between">
@@ -535,8 +614,17 @@
                           type="file"
                           class="shadow appearance-none border py-1.5 px-2 rounded-lg w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-2 border-gray-300 focus:border-gray-400"
                           placeholder="Lorem Ipsum"
-                          value={meta.attachment}
-                          onChange={(e) => meta.action.attachmentChange(e)}
+                          onChange={(e) => {
+                            runInAction(async () => {
+                              const upload = await meta.upload(
+                                e.target.files[0]
+                              );
+                              runInAction(() => {
+                                console.log(upload.path);
+                                meta.attachment = upload.path;
+                              });
+                            });
+                          }}
                         />
                         <div class="text-sm tracking-wide leading-relaxed">
                           Allowed File Extensions: .jpg, .gif, .jpeg, .png,
@@ -637,6 +725,43 @@
           <p class="text-sm text-gray-500">
             Please wait a moment for the loading data
           </p>
+        </div>
+      </div>
+
+      <div id="my-failed" class="mt-3 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full">
+          <svg
+            class="h-24 w-24 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-red-600">
+          Failed to Save
+        </h3>
+        <div class="mt-3 px-3 py-3">
+          <p class="text-sm text-gray-500">{meta.msg}</p>
+        </div>
+        <div class="px-3 py-2">
+          <button
+            onClick={() => {
+              meta.action.tryAgain();
+            }}
+            class="flex items-center w-full justify-center bg-red-900 shadow rounded-2xl"
+          >
+            <div class="text-base px-4 py-1 font-medium tracking-wide leading-relaxed text-white">
+              I'm understand, try again
+            </div>
+          </button>
         </div>
       </div>
     </div>

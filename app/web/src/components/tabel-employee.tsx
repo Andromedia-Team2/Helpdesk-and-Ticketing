@@ -11,11 +11,15 @@ export default () => {
         $('#dtable').DataTable({
             data: res.data,
             aoColumns: [
-                { mData: 'id_employee' },
-                { mData: 'shift_kerja' },
+                { mData: null,
+                    mRender: function (data, type, full) {
+                      return (full.department.nama_department);
+                    } 
+                },
                 { mData: 'nama_employee' },
                 { mData: 'email_employee' },
                 { mData: 'nomor_employee' },
+                { mData: 'lokasi_employee' },
                 {
                     "mData": null,
                     "bSortable": false,
@@ -42,11 +46,11 @@ export default () => {
             <table className="stripe w-full whitespace-no-wrap" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th className="py-3">Employee ID</th>
-                        <th className="py-3">Work Shift</th>
+                        <th className="py-3">Department</th>
                         <th className="py-3">Name</th>
                         <th className="py-3">Email</th>
                         <th className="py-3">Phone</th>
+                        <th className="py-3">Address</th>
                         <th className="px-4 py-3">Action</th>
                     </tr>
                 </thead>

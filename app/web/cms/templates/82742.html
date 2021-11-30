@@ -10,20 +10,6 @@
       attachment: "",
       id_vendor: 0,
 
-      validationCheck() {
-        this.message =
-          this.id_jenis_ticket === "" ||
-          this.id_jenis_ticket === null ||
-          this.id_jenis_ticket === 0
-            ? "Your ticket type is empty. Make sure all forms are filled and try again."
-            : this.judul_ticket === "" || this.judul_ticket === null
-            ? "Your ticket subject is empty. Make sure all forms are filled and try again."
-            : this.deskripsi_ticket === "" || this.deskripsi_ticket === null
-            ? "Your text is empty. Make sure all forms are filled and try again."
-            : false;
-        return this.message;
-      },
-
       async upload(file) {
         const formData = _FormData();
 
@@ -41,7 +27,6 @@
       let success = document.getElementById("my-success");
       let loading = document.getElementById("my-loading");
       let initiate = document.getElementById("my-initiate");
-      let failed = document.getElementById("my-failed");
       //meta.ticketType = await api("/api/get-jenis");
       modal.style.display = "block";
       initiate.style.display = "block";
@@ -78,41 +63,30 @@
             console.log(meta.attachment);
           });
         },
-        tryAgain: () => {
-          runInAction(() => {
-            modal.style.display = "none";
-            failed.style.display = "none";
-          });
-        },
         addData: (e) => {
-          let error_msg = meta.validationCheck();
           modal.style.display = "block";
-          if (error_msg) {
-            failed.style.display = "block";
-          } else {
-            loading.style.display = "block";
-            api("/api/ticket-data/add", {
-              judul_ticket: meta.judul_ticket,
-              deskripsi_ticket: meta.deskripsi_ticket,
-              tanggal_masuk: new Date(),
-              attachment: meta.attachment,
-              id_jenis_ticket: meta.id_jenis_ticket,
-              id_status_ticket: 1,
-              id_client: meta.id_client,
-              id_vendor: meta.id_vendor,
-            }).then((e) => {
+          loading.style.display = "block";
+          api("/api/ticket-data/add", {
+            judul_ticket: meta.judul_ticket,
+            deskripsi_ticket: meta.deskripsi_ticket,
+            tanggal_masuk: new Date(),
+            attachment: meta.attachment,
+            id_jenis_ticket: meta.id_jenis_ticket,
+            id_status_ticket: 1,
+            id_client: meta.id_client,
+            id_vendor: meta.id_vendor,
+          }).then((e) => {
+            console.log(e);
+            if (e.status == "SUCCESS") {
+              loading.style.display = "none";
+              success.style.display = "block";
+              navigate("/ticket-data");
+            } else {
+              modal.style.display = "none";
+              loading.style.display = "none";
               console.log(e);
-              if (e.status == "SUCCESS") {
-                loading.style.display = "none";
-                success.style.display = "block";
-                navigate("/ticket-data");
-              } else {
-                modal.style.display = "none";
-                loading.style.display = "none";
-                console.log(e);
-              }
-            });
-          }
+            }
+          });
         },
       };
     }}
@@ -139,9 +113,10 @@
           </div>
           <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
             <input
-              class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-gray-200 rounded-lg text-sm text-gray-600 tracking-widest border border-gray-500"
+              class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline  border border-gray-300 bg-gray-100"
               id="username"
               type="text"
+              placeholder="Han Solo"
               value={meta.namaClient}
               readOnly
             />
@@ -154,7 +129,7 @@
           <div class="inline-block relative w-full">
             <div class="flex flex-col w-full items-center justify-start leading-tight focus:outline-none focus:bg-white ">
               <select
-                class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline focus:border-gray-400 rounded-lg"
                 name="id_jenis_ticket"
                 onChange={(e) => {
                   meta.action.ticketTypeChange(
@@ -163,15 +138,21 @@
                   );
                 }}
               >
-                <option key="" value="">
-                  Select ticket type ...
-                </option>
                 {meta.ticketType?.data?.map((p) => (
                   <option key={p.id_jenis_ticket} value={p.id_jenis_ticket}>
                     {p.jenis_ticket}
                   </option>
                 ))}
               </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  class="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -189,11 +170,11 @@
           </div>
           <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
             <input
-              class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+              class="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gray-400  border border-gray-300"
               type="text"
               value={meta.judul_ticket}
               onChange={(e) => meta.action.judulTicketChange(e)}
-              placeholder="Ticket Subject"
+              placeholder="Lorem Ipsum"
             />
           </div>
         </div>
@@ -203,7 +184,7 @@
           </div>
           <div class="flex flex-col w-full items-center justify-start border-px-3 leading-tight focus:outline-none focus:bg-white ">
             <textarea
-              class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline h-48"
+              class="flex self-stretch shadow appearance-none h-48 border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-gray-400  border border-gray-300"
               placeholder="Enter Your Text Here"
               value={meta.deskripsi_ticket}
               onChange={(e) => meta.action.deskripsiTicketChange(e)}
@@ -227,7 +208,7 @@
             class={`flex self-stretch flex-col space-y-2.5 items-center justify-center p-4 bg-white border rounded border-gray-400 dropify`}
             style={`height: 210px; min-height: 210px; max-height: 210px;`}
             data-max-file-size={`3M`}
-            data-allowed-file-extensions={"png jpg jpeg gif pdf zip csv"}
+            data-allowed-file-extensions={"png jpg jpeg"}
             onChange={(e) => {
               runInAction(async () => {
                 const upload = await meta.upload(e.target.files[0]);
@@ -238,8 +219,10 @@
               });
             }}
           />
+
           <div class="text-sm tracking-wide leading-relaxed ">
-            Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf, .zip, .csv
+            Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf, .zip, .csv,
+            .sql, .tar, .gz
           </div>
         </div>
       </div>
@@ -323,42 +306,6 @@
           <p class="text-sm text-gray-500">
             Please wait a moment for the loading data
           </p>
-        </div>
-      </div>
-      <div id="my-failed" class="mt-3 hidden text-center">
-        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full">
-          <svg
-            class="h-24 w-24 text-red-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <h3 class="text-lg leading-6 font-medium text-red-600">
-          Failed to Save
-        </h3>
-        <div class="mt-3 px-3 py-3">
-          <p class="text-sm text-gray-500">{meta.message}</p>
-        </div>
-        <div class="px-3 py-2">
-          <button
-            onClick={() => {
-              meta.action.tryAgain();
-            }}
-            class="flex items-center w-full justify-center bg-red-900 shadow rounded-2xl"
-          >
-            <div class="text-base px-4 py-1 font-medium tracking-wide leading-relaxed text-white">
-              I'm understand, try again
-            </div>
-          </button>
         </div>
       </div>
     </div>

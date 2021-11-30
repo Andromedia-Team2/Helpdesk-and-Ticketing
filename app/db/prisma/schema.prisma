@@ -8,19 +8,20 @@ datasource db {
 }
 
 model client {
-  id_client      Int              @id @unique @default(autoincrement())
-  id_vendor      Int?
-  id_user        Int?             @unique
-  nama_client    String           @db.VarChar(150)
-  email_client   String           @db.VarChar(150)
-  lokasi_client  String           @db.VarChar(150)
-  nomor_client   String           @db.VarChar(15)
-  users          users?           @relation(fields: [id_user], references: [id_user])
-  vendor         vendor?          @relation(fields: [id_vendor], references: [id_vendor])
-  history_ticket history_ticket[]
+  id_client         Int              @id @unique @default(autoincrement())
+  id_user           Int?             @unique
+  nama_client       String           @db.VarChar(150)
+  email_client      String           @db.VarChar(150)
+  lokasi_client     String           @db.VarChar(150)
+  nomor_client      String           @db.VarChar(15)
+  foto_profile      String?          @db.VarChar(100)
+  perusahaan_client String?          @db.VarChar(150)
+  id_vendor         Int?
+  users             users?           @relation(fields: [id_user], references: [id_user])
+  vendor            vendor?          @relation(fields: [id_vendor], references: [id_vendor])
+  history_ticket    history_ticket[]
 
   @@index([id_user], name: "do___fk")
-  @@index([id_vendor], name: "has___fk")
 }
 
 model department {
@@ -36,21 +37,21 @@ model department {
 }
 
 model employee {
-  id_employee    Int              @id @unique @default(autoincrement())
-  id_department  Int?
-  id_user        Int?             @unique
-  nama_employee  String           @db.VarChar(150)
-  nomor_employee String           @db.VarChar(15)
-  email_employee String           @db.VarChar(150)
-  shift_kerja    String           @db.VarChar(150)
-  id_vendor      Int?
-  department     department?      @relation(fields: [id_department], references: [id_department])
-  users          users?           @relation(fields: [id_user], references: [id_user])
-  vendor         vendor?          @relation(fields: [id_vendor], references: [id_vendor])
-  history_ticket history_ticket[]
+  id_employee     Int              @id @unique @default(autoincrement())
+  id_department   Int
+  nama_employee   String           @db.VarChar(150)
+  nomor_employee  String           @db.VarChar(15)
+  email_employee  String           @db.VarChar(150)
+  status_employee String           @db.VarChar(150)
+  lokasi_employee String           @db.VarChar(150)
+  foto_profile    String?          @db.VarChar(100)
+  id_vendor       Int?
+  id_user         Int?             @unique
+  department      department       @relation(fields: [id_department], references: [id_department])
+  users           users?           @relation(fields: [id_user], references: [id_user])
+  vendor          vendor?          @relation(fields: [id_vendor], references: [id_vendor])
+  history_ticket  history_ticket[]
 
-  @@index([id_user], name: "do_fk")
-  @@index([id_vendor], name: "has____fk")
   @@index([id_department], name: "has__fk")
 }
 
@@ -140,7 +141,7 @@ model ticket {
   id_ticket        Int             @id @unique @default(autoincrement())
   judul_ticket     String          @db.VarChar(150)
   deskripsi_ticket String          @db.VarChar(150)
-  attachment       String          @db.VarChar(150)
+  attachment       String?         @db.VarChar(150)
   id_jenis_ticket  Int
   jenis_ticket     jenis_ticket    @relation(fields: [id_jenis_ticket], references: [id_jenis_ticket])
   history_ticket   history_ticket?
@@ -163,18 +164,20 @@ model users {
 }
 
 model vendor {
-  id_vendor      Int              @id @unique @default(autoincrement())
-  id_user        Int?             @unique
-  nama_vendor    String           @db.VarChar(150)
-  email_vendor   String           @db.VarChar(150)
-  lokasi_vendor  String           @db.VarChar(150)
-  nomor_vendor   String           @db.VarChar(15)
-  users          users?           @relation(fields: [id_user], references: [id_user])
-  client         client[]
-  department     department[]
-  employee       employee[]
-  history_ticket history_ticket[]
-  jenis_ticket   jenis_ticket[]
+  id_vendor       Int              @id @unique @default(autoincrement())
+  id_user         Int              @unique
+  nama_vendor     String           @db.VarChar(150)
+  email_vendor    String           @db.VarChar(150)
+  lokasi_vendor   String           @db.VarChar(150)
+  nomor_vendor    String           @db.VarChar(15)
+  nama_perusahaan String           @db.VarChar(150)
+  foto_profile    String?          @db.VarChar(100)
+  users           users            @relation(fields: [id_user], references: [id_user])
+  client          client[]
+  department      department[]
+  employee        employee[]
+  history_ticket  history_ticket[]
+  jenis_ticket    jenis_ticket[]
 
   @@index([id_user], name: "do__fk")
 }

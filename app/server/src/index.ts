@@ -1,14 +1,10 @@
 import argon2 from 'argon2'
-const CryptoJS = require("crypto-js");
+import fs from 'fs'
+import path from 'path'
 
-// Encrypt
-const encrypt = (val) => { return CryptoJS.AES.encrypt(val, 'secret key 123').toString() };
-
-// Decrypt
-const decrypt = (val) => {
-    var bytes = CryptoJS.AES.decrypt(val, 'secret key 123');
-    return bytes.toString(CryptoJS.enc.Utf8);
-}
+const { pipeline } = require('stream')
+const util = require('util')
+const pump = util.promisify(pipeline)
 
 const formatD = (date) => {
     date = new Date(date);
@@ -33,5 +29,5 @@ const format = (date) => {
 }
 
 export const ext = {
-    encrypt, decrypt, argon2, formatD, format
+    argon2, formatD, format, pump, fs, path
 }

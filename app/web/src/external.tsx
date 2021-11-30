@@ -22,6 +22,7 @@ export default {
   ficon: () => [import("./components/FluentIcon"), { c: "", s: "", h: "" }],
   faicon: () => [import("./components/FAIcon"), { c: "", s: "", h: "" }],
   qrcode: () => [import("./components/qrcode"), { c: "", s: "", h: "" }],
+  dropify: () => [import("./components/Dropify"), { c: "", s: "", h: "" }],
   tabelvendor: () => [
     import("./components/tabel-vendor"),
     { c: "", s: "", h: "" },

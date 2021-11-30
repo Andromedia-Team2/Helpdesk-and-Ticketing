@@ -9,15 +9,34 @@
       showMaster: false,
       showUser: false,
       showReport: false,
-      changeStatus: (e) => {},
-      changeSide: (e) => {},
-      changeProfil: (e) => {},
-      changeMaster: (e) => {},
-      changeUser: (e) => {},
-      changeReport: (e) => {},
-      logout: (e) => {
-        console.log(e.target.value);
-      },
+      dashboard: ["/coba"],
+      masterData: [
+        "/department-data",
+        "/department-data/add",
+        "/department-data/edit/" + params.id,
+        "/jenis-data",
+        "/jenis-data/add",
+        "/jenis-data/edit/" + params.id,
+        "/status-data",
+        "/level-data",
+      ],
+      userData: [
+        "/vendor-data",
+        "/vendor-data/add",
+        "/vendor-data/edit/" + params.id,
+        "/employee-data",
+        "/employee-data/add",
+        "/employee-data/edit/" + params.id,
+        "/client-data",
+        "/client-data/add",
+        "/client-data/edit/" + params.id,
+      ],
+      ticketData: [
+        "/ticket-data",
+        "/ticket-data/add",
+        "/ticket-data/view/" + params.id,
+      ],
+      reportData: [],
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
@@ -57,6 +76,7 @@
           "/ticket-data/view/" + params.id,
           "/view-profile",
           "/edit-profile",
+          "/dropify",
         ];
       } else if (user.role == "Employee") {
         meta.nama = user.dataUser.nama_employee;
@@ -74,6 +94,7 @@
           "/vendor-data",
           "/vendor-data/add",
           "/vendor-data/edit/" + params.id,
+          "/view-profile",
         ];
       } else {
         navigate("/login");
@@ -93,9 +114,9 @@
           if (user.role === "Vendor") {
             let img = document.getElementById("master");
             if (e == true) {
-              img.setAttribute("style", "transform: rotate(0deg);");
+              img?.setAttribute("style", "transform: rotate(0deg);");
             } else {
-              img.setAttribute("style", "transform: rotate(270deg);");
+              img?.setAttribute("style", "transform: rotate(270deg);");
             }
           }
         },
@@ -104,9 +125,9 @@
           if (user.role === "Vendor" || user.role === "Super Admin") {
             let img = document.getElementById("user");
             if (e == true) {
-              img.setAttribute("style", "transform: rotate(0deg);");
+              img?.setAttribute("style", "transform: rotate(0deg);");
             } else {
-              img.setAttribute("style", "transform: rotate(270deg);");
+              img?.setAttribute("style", "transform: rotate(270deg);");
             }
           }
         },
@@ -114,9 +135,9 @@
           meta.showReport = e;
           let img = document.getElementById("report");
           if (e == true) {
-            img.setAttribute("style", "transform: rotate(0deg);");
+            img?.setAttribute("style", "transform: rotate(0deg);");
           } else {
-            img.setAttribute("style", "transform: rotate(270deg);");
+            img?.setAttribute("style", "transform: rotate(270deg);");
           }
         },
         logout: (e) => {
@@ -132,6 +153,14 @@
           });
         },
       };
+
+      if (meta.masterData.includes(location.pathname)) {
+        meta.action.changeMaster(true);
+      } else if (meta.userData.includes(location.pathname)) {
+        meta.action.changeUser(true);
+      } else if (meta.reportData.includes(location.pathname)) {
+        meta.action.changeReport(true);
+      }
     }}
   />
   {user.role !== "guest" && meta.guarrantedUrl.includes(location.pathname) && (
@@ -263,8 +292,11 @@
                   <span class="sr-only">Open user menu</span>
                   <img
                     class="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
+                    src={
+                      user.dataUser?.foto_profile !== null
+                        ? "uploads/" + user.dataUser?.foto_profile
+                        : "uploads/profiles/default.png"
+                    }
                   />{" "}
                   <div class="hidden md:block ">
                     <div class="flex items-center justify-center h-8 font-bold px-2 text-white">
@@ -324,8 +356,17 @@
               <div class="flex items-center w-full justify-center text-lg font-bold text-gray-800 dark:text-gray-200">
                 AndroDesk-{user.role}
               </div>
+              <div class="px-7 mt-8">
+                <hr />
+              </div>
               <ul class="mt-8 pl-3 w-full">
-                <li class="relative hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full">
+                <li
+                  class={
+                    meta.dashboard.includes(location.pathname)
+                      ? "relative hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full bg-red-900 text-white"
+                      : "relative hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                  }
+                >
                   <a
                     class="flex px-4 py-3 items-center w-full text-sm font-semibold"
                     href="/coba"
@@ -348,7 +389,11 @@
                 {user.role === "Vendor" && (
                   <li class="relative">
                     <button
-                      class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                      class={
+                        meta.masterData.includes(location.pathname)
+                          ? "flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white rounded-l-full bg-red-900 text-white"
+                          : "flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white rounded-l-full"
+                      }
                       aria-haspopup="true"
                       onClick={() => {
                         if (meta.showMaster == false) {
@@ -383,7 +428,11 @@
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         id="master"
-                        style="transform: rotate(270deg);"
+                        style={
+                          meta.masterData.includes(location.pathname)
+                            ? "transform: rotate(0deg)"
+                            : "transform: rotate(270deg)"
+                        }
                       >
                         <path
                           fill-rule="evenodd"
@@ -439,7 +488,11 @@
                 {(user.role === "Vendor" || user.role === "Super Admin") && (
                   <li class="relative">
                     <button
-                      class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                      class={
+                        meta.userData.includes(location.pathname)
+                          ? "flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white rounded-l-full bg-red-900 text-white"
+                          : "flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white rounded-l-full"
+                      }
                       aria-haspopup="true"
                       onClick={() => {
                         if (meta.showUser == false) {
@@ -474,7 +527,11 @@
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         id="user"
-                        style="transform: rotate(270deg);"
+                        style={
+                          meta.userData.includes(location.pathname)
+                            ? "transform: rotate(0deg)"
+                            : "transform: rotate(270deg)"
+                        }
                       >
                         <path
                           fill-rule="evenodd"
@@ -526,7 +583,13 @@
                   </li>
                 )}
                 {user.role !== "Super Admin" && (
-                  <li class="relative hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full">
+                  <li
+                    class={
+                      meta.ticketData.includes(location.pathname)
+                        ? "relative hover:bg-red-900 hover:text-white rounded-l-full bg-red-900 text-white"
+                        : "relative hover:bg-red-900 hover:text-white rounded-l-full"
+                    }
+                  >
                     <a
                       class="flex px-4 py-3 items-center w-full text-sm font-semibold"
                       href="/ticket-data"
@@ -551,7 +614,11 @@
                 )}
                 <li class="relative">
                   <button
-                    class="flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white focus:bg-red-900 focus:text-white rounded-l-full"
+                    class={
+                      meta.reportData.includes(location.pathname)
+                        ? "flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white rounded-l-full bg-red-900 text-white"
+                        : "flex px-4 py-3 items-center w-full text-sm font-semibold justify-between hover:bg-red-900 hover:text-white rounded-l-full"
+                    }
                     aria-haspopup="true"
                     onClick={() => {
                       if (meta.showReport == false) {
@@ -586,7 +653,11 @@
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       id="report"
-                      style="transform: rotate(270deg);"
+                      style={
+                        meta.reportData.includes(location.pathname)
+                          ? "transform: rotate(0deg)"
+                          : "transform: rotate(270deg)"
+                      }
                     >
                       <path
                         fill-rule="evenodd"

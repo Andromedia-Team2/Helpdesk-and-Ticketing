@@ -8,17 +8,19 @@
             TICKET TYPE
           </div>
         </div>
-        <button class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-xl">
+        <button
+          class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-xl"
+          onClick={() => {
+            navigate("/jenis-data/add");
+          }}
+        >
           <img
             src="/fimgs/460_875.x1.svg"
             style=" max-width: 15px; max-height: 20px;"
           />
-          <a
-            href="/jenis-data/add"
-            class="text-sm font-medium tracking-wide leading-relaxed text-white"
-          >
+          <span class="text-sm font-medium tracking-wide leading-relaxed text-white">
             Create New
-          </a>
+          </span>
         </button>
       </div>
       <hr class=" w-full pb-4"></hr>
