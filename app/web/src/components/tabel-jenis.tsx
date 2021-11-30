@@ -11,7 +11,6 @@ export default () => {
         $('#dtable').DataTable({
             data: res.data,
             aoColumns: [
-                { mData: 'id_jenis_ticket'},
                 { mData: 'jenis_ticket' },
                 { mData: 'deskripsi_jenis_ticket',
                 "sWidth": "30%" },
@@ -40,7 +39,6 @@ export default () => {
             <table className="stripe w-full" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th className="py-3">Type ID</th>
                         <th className="py-3">Type Name</th>
                         <th className="py-3">Description</th>
                         <th className="px-4 py-3">Action</th>

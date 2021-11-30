@@ -12,10 +12,11 @@ export default () => {
             data: res.data,
             aoColumns: [
                 
-                { mData: 'lokasi_vendor' },
+                { mData: 'nama_perusahaan' },
                 { mData: 'nama_vendor' },
                 { mData: 'email_vendor' },
                 { mData: 'nomor_vendor' },
+                { mData: 'lokasi_vendor' },
                 {
                     "mData": null,
                     "bSortable": false,
@@ -47,6 +48,7 @@ export default () => {
                         <th className="py-3">Name</th>
                         <th className="py-3">Email</th>
                         <th className="py-3">Phone</th>
+                        <th className="py-3" >Address</th>
                         <th className="px-4 py-3">Action</th>
                     </tr>
                 </thead>

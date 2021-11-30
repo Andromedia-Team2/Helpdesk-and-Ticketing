@@ -7,18 +7,20 @@
         </div>
       </div>
       {user.role === "Client" && (
-        <button class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-xl">
-          <a
-            href="/ticket-data/add"
-            class=" flex space-x-3 items-center justify-center text-sm font-medium text-white"
-          >
+        <button
+          class="flex space-x-3 items-center justify-center px-4 py-2 bg-red-900 shadow rounded-xl"
+          onClick={() => {
+            navigate("/ticket-data/add");
+          }}
+        >
+          <span class=" flex space-x-3 items-center justify-center text-sm font-medium text-white">
             <img
               src="/fimgs/460_875.x1.svg"
               class="mr-2"
               style=" max-width: 15px; max-height: 20px;"
             />
             New Ticket
-          </a>
+          </span>
         </button>
       )}
     </div>

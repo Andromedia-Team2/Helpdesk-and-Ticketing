@@ -12,16 +12,11 @@ export default () => {
         $('#dtable').DataTable({
             data: res.data,
             aoColumns: [
-                { mData: null,
-                    mRender: function (data, type, full) {
-                      no = no + 1;
-                      return (no);
-                    } 
-                },
-                { mData: 'lokasi_client' },
+                { mData: 'perusahaan_client' },
                 { mData: 'nama_client' },
                 { mData: 'email_client' },
                 { mData: 'nomor_client' },
+                { mData: 'lokasi_client' },
                 {
                     "mData": null,
                     "bSortable": false,
@@ -48,11 +43,11 @@ export default () => {
             <table className="stripe w-full" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th className="py-3">No</th>
                         <th className="py-3">Company</th>
                         <th className="py-3">Name</th>
                         <th className="py-3">Email</th>
                         <th className="py-3">Phone</th>
+                        <th className="py-3">Address</th>
                         <th className="px-4 py-3">Action</th>
                     </tr>
                 </thead>

@@ -3,14 +3,23 @@
     meta={{
       jenis_ticket: "",
       deskripsi_jenis_ticket: "",
-      addData: (e) => {
-        console.log(e.target.value);
+      message: "",
+      validationCheck() {
+        this.message =
+          this.jenis_ticket === "" || this.jenis_ticket === null
+            ? "Your ticket type is empty. Make sure all forms are filled and try again."
+            : this.deskripsi_jenis_ticket === "" ||
+              this.deskripsi_jenis_ticket === null
+            ? "Your description is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
       },
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
       let success = document.getElementById("my-success");
       let loading = document.getElementById("my-loading");
+      let failed = document.getElementById("my-failed");
       meta.action = {
         jenisTicketChange: (e) => {
           runInAction(() => {
@@ -24,24 +33,35 @@
             console.log(meta.deskripsi_jenis_ticket);
           });
         },
-        addData: (e) => {
-          modal.style.display = "block";
-          loading.style.display = "block";
-          api("/api/jenis-data/add", {
-            jenis_ticket: meta.jenis_ticket,
-            deskripsi_jenis_ticket: meta.deskripsi_jenis_ticket,
-          }).then((e) => {
-            console.log(e);
-            if (e.status == "SUCCESS") {
-              loading.style.display = "none";
-              success.style.display = "block";
-              window.location.replace("/jenis-data");
-            } else {
-              loading.style.display = "none";
-              success.style.display = "block";
-              console.log(e);
-            }
+        tryAgain: () => {
+          runInAction(() => {
+            modal.style.display = "none";
+            failed.style.display = "none";
           });
+        },
+        addData: (e) => {
+          let error_msg = meta.validationCheck();
+          modal.style.display = "block";
+          if (error_msg) {
+            failed.style.display = "block";
+          } else {
+            loading.style.display = "block";
+            api("/api/jenis-data/add", {
+              jenis_ticket: meta.jenis_ticket,
+              deskripsi_jenis_ticket: meta.deskripsi_jenis_ticket,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                loading.style.display = "none";
+                success.style.display = "block";
+                window.location.replace("/jenis-data");
+              } else {
+                loading.style.display = "none";
+                success.style.display = "block";
+                console.log(e);
+              }
+            });
+          }
         },
       };
     }}
@@ -51,7 +71,7 @@
       <div class="flex self-stretch items-center justify-between">
         <div class="flex items-start justify-start">
           <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
-            JENIS TICKET - CREATE DATA
+            TICKET TYPE - CREATE DATA
           </div>
         </div>
       </div>
@@ -60,13 +80,13 @@
         <div class="flex self-stretch items-start justify-start px-5">
           <div class="flex flex-1 items-center justify-start ">
             <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
-              Jenis Ticket
+              Ticket Type
             </div>
             <input
               type="text"
               value={meta.jenis_ticket}
               onChange={(e) => meta.action.jenisTicketChange(e)}
-              class="flex self-stretch text-gray-600 w-full items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+              class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
               placeholder="type your ticket type here ..."
             />
           </div>
@@ -79,26 +99,53 @@
             <textarea
               value={meta.deskripsi_jenis_ticket}
               onChange={(e) => meta.action.deskripsiChange(e)}
-              class="flex self-stretch text-gray-600 w-full h-48 items-center font-medium justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm"
+              class="flex self-stretch items-center w-full h-48 font-medium justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
               placeholder="type your ticket type description here ..."
             />
           </div>
         </div>
-        <button
-          onClick={() => {
-            meta.action.addData();
-          }}
-          class="flex space-x-3 items-center justify-center px-6 py-2 bg-red-900 shadow rounded-xl"
-          style="max-width: 200px;"
-        >
-          <img
-            src="/fimgs/460_875.x1.svg"
-            style=" max-width: 15px; max-height: 20px;"
-          />
-          <div class="text-sm font-medium tracking-wide leading-relaxed text-white">
-            Create New
-          </div>
-        </button>
+
+        <div class="flex w-full space-x-3 items-center justify-end px-5">
+          <button
+            onClick={() => {
+              window.history.back();
+            }}
+            class="flex space-x-4 items-center justify-center px-6 py-1.5 hover:text-gray-700 hover:border-gray-700 text-gray-500 bg-white shadow rounded-xl border-2 border-gray-500"
+            style="min-width:150px; max-width: 200px;"
+          >
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7.70703 3.29303C7.8945 3.48056 7.99982 3.73487 7.99982 4.00003C7.99982 4.26519 7.8945 4.5195 7.70703 4.70703L5.41403 7.00003H11C12.8565 7.00003 14.637 7.73753 15.9498 9.05028C17.2625 10.363 18 12.1435 18 14V16C18 16.2652 17.8947 16.5196 17.7071 16.7071C17.5196 16.8947 17.2652 17 17 17C16.7348 17 16.4805 16.8947 16.2929 16.7071C16.1054 16.5196 16 16.2652 16 16V14C16 12.6739 15.4732 11.4022 14.5356 10.4645C13.5979 9.52681 12.3261 9.00003 11 9.00003H5.41403L7.70703 11.293C7.80254 11.3853 7.87872 11.4956 7.93113 11.6176C7.98354 11.7396 8.01113 11.8709 8.01228 12.0036C8.01344 12.1364 7.98813 12.2681 7.93785 12.391C7.88757 12.5139 7.81332 12.6255 7.71943 12.7194C7.62553 12.8133 7.51388 12.8876 7.39098 12.9379C7.26809 12.9881 7.13641 13.0134 7.00363 13.0123C6.87085 13.0111 6.73963 12.9835 6.61763 12.9311C6.49562 12.8787 6.38528 12.8025 6.29303 12.707L2.29303 8.70703C2.10556 8.5195 2.00024 8.26519 2.00024 8.00003C2.00024 7.73487 2.10556 7.48056 2.29303 7.29303L6.29303 3.29303C6.48056 3.10556 6.73487 3.00024 7.00003 3.00024C7.26519 3.00024 7.5195 3.10556 7.70703 3.29303Z"
+                fill="#3F3F46"
+              />
+            </svg>
+            <div class="text-sm font-bold tracking-wide leading-relaxed">
+              Cancel
+            </div>
+          </button>
+          <button
+            onClick={() => {
+              meta.action.addData();
+            }}
+            class="flex space-x-3 items-center justify-center px-6 py-1.5 hover:bg-red-800 bg-red-900 shadow rounded-xl border-2 border-red-900"
+            style="max-width: 200px;"
+          >
+            <img
+              src="/fimgs/460_875.x1.svg"
+              style=" max-width: 15px; max-height: 20px;"
+            />
+            <div class="text-sm font-bold tracking-wide leading-relaxed text-white">
+              Create New
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -140,6 +187,42 @@
           <p class="text-sm text-gray-500">
             Please wait a moment for the saving process
           </p>
+        </div>
+      </div>
+      <div id="my-failed" class="mt-3 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full">
+          <svg
+            class="h-24 w-24 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-red-600">
+          Failed to Save
+        </h3>
+        <div class="mt-3 px-3 py-3">
+          <p class="text-sm text-gray-500">{meta.message}</p>
+        </div>
+        <div class="px-3 py-2">
+          <button
+            onClick={() => {
+              meta.action.tryAgain();
+            }}
+            class="flex items-center w-full justify-center bg-red-900 shadow rounded-2xl"
+          >
+            <div class="text-base px-4 py-1 font-medium tracking-wide leading-relaxed text-white">
+              I'm understand, try again
+            </div>
+          </button>
         </div>
       </div>
     </div>
