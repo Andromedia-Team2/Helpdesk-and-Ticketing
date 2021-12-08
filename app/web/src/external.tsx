@@ -63,4 +63,20 @@ export default {
     import("./components/tabelticketlistemp"),
     { c: "", s: "", h: "" },
   ],
+  barChart: () => [
+    import("./components/App"),
+    { c: "", s: "", h: "" },
+  ],
+  pieChart: () => [
+    import("./components/App2"),
+    { c: "", s: "", h: "" },
+  ],
+  groupChart: () => [
+    import("./components/App3"),
+    { c: "", s: "", h: "" },
+  ],
+  headmapChart: () => [
+    import("./components/headmap-chart"),
+    { c: "", s: "", h: "" },
+  ],
 };
