@@ -63,6 +63,9 @@ export default {
     import("./components/tabelticketlistemp"),
     { c: "", s: "", h: "" },
   ],
+  "dropdown-mobile": () => [
+    import("./components/dropdown-mobile"),
+
   barChart: () => [
     import("./components/App"),
     { c: "", s: "", h: "" },
