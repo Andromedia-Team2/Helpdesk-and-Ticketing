@@ -1,22 +1,89 @@
 <>
-  <effect meta={{}} run={async () => {}} />
-  <div class="flex flex-col items-start justify-start">
+  <effect
+    meta={{
+      username: "",
+      password: "",
+      showMessage: false,
+      message: "",
+      pass_type: "password",
+    }}
+    run={async () => {
+      let modal = document.getElementById("my-modal");
+      let success = document.getElementById("my-success");
+      let loading = document.getElementById("my-loading");
+      let failed = document.getElementById("my-failed");
+      meta.action = {
+        usernameChange: (e) => {
+          runInAction(() => {
+            meta.username = e.target.value;
+            console.log(meta.username);
+          });
+        },
+        passwordChange: (e) => {
+          runInAction(() => {
+            meta.password = e.target.value;
+            console.log(meta.password);
+          });
+        },
+        showHidePass: () => {
+          runInAction(() => {
+            meta.pass_type === "password"
+              ? (meta.pass_type = "text")
+              : (meta.pass_type = "password");
+          });
+        },
+        tryAgain: () => {
+          runInAction(() => {
+            modal.style.display = "none";
+            failed.style.display = "none";
+          });
+        },
+        login: (e) => {
+          let error_msg = meta.validationCheck();
+          modal.style.display = "block";
+          if (error_msg) {
+            failed.style.display = "block";
+          } else {
+            loading.style.display = "block";
+            api("/api/login", {
+              username: meta.username,
+              password: meta.password,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                loading.style.display = "none";
+                success.style.display = "block";
+                //navigate("/coba");
+                window.location.replace("/coba");
+              } else {
+                meta.message = e.message;
+                loading.style.display = "none";
+                failed.style.display = "block";
+                meta.showMessage = true;
+              }
+            });
+          }
+        },
+      };
+    }}
+  />
+  <m-page class="flex flex-col items-start justify-start">
     <div>
       <div
-        class="flex flex-1 self-stretch flex-col items-center justify-end py-12 bg-red-900"
-        style="width: 414px; min-width: 414px; max-width: 414px; height: 448px; min-height: 448px; max-height: 448px;"
+        class="flex flex-1 self-stretch flex-col items-center justify-end py-12 bg-red-900 "
+        style=" height: 448px; min-height: 448px; max-height: 448px;"
       >
         <div
           class="flex self-stretch flex-col space-y-5 items-center justify-center"
-          style="width: 414px; min-width: 414px; max-width: 414px; height: 142px; min-height: 142px; max-height: 142px;"
+          style=" height: 142px; min-height: 142px; max-height: 142px;"
         >
           <div
-            class="flex flex-col items-center justify-center p-2.5"
-            style="width: 203.29px; min-width: 203.29px; max-width: 203.29px; height: 80px; min-height: 80px; max-height: 80px;"
+            class="flex flex-col items-start justify-center p-2.5"
+            style=" height: 80px; min-height: 80px; max-height: 80px;"
           >
             <img
               src="/fimgs/963_1579.x3.png"
-              style="width: 183.29px; min-width: 183.29px; max-width: 183.29px; height: 60px; min-height: 60px; max-height: 60px;background-image: url('/fimgs/bg-d85fc350692ee29674224712218fca8fba339450');background-size:100% 100%;background-repeat:no-repeat;"
+              style="width: 183.29px; min-width: 183.29px; max-width: 183.29px; height: 60px; min-height: 60px; max-height: 60px;"
             />
           </div>
           <div
@@ -29,70 +96,100 @@
           </div>
         </div>
       </div>
+      {meta.showMessage && (
+        <div
+          id="myWarning"
+          class="flex self-stretch space-x-3 items-center justify-start p-2 bg-red-500"
+        >
+          <img
+            src="/fimgs/bg-d33b6a536277025a01a7d58c228b7b52a21525b5"
+            style="max-width: 20px;max-height: 20px;"
+          />
+          <div class="text-sm tracking-wide leading-tight text-white">
+            {meta.message}
+          </div>
+        </div>
+      )}
       <div
         class="flex flex-1 self-stretch flex-col space-y-5 items-center justify-start"
-        style="width: 414px; min-width: 414px; max-width: 414px; height: 448px; min-height: 448px; max-height: 448px;"
+        style="height: 448px; min-height: 448px; max-height: 448px;"
       >
         <div
           class="flex self-stretch flex-col items-center justify-start px-6"
-          style="width: 414px; min-width: 414px; max-width: 414px; height: 202px; min-height: 202px; max-height: 202px;"
+          style="height: 202px; min-height: 202px; max-height: 202px;"
         >
           <div
-            class="flex self-stretch flex-col space-y-2.5 items-center justify-start p-2.5"
-            style="width: 366px; min-width: 366px; max-width: 366px; height: 101px; min-height: 101px; max-height: 101px;"
+            class="flex self-stretch flex-col space-y-2.5 items-start justify-start p-2.5"
+            style="height: 101px; min-height: 101px; max-height: 101px;"
           >
             <div
               class="text-xl tracking-wide leading-loose text-gray-800"
-              style="width: 346px; min-width: 346px; max-width: 346px; height: 30px; min-height: 30px; max-height: 30px;"
+              style="height: 30px; min-height: 30px; max-height: 30px;"
             >
               Username
             </div>
             <div
               class="flex self-stretch items-center justify-start py-2.5 pl-5 pr-48 bg-gray-200 border rounded-lg border-gray-800"
-              style="width: 346px; min-width: 346px; max-width: 346px; height: 41px; min-height: 41px; max-height: 41px;"
+              style="height: 41px; min-height: 41px; max-height: 41px;"
             >
-              <div class="text-sm tracking-wide leading-tight text-gray-500">
-                Username
-              </div>
+              <m-input
+                class="text-sm tracking-wide leading-tight text-gray-500"
+                placeholder="Username"
+                type="text"
+                value={meta.username}
+                onChange={(e) => meta.action.usernameChange(e)}
+              />
             </div>
           </div>
           <div
             class="flex self-stretch flex-col space-y-2.5 items-start justify-start p-2.5"
-            style="width: 366px; min-width: 366px; max-width: 366px; height: 101px; min-height: 101px; max-height: 101px;"
+            style="height: 101px; min-height: 101px; max-height: 101px;"
           >
             <div class="text-xl tracking-wide leading-loose text-gray-800">
               Password
             </div>
             <div
               class="flex self-stretch items-start justify-start"
-              style="width: 346px; min-width: 346px; max-width: 346px; height: 41px; min-height: 41px; max-height: 41px;"
+              style=" height: 41px; min-height: 41px; max-height: 41px;"
             >
               <div class="flex flex-1 items-center justify-start py-2.5 pl-5 pr-48 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-800">
-                <div class="text-sm tracking-wide leading-tight text-gray-500">
-                  Password
-                </div>
+                <m-input
+                  class="text-sm tracking-wide leading-tight text-gray-500"
+                  placeholder="Pasword"
+                  type="password"
+                  value={meta.password}
+                  onChange={(e) => meta.action.passwordChange(e)}
+                />
               </div>
               <div
                 class="flex self-stretch items-center justify-center p-2 bg-gray-200 border rounded-tr-lg rounded-br-lg border-gray-800"
-                style="width: 36px; min-width: 36px; max-width: 36px; height: 41px; min-height: 41px; max-height: 41px;"
+                style="width: 36px; min-width: 36px; max-width: 36px; height: 39px; min-height: 40px; max-height: 40px;"
               >
-                <img
-                  src="/fimgs/I963_1593_196_154.x1.svg"
-                  style="width: 20px; min-width: 20px; max-width: 20px; height: 20px; min-height: 20px; max-height: 20px;background-image: url('/fimgs/bg-27a996c755a31ad0e24fd8557967446606290bb3');background-size:100% 100%;background-repeat:no-repeat;"
-                />
+                <m-button
+                  onClick={() => {
+                    meta.action.showHidePass();
+                  }}
+                >
+                  <img
+                    src="/fimgs/I963_1593_196_154.x1.svg"
+                    style="width: 20px; min-width: 20px; max-width: 20px; height: 19px;"
+                  />
+                </m-button>
               </div>
             </div>
           </div>
         </div>
-        <button
+        <m-link
           class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl"
-          style="width: 111px; min-width: 111px; max-width: 111px; height: 46px; min-height: 46px; max-height: 46px;"
+          style="width: 111px; height: 46px; "
+          // onClick={() => {}}
+          href="/m/dashboard"
         >
           <div class="text-xl font-medium tracking-wide leading-loose text-white">
             Login
           </div>
-        </button>
+        </m-link>
       </div>
     </div>
-  </div>
+  </m-page>
 </>

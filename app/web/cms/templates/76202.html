@@ -1,35 +1,45 @@
 <>
-  <effect meta={{}} run={async () => {}} />
-  <div class="flex flex-col items-start justify-start bg-white">
+  <effect
+    meta={{
+      name: "",
+      subject: "",
+      message: "",
+    }}
+    run={async () => {
+      meta.action = {
+        nameChange: (e) => {
+          runInAction(() => {
+            meta.name = e.target.value;
+            console.log(meta.name);
+          });
+        },
+        subjectChange: (e) => {
+          runInAction(() => {
+            meta.subject = e.target.value;
+            console.log(meta.subject);
+          });
+        },
+        messageChange: (e) => {
+          runInAction(() => {
+            meta.message = e.target.value;
+            console.log(meta.message);
+          });
+        },
+      };
+    }}
+  />
+  <div class="flex flex-col  self-stretch w-screen items-start justify-start bg-white">
     <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
-      <div class="flex self-stretch items-center justify-between px-6 py-3 bg-red-900">
-        <div class="flex self-stretch items-center justify-start">
-          <img
-            src="/fimgs/963_1664.x3.png"
-            style="width: 76.37px; min-width: 76.37px; max-width: 76.37px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-d85fc350692ee29674224712218fca8fba339450');background-size:100% 100%;background-repeat:no-repeat;"
-          />
-        </div>
-        <div class="flex space-x-2 items-center justify-start">
-          <img
-            src="/fimgs/963_1666.x3.png"
-            class="flex items-start justify-start"
-            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
-          />
-          <div class="text-xs font-medium tracking-wide leading-none text-right text-white">
-            hello, adi!
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
-        <div class="flex flex-1 self-stretch flex-col space-y-6 items-center justify-start px-3">
+      <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start ">
+        <div class="flex flex-1 self-stretch flex-col space-y-6 items-center justify-start px-3 ">
           <div class="flex self-stretch items-center justify-start">
-            <div class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg">
+            <m-card class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg">
               <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
                 MY TICKET - OPEN TICKET
               </div>
-            </div>
+            </m-card>
           </div>
-          <div class="flex self-stretch flex-col items-start justify-start bg-white shadow rounded-lg">
+          <m-card class="flex self-stretch flex-col items-start justify-start bg-white shadow rounded-lg">
             <div class="flex items-start justify-start px-3 py-2">
               <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
                 Ticket Information
@@ -38,47 +48,69 @@
             <div class="flex self-stretch flex-col items-center justify-start p-3">
               <div
                 class="flex self-stretch flex-col items-start justify-start"
-                style="width: 366px; min-width: 366px; max-width: 366px; height: 78px; min-height: 78px; max-height: 78px;"
+                style="height: 78px; min-height: 78px; max-height: 78px;"
               >
                 <div class="flex self-stretch items-start justify-start p-2.5">
                   <div class="text-sm tracking-wide leading-tight text-gray-500">
                     Name
                   </div>
                 </div>
-                <div
-                  class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
-                  style="width: 366px; min-width: 366px; max-width: 366px; height: 37px; min-height: 37px; max-height: 37px;"
-                >
-                  <div class="text-sm tracking-wide leading-tight text-gray-700">
-                    Han Solo
-                  </div>
-                </div>
+                <m-input
+                  class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                  style="height:35px"
+                  type="text"
+                  placeholder="Han Solo"
+                  value={meta.name}
+                  onChange={(e) => meta.action.nameChange(e)}
+                />
               </div>
-              <div
-                class="flex self-stretch flex-col items-start justify-start"
-                style="width: 366px; min-width: 366px; max-width: 366px; height: 82px; min-height: 82px; max-height: 82px;"
-              >
-                <div class="flex self-stretch items-start justify-start p-2.5">
-                  <div class="text-sm tracking-wide leading-tight text-gray-500">
+              <div class="flex self-stretch flex-col items-start justify-start">
+                <div class="item-media">
+                  <i class="icon demo-list-icon"></i>
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start item-inner">
+                  <div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500">
                     Ticket Type
                   </div>
-                </div>
-                <div
-                  class="flex self-stretch items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"
-                  style="width: 366px; min-width: 366px; max-width: 366px; height: 41px; min-height: 41px; max-height: 41px;"
-                >
-                  <div class="text-sm tracking-wide leading-tight text-gray-700">
-                    Maintenance Ticket
+                  <div
+                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 item-input-wrap input-dropdown-wrap"
+                    style="width:full"
+                  >
+                    <select placeholder="Please choose...">
+                      <option value="Male">Technical Issue</option>
+                      <option value="Female">System Bug</option>
+                    </select>
                   </div>
-                  <img
-                    src="/fimgs/698_1092.x1.svg"
-                    style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-2cc07aa4f15443e480020f7ccbf834c608b09a16');background-size:100% 100%;background-repeat:no-repeat;"
-                  />
                 </div>
+                {/*<div class="input input-dropdown">*/}
+                {/*<select>*/}
+                {/*<option value="All">All</option>*/}
+                {/*<option value="Male">Male</option>*/}
+                {/*<option value="Female">Female</option>*/}
+                {/*</select>*/}
+                {/*</div>*/}
+                {/*<m-input*/}
+                {/*class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"*/}
+                {/*style="height:35px"*/}
+                {/*type="text"*/}
+                {/*placeholder="Maintance Ticket"*/}
+                {/*/>*/}
+                {/*<div*/}
+                {/*class="flex self-stretch items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"*/}
+                {/*style="width: 366px; min-width: 366px; max-width: 366px; height: 41px; min-height: 41px; max-height: 41px;"*/}
+                {/*>*/}
+                {/*<div class="text-sm tracking-wide leading-tight text-gray-700">*/}
+                {/*Maintenance Ticket*/}
+                {/*</div>*/}
+                {/*<img*/}
+                {/*src="/fimgs/698_1092.x1.svg"*/}
+                {/*style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-2cc07aa4f15443e480020f7ccbf834c608b09a16');background-size:100% 100%;background-repeat:no-repeat;"*/}
+                {/*/>*/}
+                {/*</div>*/}
               </div>
             </div>
-          </div>
-          <div class="flex self-stretch flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg">
+          </m-card>
+          <m-card class="flex self-stretch flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg">
             <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
               Message
             </div>
@@ -86,21 +118,22 @@
               <div class="flex self-stretch items-start justify-start">
                 <div
                   class="flex flex-1 flex-col items-start justify-start"
-                  style="width: 358px; min-width: 358px; max-width: 358px; height: 78px; min-height: 78px; max-height: 78px;"
+                  style="height: 78px; min-height: 78px; max-height: 78px;"
                 >
                   <div class="flex items-start justify-start p-2.5">
                     <div class="text-sm tracking-wide leading-tight text-gray-500">
                       Subject
                     </div>
                   </div>
-                  <div
-                    class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 bg-gray-200 border rounded-lg border-gray-500"
-                    style="width: 358px; min-width: 358px; max-width: 358px; height: 37px; min-height: 37px; max-height: 37px;"
-                  >
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
-                      lorem ipsum
-                    </div>
-                  </div>
+
+                  <m-input
+                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    style="height:35px"
+                    type="text"
+                    placeholder="Lorem Ipsum"
+                    value={meta.subject}
+                    onChange={(e) => meta.action.subjectChange(e)}
+                  />
                 </div>
               </div>
               <div class="flex self-stretch items-start justify-start">
@@ -110,22 +143,25 @@
                       Message
                     </div>
                   </div>
-                  <div class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500">
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
-                      Enter your text here
-                    </div>
-                  </div>
+                  <m-input
+                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    style="height:35px"
+                    type="text"
+                    placeholder="Enter Your Text Here"
+                    value={meta.message}
+                    onChange={(e) => meta.action.messageChange(e)}
+                  />
                 </div>
               </div>
             </div>
-          </div>
-          <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-3 bg-white shadow rounded-lg">
+          </m-card>
+          <m-card class="flex self-stretch flex-col space-y-3 items-start justify-start p-3 bg-white shadow rounded-lg">
             <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
               Attachments
             </div>
             <div
               class="flex self-stretch flex-col space-y-2 items-start justify-start"
-              style="width: 366px; min-width: 366px; max-width: 366px; height: 130px; min-height: 130px; max-height: 130px;"
+              style=" height: 130px; min-height: 130px; max-height: 130px;"
             >
               <div class="flex items-start justify-start p-2.5">
                 <div class="text-sm tracking-wide leading-tight text-gray-500">
@@ -134,9 +170,9 @@
               </div>
               <div
                 class="flex self-stretch space-x-6 items-center justify-start"
-                style="width: 366px; min-width: 366px; max-width: 366px; height: 37px; min-height: 37px; max-height: 37px;"
+                style=" height: 37px; min-height: 37px; max-height: 37px;"
               >
-                <div class="flex flex-1 items-start justify-start">
+                <div class="flex flex-1 items-start justify-start w-full">
                   <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
                     <div class="text-sm tracking-wide leading-tight text-gray-700">
                       Select File
@@ -148,73 +184,42 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full">
-                  <div style="background-image: url('/fimgs/bg-b24bcae01668746da3b996d95c8fb176a9675ff7');background-size:100% 100%;background-repeat:no-repeat;" />
+                <m-button
+                  class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
+                  style="height:30px"
+                >
+                  <img
+                    src="/fimgs/688_1787.x1.svg"
+                    style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;"
+                  />
                   <div class="text-sm font-medium tracking-wide leading-tight text-white">
                     Add
                   </div>
-                </div>
+                </m-button>
               </div>
               <div class="text-xs tracking-wide leading-none text-gray-500">
                 Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf, .zip,
                 .csv, .sql, .tar, .gz
               </div>
             </div>
-          </div>
+          </m-card>
           <div class="flex space-x-6 items-start justify-start">
-            <div class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500">
+            <m-link
+              class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500"
+              href="/m/dashboard"
+            >
               <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
                 cancel
               </div>
-            </div>
-            <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
+            </m-link>
+            <m-link
+              class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full"
+              href="/m/dashboard"
+            >
               <div class="text-sm font-medium tracking-wide leading-tight text-white">
-                create ticket{" "}
+                create ticket
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex self-stretch items-start justify-between px-6 bg-white shadow">
-          <div class="flex flex-col items-center justify-start p-2">
-            <div class="flex items-start justify-start">
-              <img
-                src="/fimgs/773_1272.x3.png"
-                style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;background-image: url('/fimgs/bg-e3f3637260cb516e379328e4426bf83f03764fd3');background-size:100% 100%;background-repeat:no-repeat;"
-              />
-            </div>
-            <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
-              Dashboard
-            </div>
-          </div>
-          <div class="flex flex-col items-center justify-start p-2">
-            <img
-              src="/fimgs/773_1225.x3.png"
-              class="flex items-start justify-start"
-              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
-            />
-            <div class="text-xs font-medium tracking-wide leading-none text-red-900">
-              New Ticket
-            </div>
-          </div>
-          <div class="flex flex-col items-center justify-start p-2">
-            <img
-              src="/fimgs/773_1229.x3.png"
-              class="flex items-start justify-start"
-              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
-            />
-            <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
-              My Ticket
-            </div>
-          </div>
-          <div class="flex flex-col items-center justify-start p-2">
-            <img
-              src="/fimgs/773_1233.x3.png"
-              class="flex items-start justify-start"
-              style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
-            />
-            <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
-              Profile
-            </div>
+            </m-link>
           </div>
         </div>
       </div>
