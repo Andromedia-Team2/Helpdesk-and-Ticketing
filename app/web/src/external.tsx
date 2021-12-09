@@ -65,7 +65,7 @@ export default {
   ],
   "dropdown-mobile": () => [
     import("./components/dropdown-mobile"),
-
+  ],
   barChart: () => [
     import("./components/App"),
     { c: "", s: "", h: "" },
