@@ -70,7 +70,7 @@ export default {
     import("./components/App"),
     { c: "", s: "", h: "" },
   ],
-  pieChart: () => [
+  pieChart: () => [ 
     import("./components/App2"),
     { c: "", s: "", h: "" },
   ],

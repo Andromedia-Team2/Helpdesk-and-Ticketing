@@ -1,7 +1,6 @@
 <>
-  <m-navbar class="fixed top-0 bg-red">f</m-navbar>
+  <m-navbar class="fixed top-0 bg-red">Navbar</m-navbar>
   <m-page>
-    {" "}
     <div class="block-title">Validation + Additional Info</div>
     <div class="list no-hairlines-md">
       <ul>
@@ -12,13 +11,30 @@
           <div class="item-inner">
             <div class="item-title item-label">Name</div>
             <div class="item-input-wrap">
-              <input type="text" placeholder="Your name" required validate />
+              <input type="text" placeholder="Your name" required />
               <span class="input-clear-button"></span>
-              <div class="item-input-info">Default "required" validation</div>
             </div>
           </div>
         </li>
       </ul>
+
+      <m-button
+        class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
+        onClick={() => {
+          // window.mobileApp.app.dialog.preloader(), close();
+          // navigate("/m/login");
+
+          window.mobileApp.app.dialog.confirm(
+            "Apakah data yang anda masukkan sudah benar?",
+            "Alert",
+            () => {}
+          );
+        }}
+      >
+        <div class="text-sm font-medium tracking-wide leading-tight text-white">
+          Save
+        </div>
+      </m-button>
     </div>
   </m-page>
   <m-toolbar class="fixed bottom-0">dc</m-toolbar>
