@@ -131,7 +131,16 @@
                 </m-link>
               </div>
               <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
-                <m-link href="/m/view-profile">
+                <m-link
+                  onClick={() => {
+                    window.mobileApp.app.dialog.confirm(
+                      "Yakin Mengubah Password ?",
+                      "Konfirmasi",
+                      () => {},
+                      navigate("/m/view-profile")
+                    );
+                  }}
+                >
                   <div class="text-sm font-medium tracking-wide leading-tight text-white">
                     save changes
                   </div>

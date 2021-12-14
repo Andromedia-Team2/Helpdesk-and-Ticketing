@@ -1,4 +1,98 @@
-<div>
-  <hello-world />
-  <div>Ini Page Baru</div>
-</div>
+<>
+  <effect meta={{}} run={async () => {}} />
+  {/*<div class="flex  flex-col items-start justify-start bg-gray-50">*/}
+  <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+    <m-navbar
+      class="navbar flex self-stretch items-center justify-between px-6 py-3 bg-red-900 fixed top-0 shadow   "
+      style="--f7-navbar-bg-color: red-900"
+    >
+      <div class="flex self-stretch items-center justify-start">
+        <img
+          src="/fimgs/1051_1629.x3.png"
+          style="width: 76.37px; min-width: 76.37px; max-width: 76.37px; height: 25px; min-height: 25px; max-height: 25px;"
+        />
+      </div>
+      <m-link
+        class="flex space-x-2 items-center justify-start"
+        href="/m/view-profile"
+      >
+        <div class="flex items-start justify-start">
+          <img
+            src="/fimgs/1051_1632.x3.png"
+            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
+          />
+        </div>
+        <div class="text-xs font-medium tracking-wide leading-none text-right text-white">
+          hello, user!
+        </div>
+      </m-link>
+    </m-navbar>
+    <div />
+    {/**/}
+
+    <m-page class="flex self-stretch items-start justify-start h-stretch ">
+      {children}
+    </m-page>
+    <m-toolbar
+      class="flex self-stretch items-start justify-between px-6 bg-white shadow fixed bottom-0 "
+      style="height:75px;padding-bottom:20px"
+    >
+      <m-link
+        class="flex flex-col items-center justify-start p-2"
+        href="/m/dashboard"
+      >
+        <img
+          src="/fimgs/1051_1667.x1.svg"
+          class="flex items-start justify-start"
+          style="width: 30px;  height: 30px;"
+        />
+        <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+          Dashboard
+        </div>
+      </m-link>
+      <m-link
+        class="flex flex-col items-center justify-start p-2"
+        href="/m/open-ticket"
+      >
+        <div class="flex items-start justify-start">
+          <img
+            src="/fimgs/1051_1672.x3.png"
+            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
+          />
+        </div>
+        <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+          New Ticket
+        </div>
+      </m-link>
+      <m-link
+        class="flex flex-col items-center justify-start p-2"
+        href="/m/my-ticket"
+      >
+        <div class="flex items-start justify-start">
+          <img
+            src="/fimgs/1051_1676.x3.png"
+            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
+          />
+        </div>
+        <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+          My Ticket
+        </div>
+      </m-link>
+      <m-link
+        class="flex flex-col items-center justify-start p-2"
+        href="/m/view-profile"
+      >
+        <div class="flex items-start justify-start">
+          <img
+            src="/fimgs/773_1186.x1.svg"
+            style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
+          />
+        </div>
+        <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+          Profile
+        </div>
+      </m-link>
+    </m-toolbar>
+  </div>
+  {/*</div>*/}
+</>

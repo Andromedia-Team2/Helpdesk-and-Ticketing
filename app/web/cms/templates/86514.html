@@ -182,8 +182,10 @@
         <m-link
           class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl"
           style="width: 111px; height: 46px; "
-          // onClick={() => {}}
-          href="/m/dashboard"
+          onClick={() => {
+            window.mobileApp.app.dialog.preloader(), close();
+            navigate("/m/dashboard");
+          }}
         >
           <div class="text-xl font-medium tracking-wide leading-loose text-white">
             Login
