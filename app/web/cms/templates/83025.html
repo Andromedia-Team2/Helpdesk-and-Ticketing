@@ -1,0 +1,116 @@
+<>
+  <effect
+    meta={{
+      newpass: "",
+      confirmpass: "",
+      pass_type: "password",
+    }}
+    run={async () => {
+      meta.action = {
+        newpassChange: (e) => {
+          runInAction(() => {
+            meta.newpass = e.target.value;
+            console.log(meta.newpass);
+          });
+        },
+        confirmpassChange: (e) => {
+          runInAction(() => {
+            meta.confirmpass = e.target.value;
+            console.log(meta.confirmpass);
+          });
+        },
+        showHidePass: () => {
+          runInAction(() => {
+            meta.pass_type === "password"
+              ? (meta.pass_type = "text")
+              : (meta.pass_type = "password");
+          });
+        },
+      };
+    }}
+  />
+  <div class="flex flex-col items-start justify-start px-6 pt-6 bg-gray-50">
+    <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
+      <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+        <div class="flex self-stretch items-start justify-center">
+          <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+            Reset password
+          </div>
+        </div>
+        <img
+          src="/fimgs/109_184.x1.png"
+          style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;background-image: url('/fimgs/bg-dfcaf01f55049a50d5bc6175e8336cfef70097b6');background-size:100% 100%;background-repeat:no-repeat;"
+        />
+      </div>
+      <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+        <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+          Set your new password to protect your account
+        </div>
+        <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
+          <div class="text-xs tracking-wide leading-none text-gray-500">
+            New Password
+          </div>
+          <div class="flex self-stretch space-x-2.5 items-center justify-start px-5 py-2.5 bg-white border rounded-lg border-gray-800 ">
+            <m-input
+              class="text-sm tracking-wide leading-tight text-gray-500 w-full"
+              placeholder="*****"
+              type="password"
+              required={true}
+              // value={meta.newpass}
+              // onChange={(e) => meta.action.newpassChange(e)}
+            />
+            <m-button
+              class="flex items-center justify-center "
+              onClick={() => {
+                meta.action.showHidePass();
+              }}
+            >
+              <img
+                src="/fimgs/I109_191_2_8.x1.svg"
+                style="width: 22px;height: 22px; "
+              />
+            </m-button>
+          </div>
+        </div>
+        <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
+          <div class="text-xs tracking-wide leading-none text-gray-500">
+            Confirm Password
+          </div>
+          <div class="flex self-stretch space-x-2.5 items-center justify-start px-5 py-2.5 bg-white border rounded-lg border-gray-800">
+            <m-input
+              class="text-sm tracking-wide leading-tight text-gray-500 w-full"
+              placeholder="*****"
+              type="password"
+              required={true}
+              // value={meta.confirmpass}
+              // onChange={(e) => meta.action.confirmpassChange(e)}
+            />
+            <m-button
+              class="flex items-center justify-center "
+              onClick={() => {
+                meta.action.showHidePass();
+              }}
+            >
+              <img
+                src="/fimgs/I109_191_2_8.x1.svg"
+                style="width: 22px;height: 22px; "
+              />
+            </m-button>
+          </div>
+        </div>
+      </div>
+      <m-button
+        class="flex items-center justify-start px-4 py-6 bg-red-900 shadow rounded-3xl shadow-xl text-sm font-medium tracking-wide leading-loose text-white"
+        onClick={() => {
+          window.mobileApp.app.dialog.preloader(),
+            setTimeout(function () {
+              window.mobileApp.app.dialog.close();
+            }, 1500);
+          navigate("/m/alert");
+        }}
+      >
+        Reset Password
+      </m-button>
+    </div>
+  </div>
+</>

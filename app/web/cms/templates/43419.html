@@ -1,0 +1,69 @@
+<>
+  <effect
+    meta={{
+      email: "",
+    }}
+    run={async () => {
+      meta.action = {
+        emailChange: (e) => {
+          runInAction(() => {
+            meta.email = e.target.value;
+            console.log(meta.email);
+          });
+        },
+        reset: (e) => {
+          window.location.replace("/reset-pass");
+        },
+      };
+    }}
+  />
+  <div
+    class="flex flex-col items-center justify-center bg-gray-50"
+    style="background-image: url('/fimgs/bg-cc907efaa4f25486f7149412174411cf313856da');background-size:100% 100%;background-repeat:no-repeat;"
+  >
+    <div
+      class="items-center justify-center"
+      style="width: 350px; max-width: 350px;"
+    >
+      <div class="flex flex-1 flex-col items-center justify-center p-6 bg-white shadow rounded-lg">
+        <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="flex self-stretch items-start justify-center">
+              <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+                Forgot your password ?
+              </div>
+            </div>
+            <img
+              src="/fimgs/1375_1845.x1.png"
+              style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;background-image: url('/fimgs/bg-d81b8f4424a548c108b01b879913938265f52da3');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+              Enter your email address associated with your account
+            </div>
+            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+              We will email you a link to reset your password
+            </div>
+
+            <input
+              type="text"
+              value={meta.email}
+              onChange={(e) => meta.action.emailChange(e)}
+              class="flex self-stretch items-center justify-start py-2.5 pl-5 pr-48 bg-white border rounded-lg border-gray-800 focus:outline-none focus:shadow-outline"
+              placeholder="Email"
+            />
+          </div>
+          <button
+            class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
+            onClick={() => {
+              meta.action.reset();
+            }}
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</>

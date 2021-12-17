@@ -74,7 +74,7 @@
                   placeholder="Han Solo"
                   value={meta.nama}
                   onChange={(e) => meta.action.namaChange(e)}
-                  required
+                  required={true}
                 />
               </div>
               <div class="flex self-stretch flex-col items-start justify-start">
@@ -90,7 +90,7 @@
                   placeholder="han.solo@startrek.com"
                   value={meta.email}
                   onChange={(e) => meta.action.emailChange(e)}
-                  required
+                  required={true}
                 />
               </div>
             </div>
@@ -109,7 +109,7 @@
                   <input
                     class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                     placeholder="Startrek Ent."
-                    required
+                    required={true}
                   />
                 </div>
                 <div class="flex self-stretch flex-col items-start justify-start">
@@ -125,7 +125,7 @@
                     placeholder="081649246857"
                     value={meta.nomor}
                     onChange={(e) => meta.action.nomorChange(e)}
-                    required
+                    required={true}
                   />
                 </div>
                 <div class="flex self-stretch flex-col items-start justify-start">
@@ -141,7 +141,7 @@
                     placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
                     value={meta.lokasi}
                     onChange={(e) => meta.action.lokasiChange(e)}
-                    required
+                    required={true}
                   />
                 </div>
                 <div class="flex self-stretch flex-col items-start justify-start">
@@ -158,7 +158,7 @@
                       placeholder="startrek11"
                       value={meta.username}
                       onChange={(e) => meta.action.usernameChange(e)}
-                      required
+                      required={true}
                     />
                   </div>
                 </div>

@@ -115,7 +115,7 @@
         style="height: 448px; min-height: 448px; max-height: 448px;"
       >
         <div
-          class="flex self-stretch flex-col items-center justify-start px-6"
+          class="flex self-stretch flex-col items-center justify-start px-6 mb-5"
           style="height: 202px; min-height: 202px; max-height: 202px;"
         >
           <div
@@ -138,6 +138,7 @@
                 type="text"
                 value={meta.username}
                 onChange={(e) => meta.action.usernameChange(e)}
+                required={true}
               />
             </div>
           </div>
@@ -156,9 +157,10 @@
                 <m-input
                   class="text-sm tracking-wide leading-tight text-gray-500"
                   placeholder="Pasword"
-                  type="password"
+                  type={meta.pass_type}
                   value={meta.password}
                   onChange={(e) => meta.action.passwordChange(e)}
+                  required={true}
                 />
               </div>
               <div
@@ -178,19 +180,31 @@
               </div>
             </div>
           </div>
+          <m-link
+            class="flex self-stretch items-center justify-end pt-2 pr-4 "
+            href="/m/forgot-pass"
+          >
+            <div class="text-xs font-medium tracking-wide leading-none text-red-500">
+              forgot your password?
+            </div>
+          </m-link>
         </div>
-        <m-link
+
+        <m-button
           class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl"
           style="width: 111px; height: 46px; "
           onClick={() => {
-            window.mobileApp.app.dialog.preloader(), close();
+            window.mobileApp.app.dialog.preloader(),
+              setTimeout(function () {
+                window.mobileApp.app.dialog.close();
+              }, 1500);
             navigate("/m/dashboard");
           }}
         >
           <div class="text-xl font-medium tracking-wide leading-loose text-white">
             Login
           </div>
-        </m-link>
+        </m-button>
       </div>
     </div>
   </m-page>

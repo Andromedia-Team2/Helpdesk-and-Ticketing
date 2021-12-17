@@ -1,0 +1,45 @@
+<>
+  <effect
+    meta={{}}
+    run={async () => {
+      meta.action = {
+        login: (e) => {
+          window.location.replace("/login");
+        },
+      };
+    }}
+  />
+  <div
+    class="flex flex-col items-center justify-center bg-gray-50"
+    style="background-image: url('/fimgs/bg-cc907efaa4f25486f7149412174411cf313856da');background-size:100% 100%;background-repeat:no-repeat;"
+  >
+    <div
+      class="items-center justify-center"
+      style="width: 350px; max-width: 350px;"
+    >
+      <div class="flex flex-1 flex-col items-center justify-center p-6 bg-white shadow rounded-lg">
+        <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
+          <div class="flex self-stretch flex-col items-center justify-start">
+            <img
+              src="/fimgs/1453_1949.x1.png"
+              style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;background-image: url('/fimgs/bg-dfcaf01f55049a50d5bc6175e8336cfef70097b6');background-size:100% 100%;background-repeat:no-repeat;"
+            />
+          </div>
+          <div class="flex self-stretch flex-col items-center justify-start">
+            <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+              Your password has been reset
+            </div>
+          </div>
+          <button
+            class="flex items-center justify-start px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
+            onClick={() => {
+              meta.action.login();
+            }}
+          >
+            Go to Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</>

@@ -74,12 +74,15 @@
             });
           }
         },
+        forgot: (e) => {
+          window.location.replace("/forgot-pass");
+        },
       };
     }}
   />
   <div
     class="flex flex-col items-center justify-center bg-gray-50"
-    style="background-image: url('/uploads/bg/bglogin.png');background-size:100% 100%;background-repeat:no-repeat;"
+    style="background-image: url('/fimgs/bg-cc907efaa4f25486f7149412174411cf313856da');background-size:100% 100%;background-repeat:no-repeat;"
   >
     <div
       class="items-center justify-center"
@@ -164,9 +167,16 @@
                 />
               </div>
             </div>
-            <div class="flex w-full items-start px-2.5 justify-end text-red-500 font-medium text-xs">
-              forgot your password?
-            </div>
+            <button class="flex w-full items-start px-2.5 justify-end">
+              <div
+                class="flex w-full items-start px-2.5 justify-end text-red-500 font-medium text-xs"
+                onClick={() => {
+                  meta.action.forgot();
+                }}
+              >
+                forgot your password?
+              </div>
+            </button>
           </div>
           <button
             onClick={() => {

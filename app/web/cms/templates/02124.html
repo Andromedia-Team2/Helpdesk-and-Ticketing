@@ -1,0 +1,155 @@
+<>
+  <effect
+    meta={{
+      newPassword: "",
+      confirmPassword: "",
+      message: "",
+      pass_type1: "password",
+      pass_type2: "password",
+      pass_type3: "password",
+    }}
+    run={async () => {
+      meta.action = {
+        newChange: (e) => {
+          runInAction(() => {
+            meta.newPassword = e.target.value;
+            console.log(meta.newPassword);
+          });
+        },
+        confirmChange: (e) => {
+          runInAction(() => {
+            meta.confirmPassword = e.target.value;
+            console.log(meta.confirmPassword);
+          });
+        },
+        showHidePass2: () => {
+          runInAction(() => {
+            meta.pass_type2 === "password"
+              ? (meta.pass_type2 = "text")
+              : (meta.pass_type2 = "password");
+          });
+        },
+        showHidePass3: () => {
+          runInAction(() => {
+            meta.pass_type3 === "password"
+              ? (meta.pass_type3 = "text")
+              : (meta.pass_type3 = "password");
+          });
+        },
+        alert: (e) => {
+          window.location.replace("/alert");
+        },
+      };
+    }}
+  />
+  <div
+    class="flex flex-col items-center justify-center bg-gray-50"
+    style="background-image: url('/fimgs/bg-cc907efaa4f25486f7149412174411cf313856da');background-size:100% 100%;background-repeat:no-repeat;"
+  >
+    <div
+      class="items-center justify-center"
+      style="width: 350px; max-width: 350px;"
+    >
+      <div class="flex flex-1 flex-col items-center justify-center p-6 bg-white shadow rounded-lg ">
+        <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="flex self-stretch items-start justify-center">
+              <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+                Reset password
+              </div>
+            </div>
+            <img
+              src="/fimgs/1381_2279.x1.png"
+              style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;"
+            />
+          </div>
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+              Set your new password to protect your account
+            </div>
+            <div class="flex flex-col items-start justify-start w-full">
+              <div class="flex flex-col space-y-1 items-start justify-start">
+                <div class="text-xs tracking-wide leading-none text-gray-500">
+                  New Password
+                </div>
+              </div>
+              <div class="relative w-full text-gray-600 focus-within:text-gray-400">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+                  <button
+                    type="submit"
+                    class="p-1 focus:outline-none focus:shadow-outline"
+                    onClick={() => {
+                      meta.action.showHidePass3();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="#4b5563"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                    </svg>
+                  </button>
+                </span>
+                <input
+                  type={meta.pass_type3}
+                  value={meta.confirmPassword}
+                  onChange={(e) => meta.action.confirmChange(e)}
+                  placeholder="****"
+                  required
+                  class="flex items-center tracking-widest justify-between py-2 w-full pl-4 pr-14 border rounded-lg text-base text-gray-600 font-medium pr-5 bg-white focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline mt-1"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col items-start justify-start w-full">
+              <div class="flex flex-col space-y-1 items-start justify-start">
+                <div class="text-xs tracking-wide leading-none text-gray-500">
+                  Confirm New Password
+                </div>
+              </div>
+              <div class="relative w-full text-gray-600 focus-within:text-gray-400">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+                  <button
+                    type="submit"
+                    class="p-1 focus:outline-none focus:shadow-outline"
+                    onClick={() => {
+                      meta.action.showHidePass3();
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="#4b5563"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                    </svg>
+                  </button>
+                </span>
+                <input
+                  type={meta.pass_type3}
+                  value={meta.confirmPassword}
+                  onChange={(e) => meta.action.confirmChange(e)}
+                  placeholder="****"
+                  required
+                  class="flex items-center tracking-widest justify-between py-2 w-full pl-4 pr-14 border rounded-lg text-base text-gray-600 font-medium pr-5 bg-white focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline mt-1"
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            class="flex items-center justify-start px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
+            onClick={() => {
+              meta.action.alert();
+            }}
+          >
+            Reset Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</>

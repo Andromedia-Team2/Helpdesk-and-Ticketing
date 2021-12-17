@@ -1,0 +1,32 @@
+<>
+  <effect meta={{}} run={async () => {}} />
+  <div class="flex items-start justify-start">
+    <div class="flex flex-1 self-stretch flex-col items-center justify-center px-6 pt-6">
+      <div class="flex flex-1 self-stretch flex-col space-y-6 items-center justify-center pb-12 h-full mt-40">
+        <div class="flex self-stretch flex-col items-center justify-start fixed-center">
+          <img
+            src="/fimgs/1444_1980.x1.png"
+            style="width: 200px; height: 200px; "
+          />
+        </div>
+        <div class="flex self-stretch flex-col items-center justify-start">
+          <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+            Your password has been reset
+          </div>
+        </div>
+        <m-button
+          class="flex items-center justify-start px-4 py-4 bg-red-900 shadow-lg rounded-2xl text-sm font-medium tracking-wide leading-loose text-white"
+          onClick={() => {
+            window.mobileApp.app.dialog.preloader(),
+              setTimeout(function () {
+                window.mobileApp.app.dialog.close();
+              }, 1500);
+            navigate("/m/login");
+          }}
+        >
+          Go to Dashboard
+        </m-button>
+      </div>
+    </div>
+  </div>
+</>
