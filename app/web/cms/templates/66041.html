@@ -1,0 +1,226 @@
+<>
+  <effect meta={{}} run={async () => {}} />
+  <div class="flex flex-col items-start justify-start bg-gray-50">
+    <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+      <regist-vendor />
+      <div class="flex flex-1 self-stretch items-start justify-start px-12">
+        <div class="flex flex-1 self-stretch flex-col space-y-5 items-start justify-start py-6 rounded-2xl">
+          <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
+            <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
+              Ticket Report
+            </div>
+            <div />
+          </div>
+          <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+            <div class="flex self-stretch items-center justify-between pt-3">
+              <div class="flex items-center justify-start">
+                <div class="flex items-start justify-start p-1">
+                  <div class="text-xs tracking-wide leading-none text-gray-700"></div>
+                </div>
+              </div>
+              <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                Overall Tickets
+              </div>
+              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                    by month
+                  </div>
+                </div>
+                <img
+                  src="/fimgs/1415_2851.x3.png"
+                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                />
+              </div>
+            </div>
+            <hr class=" w-full mt-4 pb-4"></hr>
+            <div class="container">
+              <barchart-overallticket />
+            </div>
+          </div>
+          <div class="flex self-stretch flex-col items-start justify-start">
+            <div class="flex self-stretch space-x-4 items-start justify-start">
+              <div class="flex flex-1 flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch items-center justify-between p-3">
+                  <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                    Ticket by level
+                  </div>
+                  <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                    <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                        by month
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/1415_2867.x3.png"
+                      style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+                <hr class=" w-full pt-4 pb-4"></hr>
+                <div class="container">
+                  <groupchart-tlevel />
+                </div>
+                <div />
+              </div>
+              <div class="flex flex-1 flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch items-center justify-between p-3">
+                  <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                    Ticket by type
+                  </div>
+                  <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                    <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                        by month
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/1415_2855.x3.png"
+                      style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+                <hr class=" w-full pt-4 pb-4"></hr>
+                <div class="container">
+                  <groupchart-ttype />
+                </div>
+                <div />
+              </div>
+            </div>
+          </div>
+          <div class="flex self-stretch flex-col items-start justify-start">
+            <div class="flex self-stretch space-x-4 items-start justify-start">
+              <div class="flex flex-1 flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch items-center justify-between p-3">
+                  <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                    Ticket by Departement
+                  </div>
+                  <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                    <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                        by month
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/1415_2867.x3.png"
+                      style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+                <hr class=" w-full pt-4 pb-4"></hr>
+                <div class="container">
+                  <groupchart-tdepartement />
+                </div>
+                <div />
+              </div>
+              <div class="flex flex-1 flex-col items-start justify-start px-6 pb-6 ">
+                <div class="flex self-stretch items-center justify-between p-3"></div>
+                <div class="border-gray-500" />
+                <div />
+              </div>
+            </div>
+          </div>
+          <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
+            <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
+              Employee Performance
+            </div>
+            <div />
+          </div>
+          <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+            <div class="flex self-stretch items-center justify-between p-3">
+              <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                Employee Performance (Overall Tickets)
+              </div>
+            </div>
+            <hr class=" w-full pt-4 pb-4"></hr>
+            <div class="container">
+              <linechart-overallemployee />
+            </div>
+            <div />
+          </div>
+          <div class="flex self-stretch flex-col items-start justify-start">
+            <div class="flex self-stretch space-x-4 items-start justify-start">
+              <div class="flex flex-1 flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch items-center justify-between p-3">
+                  <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                    Employee by level
+                  </div>
+                  <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                    <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                        by month
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/1415_2867.x3.png"
+                      style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+                <hr class=" w-full pt-4 pb-4"></hr>
+                <div class="container">
+                  <groupchart-elevel />
+                </div>
+                <div />
+              </div>
+              <div class="flex flex-1 flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch items-center justify-between p-3">
+                  <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                    Employee by type
+                  </div>
+                  <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                    <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                        by month
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/1415_2855.x3.png"
+                      style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+                <hr class=" w-full pt-4 pb-4"></hr>
+                <div class="container">
+                  <groupchart-etype />
+                </div>
+                <div />
+              </div>
+            </div>
+          </div>
+          <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
+            <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
+              Review from client
+            </div>
+            <div />
+          </div>
+          <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
+            <div class="flex self-stretch items-center justify-between p-3">
+              <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                Rate of service
+              </div>
+              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                    by month
+                  </div>
+                </div>
+                <img
+                  src="/fimgs/1417_2219.x3.png"
+                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                />
+              </div>
+            </div>
+            <hr class=" w-full pt-4 pb-4"></hr>
+            <div class="mx-auto">
+              <div>
+                <doghnutchart-ros />
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</>
