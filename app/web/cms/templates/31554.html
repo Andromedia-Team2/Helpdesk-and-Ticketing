@@ -19,6 +19,7 @@
         "/jenis-data/edit/" + params.id,
         "/status-data",
         "/level-data",
+        "/report-",
       ],
       userData: [
         "/vendor-data",
@@ -36,7 +37,7 @@
         "/ticket-data/add",
         "/ticket-data/view/" + params.id,
       ],
-      reportData: [],
+      reportData: ["/report-ticket-client"],
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
@@ -77,6 +78,7 @@
           "/view-profile",
           "/edit-profile",
           "/dropify",
+          "/report-ticket-client",
         ];
       } else if (user.role == "Employee") {
         meta.nama = user.dataUser.nama_employee;
@@ -95,6 +97,15 @@
           "/vendor-data/add",
           "/vendor-data/edit/" + params.id,
           "/view-profile",
+          // fawwaz
+          "/dashboard-client",
+          "/dashboard-employee",
+          "/dashboard-vendor",
+          "/dashboard-admin",
+          "/report-vendor",
+          "/report-ticket-client",
+          "/report-ticket-vendor",
+          // end fawwaz
         ];
       } else {
         navigate("/login");
@@ -676,9 +687,33 @@
                         <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
                           <a
                             class="flex items-center w-full px-4 py-2 "
-                            href="#"
+                            href="/dashboard-vendor"
                           >
-                            Report Ticket
+                            Dashboard Vendor
+                          </a>
+                        </li>
+                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                          <a
+                            class="flex items-center w-full px-4 py-2 "
+                            href="/dashboard-employee"
+                          >
+                            Dashboard Employee
+                          </a>
+                        </li>
+                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                          <a
+                            class="flex items-center w-full px-4 py-2 "
+                            href="/report-ticket-client"
+                          >
+                            Report Ticket Client
+                          </a>
+                        </li>
+                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
+                          <a
+                            class="flex items-center w-full px-4 py-2 "
+                            href="/report-ticket-vendor"
+                          >
+                            Report Ticket Vendor
                           </a>
                         </li>
                         <li class="hover:bg-gray-200 dark:hover:text-gray-200">

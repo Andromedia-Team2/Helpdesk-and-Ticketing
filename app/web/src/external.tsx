@@ -66,20 +66,49 @@ export default {
   "dropdown-mobile": () => [
     import("./components/dropdown-mobile"),
   ],
-  barChart: () => [
-    import("./components/App"),
-    { c: "", s: "", h: "" },
+  "linechart": () => [
+    import("./components/linechart"),
   ],
-  pieChart: () => [ 
-    import("./components/App2"),
-    { c: "", s: "", h: "" },
+  "barchart": () => [
+    import("./components/barchart"),
   ],
-  groupChart: () => [
-    import("./components/App3"),
-    { c: "", s: "", h: "" },
+  "doghnutchart": () => [
+    import("./components/doghnutchart"),
   ],
-  headmapChart: () => [
-    import("./components/headmap-chart"),
-    { c: "", s: "", h: "" },
+  "doghnutchart-ros": () => [
+    import("./components/doghnutchart-ros"),
+  ],
+  "barchart-overallticket": () => [
+    import("./components/barchart-overallticket"),
+  ],
+  "linechart-overallemployee": () => [
+    import("./components/linechart-overallemployee"),
+  ],
+  "groupchart": () => [
+    import("./components/groupchart"),
+  ],
+  "groupchart-ttype": () => [
+    import("./components/groupchart-ttype"),
+  ],
+  "groupchart-tlevel": () => [
+    import("./components/groupchart-tlevel"),
+  ],
+  "groupchart-tdepartement": () => [
+    import("./components/groupchart-tdepartement"),
+  ],
+  "linechart-overall": () => [
+    import("./components/linechart"),
+  ],
+  "groupchart-elevel": () => [
+    import("./components/groupchart-elevel"),
+  ],
+  "groupchart-etype": () => [
+    import("./components/groupchart-etype"),
+  ],
+  "doghnutchart-dlevel": () => [
+    import("./components/doghnutchart-tlevel"),
+  ],
+  "doghnutchart-dtype": () => [
+    import("./components/doghnutchart-ttype"),
   ],
 };
