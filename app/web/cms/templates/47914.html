@@ -1,0 +1,81 @@
+<>
+  <effect
+    meta={{
+      email: "",
+    }}
+    run={async () => {
+      meta.action = {
+        emailChange: (e) => {
+          runInAction(() => {
+            meta.email = e.target.value;
+            console.log(meta.email);
+          });
+        },
+      };
+    }}
+  />
+  <div class="flex flex-col items-start justify-start pt-6 bg-gray-50">
+    <div class="flex flex-1 self-stretch flex-col items-start justify-start px-6 pb-6">
+      <div class="flex flex-1 self-stretch flex-col space-y-12 items-start justify-start px-6 py-2.5">
+        <div class="flex self-stretch space-x-1 items-start justify-start">
+          <m-link
+            onClick={() => {
+              navigate("/m/login");
+            }}
+          >
+            <img
+              src="/fimgs/109_205.x1.svg"
+              class="flex items-center justif-center pt-2"
+              style="width: 24px; height: 30px; "
+            />
+          </m-link>
+          <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+            Forgot your password?
+          </div>
+          <div class="transform rotate-180" />
+        </div>
+        <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
+          <div class="flex self-stretch flex-col items-center justify-start">
+            <img
+              src="/fimgs/109_211.x1.png"
+              style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;"
+            />
+          </div>
+          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+            <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+              Enter your email address associated with your account
+            </div>
+            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+              We will email you a link to reset your password
+            </div>
+            <div
+              class="flex self-stretch items-center justify-start py-2.5 pl-5 pr-48  border rounded-lg border-gray-800"
+              style="height: 41px; min-height: 41px; max-height: 41px;"
+            >
+              <m-input
+                class="text-sm tracking-wide leading-tight text-gray-500"
+                placeholder="Email"
+                type="text"
+                value={meta.email}
+                onChange={(e) => meta.action.emailChange(e)}
+                required={true}
+              />
+            </div>
+          </div>
+          <m-button
+            class="flex items-center justify-center px-6 py-4 bg-red-900 shadow rounded-2xl shadow-lg text-xs font-medium tracking-wide leading-loose text-white"
+            onClick={() => {
+              window.mobileApp.app.dialog.alert(
+                "Check Your Email",
+                "Information"
+              ),
+                navigate("/m/reset-pass");
+            }}
+          >
+            Send
+          </m-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</>

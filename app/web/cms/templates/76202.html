@@ -62,7 +62,7 @@
                   placeholder="Han Solo"
                   value={meta.name}
                   onChange={(e) => meta.action.nameChange(e)}
-                  required
+                  required={true}
                 />
               </div>
               <div class="flex self-stretch flex-col items-start justify-start">
@@ -83,31 +83,6 @@
                     </select>
                   </div>
                 </div>
-                {/*<div class="input input-dropdown">*/}
-                {/*<select>*/}
-                {/*<option value="All">All</option>*/}
-                {/*<option value="Male">Male</option>*/}
-                {/*<option value="Female">Female</option>*/}
-                {/*</select>*/}
-                {/*</div>*/}
-                {/*<m-input*/}
-                {/*class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"*/}
-                {/*style="height:35px"*/}
-                {/*type="text"*/}
-                {/*placeholder="Maintance Ticket"*/}
-                {/*/>*/}
-                {/*<div*/}
-                {/*class="flex self-stretch items-center justify-between py-2 pl-5 pr-2.5 border rounded-lg border-gray-500"*/}
-                {/*style="width: 366px; min-width: 366px; max-width: 366px; height: 41px; min-height: 41px; max-height: 41px;"*/}
-                {/*>*/}
-                {/*<div class="text-sm tracking-wide leading-tight text-gray-700">*/}
-                {/*Maintenance Ticket*/}
-                {/*</div>*/}
-                {/*<img*/}
-                {/*src="/fimgs/698_1092.x1.svg"*/}
-                {/*style="width: 25px; min-width: 25px; max-width: 25px; height: 25px; min-height: 25px; max-height: 25px;background-image: url('/fimgs/bg-2cc07aa4f15443e480020f7ccbf834c608b09a16');background-size:100% 100%;background-repeat:no-repeat;"*/}
-                {/*/>*/}
-                {/*</div>*/}
               </div>
             </div>
           </m-card>
@@ -134,6 +109,7 @@
                     placeholder="Lorem Ipsum"
                     value={meta.subject}
                     onChange={(e) => meta.action.subjectChange(e)}
+                    required={true}
                   />
                 </div>
               </div>
@@ -151,6 +127,7 @@
                     placeholder="Enter Your Text Here"
                     value={meta.message}
                     onChange={(e) => meta.action.messageChange(e)}
+                    required={true}
                   />
                 </div>
               </div>
@@ -188,6 +165,12 @@
                 <m-button
                   class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
                   style="height:30px"
+                  onClick={() => {
+                    window.mobileApp.app.dialog.preloader(),
+                      setTimeout(function () {
+                        window.mobileApp.app.dialog.close();
+                      }, 1500);
+                  }}
                 >
                   <img
                     src="/fimgs/688_1787.x1.svg"
