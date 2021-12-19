@@ -6,12 +6,23 @@
       showMessage: false,
       message: "",
       pass_type: "password",
+      validationCheck() {
+        this.message =
+          this.username === "" || this.username === null
+            ? "Your username is empty. Make sure all forms are filled and try again."
+            : this.password === "" || this.password === null
+            ? "Your password is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
     }}
     run={async () => {
-      let modal = document.getElementById("my-modal");
-      let success = document.getElementById("my-success");
-      let loading = document.getElementById("my-loading");
-      let failed = document.getElementById("my-failed");
       meta.action = {
         usernameChange: (e) => {
           runInAction(() => {
@@ -32,34 +43,25 @@
               : (meta.pass_type = "password");
           });
         },
-        tryAgain: () => {
-          runInAction(() => {
-            modal.style.display = "none";
-            failed.style.display = "none";
-          });
-        },
         login: (e) => {
           let error_msg = meta.validationCheck();
-          modal.style.display = "block";
           if (error_msg) {
-            failed.style.display = "block";
+            window.mobileApp.app.dialog.alert(null, error_msg);
           } else {
-            loading.style.display = "block";
+            window.mobileApp.app.dialog.preloader();
             api("/api/login", {
               username: meta.username,
               password: meta.password,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
-                loading.style.display = "none";
-                success.style.display = "block";
                 //navigate("/coba");
-                window.location.replace("/coba");
+                window.location.replace("/m/dashboard");
+                meta.timeOut(1000);
               } else {
                 meta.message = e.message;
-                loading.style.display = "none";
-                failed.style.display = "block";
-                meta.showMessage = true;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
               }
             });
           }
@@ -194,11 +196,7 @@
           class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl"
           style="width: 111px; height: 46px; "
           onClick={() => {
-            window.mobileApp.app.dialog.preloader(),
-              setTimeout(function () {
-                window.mobileApp.app.dialog.close();
-              }, 1500);
-            navigate("/m/dashboard");
+            meta.action.login();
           }}
         >
           <div class="text-xl font-medium tracking-wide leading-loose text-white">
