@@ -1,29 +1,100 @@
 <>
   <effect
     meta={{
-      current: "",
-      newpass: "",
-      confirm: "",
+      id_user: 0,
+      password: "",
+      newPassword: "",
+      confirmPassword: "",
+      message: "",
+      pass_type1: "password",
+      pass_type2: "password",
+      pass_type3: "password",
+
+      validationCheck() {
+        this.message =
+          this.password === "" || this.password === null
+            ? "Your current password is empty. Make sure all forms are filled and try again."
+            : this.newPassword === "" || this.newPassword === null
+            ? "Your new password is empty. Make sure all forms are filled and try again."
+            : !validatePass(this.newPassword)
+            ? "Password length 8-16, Include Uppercase, Lowercase & No space"
+            : this.confirmPassword === "" || this.confirmPassword === null
+            ? "Your confirmation password is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
     }}
     run={async () => {
+      meta.id_user = parseInt(user.dataUser.id_user);
       meta.action = {
-        currentChange: (e) => {
+        passwordChange: (e) => {
           runInAction(() => {
-            meta.current = e.target.value;
-            console.log(meta.current);
+            meta.password = e.target.value;
+            console.log(meta.password);
           });
         },
-        newpassChange: (e) => {
+        newChange: (e) => {
           runInAction(() => {
-            meta.newpass = e.target.value;
-            console.log(meta.newpass);
+            meta.newPassword = e.target.value;
+            console.log(meta.newPassword);
           });
         },
         confirmChange: (e) => {
           runInAction(() => {
-            meta.confirm = e.target.value;
-            console.log(meta.confirm);
+            meta.confirmPassword = e.target.value;
+            console.log(meta.confirmPassword);
           });
+        },
+        showHidePass1: () => {
+          runInAction(() => {
+            meta.pass_type1 === "password"
+              ? (meta.pass_type1 = "text")
+              : (meta.pass_type1 = "password");
+          });
+        },
+        showHidePass2: () => {
+          runInAction(() => {
+            meta.pass_type2 === "password"
+              ? (meta.pass_type2 = "text")
+              : (meta.pass_type2 = "password");
+          });
+        },
+        showHidePass3: () => {
+          runInAction(() => {
+            meta.pass_type3 === "password"
+              ? (meta.pass_type3 = "text")
+              : (meta.pass_type3 = "password");
+          });
+        },
+        editData: (e) => {
+          let error_msg = meta.validationCheck();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            api("/api/password/edit", {
+              id_user: meta.id_user,
+              password: meta.password,
+              newPassword: meta.newPassword,
+              confirmPassword: meta.confirmPassword,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                navigate("/m/view-profile");
+                meta.timeOut(1000);
+              } else {
+                meta.message = e.message;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
+              }
+            });
+          }
         },
       };
     }}
@@ -55,9 +126,10 @@
                     class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10"
                     style="height:35px"
                     type="password"
-                    value={meta.current}
-                    onChange={(e) => meta.action.currentChange(e)}
-                    required={true}
+                    value={meta.password}
+                    onChange={(e) => meta.action.passwordChange(e)}
+                    placeholder="Password"
+                    required
                   >
                     {/*<a class="">*/}
                     {/*<svg*/}
@@ -81,9 +153,10 @@
                     class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10 w-full"
                     style="height:35px"
                     type="password"
-                    value={meta.newpass}
-                    onChange={(e) => meta.action.newpassChange(e)}
-                    required={true}
+                    value={meta.newPassword}
+                    onChange={(e) => meta.action.newChange(e)}
+                    placeholder="New Password"
+                    required
                   >
                     {/*<a class="">*/}
                     {/*<svg*/}
@@ -107,9 +180,10 @@
                     class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10"
                     style="height:35px"
                     type="password"
-                    value={meta.confirm}
+                    value={meta.confirmPassword}
                     onChange={(e) => meta.action.confirmChange(e)}
-                    required={true}
+                    placeholder="type your password here ..."
+                    required
                   >
                     {/*<a class="">*/}
                     {/*<svg*/}
@@ -136,12 +210,7 @@
               <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
                 <m-link
                   onClick={() => {
-                    window.mobileApp.app.dialog.confirm(
-                      "Yakin Mengubah Password ?",
-                      "Konfirmasi",
-                      () => {},
-                      navigate("/m/view-profile")
-                    );
+                    meta.action.editData();
                   }}
                 >
                   <div class="text-sm font-medium tracking-wide leading-tight text-white">

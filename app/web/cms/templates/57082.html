@@ -1,25 +1,99 @@
 <>
   <effect
     meta={{
-      value: {},
-      nama: "",
-      nomor: "",
+      name: "",
       email: "",
-      lokasi: "",
+      company: "",
+      phone: "",
+      address: "",
       username: "",
+      password: "",
+      value: {},
+      photo:
+        user.dataUser?.foto_profile !== null
+          ? "/uploads/" + user.dataUser?.foto_profile
+          : "/uploads/profiles/default.png",
+      message: "",
+      attachment: "",
+      validationCheck() {
+        this.message =
+          this.name === "" || this.name === null
+            ? "Your name is empty. Make sure all forms are filled and try again."
+            : this.username === "" || this.username === null
+            ? "Your username is empty. Make sure all forms are filled and try again."
+            : this.email === "" || this.email === null
+            ? "Your email is empty. Make sure all forms are filled and try again."
+            : !validateEmail(this.email)
+            ? "Invalid email format. Make sure your email format like (abc@def.com)"
+            : this.company === "" || this.company === null
+            ? "Your company is empty. Make sure all forms are filled and try again."
+            : this.phone === "" || this.phone === null
+            ? "Your phone number is empty. Make sure all forms are filled and try again."
+            : this.address === "" || this.address === null
+            ? "Your address is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
+
+      validationCheck1() {
+        this.message =
+          this.attachment === "" || this.attachment === null
+            ? "Your photo is empty. Make sure your photo selected before uploading."
+            : false;
+        return this.message;
+      },
+
+      async upload(file) {
+        const formData = _FormData();
+
+        formData.append("path", "profiles");
+        formData.append("file", file);
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        return await response.json();
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
     }}
     run={async () => {
+      await db.users
+        .findUnique({
+          where: {
+            id_user: user.dataUser.id_user,
+          },
+        })
+        .then((e) => {
+          meta.value = e;
+
+          meta.username = meta.value.username;
+          meta.password = meta.value.password;
+        });
+      meta.name = user.dataUser.nama_client;
+      meta.email = user.dataUser.email_client;
+      meta.company = user.dataUser.perusahaan_client;
+      meta.phone = user.dataUser.nomor_client;
+      meta.address = user.dataUser.lokasi_client;
+      user.dataUser.foto_profile !== null
+        ? (meta.photo = "/uploads/" + user.dataUser.foto_profile)
+        : (meta.photo = "/uploads/profiles/default.png");
+
       meta.action = {
         namaChange: (e) => {
           runInAction(() => {
-            meta.nama = e.target.value;
-            console.log(meta.nama);
+            meta.name = e.target.value;
+            console.log(meta.name);
           });
         },
         nomorChange: (e) => {
           runInAction(() => {
-            meta.nomor = e.target.value;
-            console.log(meta.nomor);
+            meta.phone = e.target.value;
+            console.log(meta.phone);
           });
         },
         emailChange: (e) => {
@@ -30,8 +104,8 @@
         },
         lokasiChange: (e) => {
           runInAction(() => {
-            meta.lokasi = e.target.value;
-            console.log(meta.lokasi);
+            meta.company = e.target.value;
+            console.log(meta.company);
           });
         },
         usernameChange: (e) => {
@@ -39,6 +113,62 @@
             meta.username = e.target.value;
             console.log(meta.username);
           });
+        },
+        addressChange: (e) => {
+          runInAction(() => {
+            meta.address = e.target.value;
+            console.log(meta.address);
+          });
+        },
+        editData: (e) => {
+          let error_msg = meta.validationCheck();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            api("/api/profile/edit", {
+              id_user: parseInt(user.dataUser.id_user),
+              nama: meta.name,
+              email: meta.email,
+              company: meta.company,
+              nomor: meta.phone,
+              address: meta.address,
+              username: meta.username,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                window.location.replace("/m/view-profile");
+                meta.timeOut(1000);
+              } else {
+                meta.message = e.message;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
+              }
+            });
+          }
+        },
+        uploadProfile: (e) => {
+          let error_msg = meta.validationCheck1();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            api("/api/photo/upload", {
+              id_user: parseInt(user.dataUser.id_user),
+              attachment: meta.attachment,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                //window.location.reload();
+                meta.photo = "/uploads/" + meta.attachment;
+                meta.timeOut(1000);
+              } else {
+                meta.message = e.message;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
+              }
+            });
+          }
         },
       };
     }}
@@ -54,11 +184,31 @@
         <div class="flex self-stretch flex-col items-center justify-start p-6 bg-white shadow rounded-lg">
           <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
             <div class="flex self-stretch items-center justify-center ">
-              <img
-                src="/fimgs/1036_1928.x1.svg"
-                class="flex flex-col items-center justify-center p-2.5 rounded-full"
-                style="width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"
-              />
+              <label
+                for="file-upload"
+                class={`flex flex-col items-start justify-start items-center`}
+              >
+                <input
+                  type={`file`}
+                  onChange={(e) => {
+                    runInAction(async () => {
+                      const upload = await meta.upload(e.target.files[0]);
+                      runInAction(() => {
+                        console.log(upload.path);
+                        meta.attachment = upload.path;
+                      });
+                      meta.action.uploadProfile();
+                    });
+                  }}
+                  id="file-upload"
+                  style="visibility:hidden;"
+                />
+                <img
+                  src={meta.photo}
+                  class="flex flex-col items-center justify-center p-2.5 rounded-full"
+                  style="width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"
+                />
+              </label>
             </div>
             <div class="flex self-stretch flex-col space-y-2 items-start justify-start">
               <div class="flex self-stretch flex-col items-start justify-start">
@@ -71,8 +221,8 @@
                   class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                   style="height:35px"
                   type="text"
-                  placeholder="Han Solo"
-                  value={meta.nama}
+                  placeholder="Full Name"
+                  value={meta.name}
                   onChange={(e) => meta.action.namaChange(e)}
                   required={true}
                 />
@@ -87,7 +237,7 @@
                   class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                   style="height:35px"
                   type="email"
-                  placeholder="han.solo@startrek.com"
+                  placeholder="Email"
                   value={meta.email}
                   onChange={(e) => meta.action.emailChange(e)}
                   required={true}
@@ -100,50 +250,6 @@
           <div class="flex self-stretch flex-col items-start justify-start">
             <div class="flex self-stretch flex-col items-start justify-start">
               <div class="flex self-stretch flex-col items-start justify-start">
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch items-start justify-start p-2.5">
-                    <label class="text-sm tracking-wide leading-tight text-gray-500">
-                      Company
-                    </label>
-                  </div>
-                  <input
-                    class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                    placeholder="Startrek Ent."
-                    required={true}
-                  />
-                </div>
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch items-start justify-start p-2.5">
-                    <label class="text-sm tracking-wide leading-tight text-gray-500">
-                      Phone
-                    </label>
-                  </div>
-                  <m-input
-                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                    style="height:35px"
-                    type="number"
-                    placeholder="081649246857"
-                    value={meta.nomor}
-                    onChange={(e) => meta.action.nomorChange(e)}
-                    required={true}
-                  />
-                </div>
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch items-start justify-start p-2.5">
-                    <label class="text-sm tracking-wide leading-tight text-gray-500">
-                      Address
-                    </label>
-                  </div>
-                  <m-input
-                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                    style="height:35px"
-                    type="text"
-                    placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
-                    value={meta.lokasi}
-                    onChange={(e) => meta.action.lokasiChange(e)}
-                    required={true}
-                  />
-                </div>
                 <div class="flex self-stretch flex-col items-start justify-start">
                   <div class="flex self-stretch flex-col items-start justify-start">
                     <div class="flex self-stretch items-start justify-start p-2.5">
@@ -162,25 +268,53 @@
                     />
                   </div>
                 </div>
-                <div class="flex self-stretch items-end justify-start">
-                  <div class="flex flex-1 flex-col space-y-2 items-start justify-start">
-                    <div class="flex self-stretch items-start justify-start p-2.5">
-                      <label class="text-sm tracking-wide leading-tight text-gray-500">
-                        Password
-                      </label>
-                    </div>
-                    <div class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
-                      <div class="text-sm tracking-wide leading-tight text-gray-700 w-full">
-                        11startrek
-                      </div>
-                      <div class="flex items-start justify-start p-1 rounded-tr-lg rounded-br-lg">
-                        <img
-                          src="/fimgs/I1036_1822_196_154.x1.svg"
-                          style="width: 20px; min-width: 20px; max-width: 20px; height: 20px; min-height: 20px; max-height: 20px;background-image: url('/fimgs/bg-6130b0b2d196028c462a76cb07bc8cb599a2bc89');background-size:100% 100%;background-repeat:no-repeat;"
-                        />
-                      </div>
-                    </div>
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start p-2.5">
+                    <label class="text-sm tracking-wide leading-tight text-gray-500">
+                      Company
+                    </label>
                   </div>
+                  <m-input
+                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    style="height:35px"
+                    type="text"
+                    placeholder="Company"
+                    value={meta.company}
+                    onChange={(e) => meta.action.lokasiChange(e)}
+                    required={true}
+                  />
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start p-2.5">
+                    <label class="text-sm tracking-wide leading-tight text-gray-500">
+                      Phone
+                    </label>
+                  </div>
+                  <m-input
+                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    style="height:35px"
+                    type="number"
+                    placeholder="Phone Number"
+                    value={meta.phone}
+                    onChange={(e) => meta.action.nomorChange(e)}
+                    required={true}
+                  />
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start p-2.5">
+                    <label class="text-sm tracking-wide leading-tight text-gray-500">
+                      Address
+                    </label>
+                  </div>
+                  <m-input
+                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                    style="height:35px"
+                    type="text"
+                    placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
+                    value={meta.address}
+                    onChange={(e) => meta.action.addressChange(e)}
+                    required={true}
+                  />
                 </div>
               </div>
             </div>
@@ -196,12 +330,7 @@
             <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
               <m-link
                 onClick={() => {
-                  window.mobileApp.app.dialog.confirm(
-                    "Data Profile yang anda ubah sudah benar?",
-                    "Konfirmasi",
-                    () => {},
-                    navigate("/m/view-profile")
-                  );
+                  meta.action.editData();
                 }}
               >
                 <div class="text-sm font-medium tracking-wide leading-tight text-white">
