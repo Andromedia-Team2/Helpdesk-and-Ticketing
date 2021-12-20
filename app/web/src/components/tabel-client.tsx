@@ -33,7 +33,8 @@ export default () => {
                         "</svg></a></button></div>"; 
                     }
                 }
-            ]
+            ],
+            "bDestroy": true
         });
 
     })

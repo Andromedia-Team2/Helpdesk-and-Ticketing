@@ -56,24 +56,28 @@ model employee {
 }
 
 model history_ticket {
-  id_history_ticket    Int           @id @unique @default(autoincrement())
-  id_ticket            Int           @unique
-  id_level_ticket      Int?
-  id_employee          Int?
-  tanggalMasuk_ticket  String        @db.VarChar
-  tanggalSolved_ticket String?       @db.VarChar
-  id_status_ticket     Int
-  id_department        Int?
-  id_client            Int
-  id_vendor            Int
-  client               client        @relation(fields: [id_client], references: [id_client])
-  department           department?   @relation(fields: [id_department], references: [id_department])
-  employee             employee?     @relation(fields: [id_employee], references: [id_employee])
-  level_ticket         level_ticket? @relation(fields: [id_level_ticket], references: [id_level_ticket])
-  status_ticket        status_ticket @relation(fields: [id_status_ticket], references: [id_status_ticket])
-  ticket               ticket        @relation(fields: [id_ticket], references: [id_ticket])
-  vendor               vendor        @relation(fields: [id_vendor], references: [id_vendor])
-  percakapan           percakapan[]
+  id_history_ticket      Int           @id @unique @default(autoincrement())
+  id_ticket              Int           @unique
+  id_level_ticket        Int?
+  id_employee            Int?
+  tanggalMasuk_ticket    String        @db.VarChar
+  tanggalSolved_ticket   String?       @db.VarChar
+  id_status_ticket       Int
+  id_department          Int?
+  id_client              Int
+  id_vendor              Int
+  tanggalAssign_ticket   DateTime?     @db.Timestamp(6)
+  tanggalProgress_ticket DateTime?     @db.Timestamp(6)
+  firstReply_deviation   Int?
+  ticketSolved_deviation Int?
+  client                 client        @relation(fields: [id_client], references: [id_client])
+  department             department?   @relation(fields: [id_department], references: [id_department])
+  employee               employee?     @relation(fields: [id_employee], references: [id_employee])
+  level_ticket           level_ticket? @relation(fields: [id_level_ticket], references: [id_level_ticket])
+  status_ticket          status_ticket @relation(fields: [id_status_ticket], references: [id_status_ticket])
+  ticket                 ticket        @relation(fields: [id_ticket], references: [id_ticket])
+  vendor                 vendor        @relation(fields: [id_vendor], references: [id_vendor])
+  percakapan             percakapan[]
 
   @@index([id_client], name: "history_ticket_id_client")
   @@index([id_department], name: "history_ticket_id_department")

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Doughnut, defaults } from 'react-chartjs-2'
 
-const LineChart = () => {
+export default (x) => {
+  const idata = x.data;
   return (
     <div>
       <Doughnut
@@ -13,7 +14,7 @@ const LineChart = () => {
           ],
           datasets: [{
             label: 'My First Dataset',
-            data: [300, 50, 100],
+            data: idata,
             backgroundColor: [
               'rgb(239, 68, 68)',
               'rgb(234, 179, 8)',
@@ -27,4 +28,3 @@ const LineChart = () => {
   )
 }
 
-export default LineChart
