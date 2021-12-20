@@ -9,7 +9,7 @@
       showMaster: false,
       showUser: false,
       showReport: false,
-      dashboard: ["/coba"],
+      dashboard: ["/dashboard"],
       masterData: [
         "/department-data",
         "/department-data/add",
@@ -46,6 +46,7 @@
       if (user.role == "Vendor") {
         meta.nama = user.dataUser.nama_vendor;
         meta.guarrantedUrl = [
+          "/dashboard",
           "/coba",
           "/department-data",
           "/department-data/add",
@@ -67,10 +68,18 @@
           "/ticket-data/view/" + params.id,
           "/view-profile",
           "/edit-profile",
+          "/dashboard-client",
+          "/dashboard-employee",
+          "/dashboard-vendor",
+          "/dashboard-admin",
+          "/report-vendor",
+          "/report-ticket-client",
+          "/report-ticket-vendor",
         ];
       } else if (user.role == "Client") {
         meta.nama = user.dataUser.nama_client;
         meta.guarrantedUrl = [
+          "/dashboard",
           "/coba",
           "/ticket-data",
           "/ticket-data/add",
@@ -79,11 +88,18 @@
           "/edit-profile",
           "/dropify",
           "/report-ticket-client",
+          "/dashboard-client",
+          "/dashboard-employee",
+          "/dashboard-vendor",
+          "/dashboard-admin",
+          "/report-vendor",
+          "/report-ticket-client",
+          "/report-ticket-vendor",
         ];
       } else if (user.role == "Employee") {
         meta.nama = user.dataUser.nama_employee;
         meta.guarrantedUrl = [
-          "/coba",
+          "/dashboard",
           "/ticket-data",
           "/ticket-data/view/" + params.id,
           "/view-profile",
@@ -92,7 +108,7 @@
       } else if (user.role == "Super Admin") {
         meta.nama = "Super Admin";
         meta.guarrantedUrl = [
-          "/coba",
+          "/dashboard",
           "/vendor-data",
           "/vendor-data/add",
           "/vendor-data/edit/" + params.id,
@@ -380,7 +396,7 @@
                 >
                   <a
                     class="flex px-4 py-3 items-center w-full text-sm font-semibold"
-                    href="/coba"
+                    href="/dashboard"
                   >
                     <svg
                       class="w-5 h-5"

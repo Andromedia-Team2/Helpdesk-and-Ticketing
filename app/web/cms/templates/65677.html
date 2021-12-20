@@ -1,37 +1,56 @@
 <>
-  <effect meta={{}} run={async () => {}} />
+  <effect
+    meta={{
+      dataLevel: [],
+      dataSummary: {},
+    }}
+    run={async () => {
+      await api("/api/get-stats").then((e) => {
+        meta.dataLevel = e.data;
+        console.log(meta.dataLevel);
+      });
+
+      await api("/api/get-sum").then((e) => {
+        meta.dataSummary = e.data;
+        console.log(meta.dataSummary);
+      });
+    }}
+  />
   <div class="flex flex-col items-start justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start">
-      <regist-vendor />
       <div class="flex flex-1 self-stretch items-start justify-start px-6">
         <div class="flex flex-1 flex-col space-y-5 items-start justify-start px-3 py-6">
           <div class="flex self-stretch items-start justify-between">
-            <div class="flex items-center justify-between bg-white shadow rounded-lg">
-              <div class="flex flex-col space-y-3 items-start justify-start p-3">
-                <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
-                  Open
+            {(user.role === "Vendor" ||
+              user.role === "Super Admin" ||
+              user.role === "Client") && (
+              <div class="flex items-center justify-between bg-white shadow rounded-lg">
+                <div class="flex flex-col space-y-3 items-start justify-start p-3">
+                  <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
+                    Open
+                  </div>
+                  <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
+                    {meta.dataSummary?.open}
+                  </div>
                 </div>
-                <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
-                  2
-                </div>
+                <img
+                  src="/fimgs/1417_2084.x3.png"
+                  class="flex items-start justify-start p-3"
+                  style="width: 104px; min-width: 104px; max-width: 104px; height: 104px; min-height: 104px; max-height: 104px;"
+                />
+                <img
+                  src="/fimgs/1417_2086.x3.png"
+                  style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                />
               </div>
-              <img
-                src="/fimgs/1417_2084.x3.png"
-                class="flex items-start justify-start p-3"
-                style="width: 104px; min-width: 104px; max-width: 104px; height: 104px; min-height: 104px; max-height: 104px;"
-              />
-              <img
-                src="/fimgs/1417_2086.x3.png"
-                style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
-              />
-            </div>
+            )}
             <div class="flex items-start justify-between bg-white shadow rounded-lg">
               <div class="flex flex-col space-y-3 items-start justify-start p-3">
                 <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
                   Assigned
                 </div>
                 <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
-                  4
+                  {meta.dataSummary?.assign}
                 </div>
               </div>
               <div class="flex items-start justify-start p-3">
@@ -51,7 +70,7 @@
                   In Progress
                 </div>
                 <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
-                  8
+                  {meta.dataSummary?.progress}
                 </div>
               </div>
               <img
@@ -70,7 +89,7 @@
                   Resolved
                 </div>
                 <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
-                  2
+                  {meta.dataSummary?.resolved}
                 </div>
               </div>
               <img
@@ -108,7 +127,7 @@
                       </div>
                     </div>
                     <div class="border-gray-500" />
-                    <doghnutchart data={[10, 20, 30]} />
+                    <doghnutchart data={meta.dataLevel} />
                     <div />
                   </div>
                   <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
@@ -131,7 +150,7 @@
                       </div>
                     </div>
                     <div class="border-gray-500" />
-                    <doghnutchart data={[10, 20, 30]} />
+                    <doghnutchart data={[40, 60, 120]} />
                     <div />
                   </div>
                 </div>

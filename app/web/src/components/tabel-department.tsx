@@ -7,7 +7,7 @@ require('datatables.net')(window, $);
 declare const window: BaseWindow
 
 export default (x) => {
-    console.log(x.state.name);
+    console.log(x.data);
     api("/api/get-department").then((res) => {
         $('#dtable').DataTable({
             data: res.data,
