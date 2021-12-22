@@ -13,9 +13,9 @@ const LineChart = () => {
           labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
           datasets: [
             {
-              label: 'Low',
-              data: [1, 12, 19, 3, 4, 8, 12, 23, 25, 32, 44, 45],
-              borderColor : '#D6D4A0',
+              label: 'Moza',
+              data: [1, 5, 10, 25, 60, 90, 120, 150, 180, 210, 240, 280],
+              borderColor : '#03045e',
               // backgroundColor: '#312e8115',
               pointBackgroundColor:'#66717E',
               pointRadius:5,
@@ -23,19 +23,9 @@ const LineChart = () => {
               borderWidth:2,
               // tension:0.2
             },{
-              label: 'Medium',
-              data: [11, 18, 2, 4, 8, 3, 12, 20, 21, 23, 25, 27],
-              borderColor : '#DB995A',
-              // backgroundColor: '#ff660015',
-              pointBackgroundColor:'#ffffff',
-              pointRadius:5,
-              pointHoverRadius:7,
-              borderWidth:2,
-              // tension:0.2
-            },{
-              label: 'High',
-              data: [1, 2, 4, 6, 8, 9, 11, 15, 18, 19, 22, 27],
-              borderColor : '#E24E1B',
+              label: 'Nadya',
+              data: [1, 5, 10, 25, 40, 90, 120, 150, 160, 210, 200, 180],
+              borderColor : '#023e8a',
               // backgroundColor: '#ff660015',
               pointBackgroundColor:'#ffffff',
               pointRadius:5,
