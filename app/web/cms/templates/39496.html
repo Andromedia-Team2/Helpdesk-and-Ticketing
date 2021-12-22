@@ -158,6 +158,7 @@
               id_level_ticket: meta.id_level_ticket,
               id_status_ticket: 2,
               id_department: meta.id_department,
+              tanggal_assign: new Date(),
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
@@ -179,6 +180,7 @@
             id_ticket: meta.id_ticket,
             tanggal_solved: new Date(),
             id_status_ticket: 4,
+            id_history_ticket: parseInt(meta.value.id_history_ticket),
           }).then((e) => {
             console.log(e);
             if (e.status == "SUCCESS") {
@@ -202,6 +204,7 @@
             api("/api/message", {
               tanggal_waktu_percakapan: new Date(),
               isi_percakapan: meta.message,
+              ticket_status: meta.value?.status_ticket?.status_ticket,
               attachment: meta.attachment,
               id_history_ticket: parseInt(meta.value.id_history_ticket),
               id_user: parseInt(user.dataUser.id_user),
@@ -259,7 +262,7 @@
                     {meta.value?.ticket?.jenis_ticket?.jenis_ticket}
                   </div>
                 </div>
-                {user.role === "Employee" &&
+                {user.role === "Client" &&
                   meta.value?.status_ticket?.status_ticket !== "RESOLVED" && (
                     <div class="flex self-stretch w-full md:space-x-3 items-center justify-start justify-end">
                       <div class="text-l hidden md:block tracking-wide leading-loose text-gray-600 items-center justify-left ">
@@ -314,10 +317,10 @@
                         {meta.value?.client?.email_client}
                       </div>
                       <div class="text-base hidden md:block tracking-wide leading-normal text-gray-700">
-                        {meta.value?.tanggalMasuk_ticket}
+                        {formatDate(meta.value?.tanggalMasuk_ticket)}
                       </div>
                       <div class="text-base md:hidden tracking-wide leading-normal text-gray-700">
-                        {meta.value?.tanggalMasuk_ticket}
+                        {formatDay(meta.value?.tanggalMasuk_ticket)}
                       </div>
                     </div>
                   </div>
@@ -474,10 +477,10 @@
                             </div>
                             <div class="flex self-stretch items-center justify-between">
                               <div class="text-base hidden md:block tracking-wide leading-normal text-gray-700">
-                                {p.tanggal_waktu_percakapan}
+                                {formatDay(p.tanggal_waktu_percakapan)}
                               </div>
                               <div class="text-base md:hidden tracking-wide leading-normal text-gray-700">
-                                {p.tanggal_waktu_percakapan}
+                                {formatDate(p.tanggal_waktu_percakapan)}
                               </div>
                               <div class="text-lg tracking-wide leading-relaxed text-center text-gray-500">
                                 {p.users.id_role === 3 &&
@@ -570,10 +573,10 @@
                                   meta.value?.employee?.email_employee}
                               </div>
                               <div class="text-base hidden md:block tracking-wide leading-normal text-gray-700">
-                                {p.tanggal_waktu_percakapan}
+                                {formatDay(p.tanggal_waktu_percakapan)}
                               </div>
                               <div class="text-base md:hidden tracking-wide leading-normal text-gray-700">
-                                {p.tanggal_waktu_percakapan}
+                                {formatDate(p.tanggal_waktu_percakapan)}
                               </div>
                             </div>
                           </div>

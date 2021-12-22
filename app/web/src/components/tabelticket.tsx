@@ -8,6 +8,18 @@ var $ = require("jquery");
 require("datatables.net")(window, $);
 declare const window: BaseWindow;
 
+const format = (date) => {
+  date = new Date(date);
+  const day = ('0' + date.getDate()).slice(-2);
+  const monthIndex = ('0' + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+  const myFormattedDate = day + "/" + (monthIndex) + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+  return myFormattedDate;
+}
+
 export default () => {
   var no = 0;
   api("/api/get-ticket").then((res) => {
@@ -36,14 +48,14 @@ export default () => {
          {
           mData: null,
           mRender: function (data, type, full) {
-            return (full.tanggalMasuk_ticket);
+            return (format(full.tanggalMasuk_ticket));
           }
         },
          {
           mData: null,
           mRender: function (data, type, full) {
             if (full.tanggalSolved_ticket	 != null){
-              return (full.tanggalSolved_ticket	);
+              return (format(full.tanggalSolved_ticket));
             }else{
               return ("Not Solved")
             }

@@ -55,6 +55,10 @@ export default {
     import("./components/tabelticket"),
     { c: "", s: "", h: "" },
   ],
+  tabelperform: () => [
+    import("./components/tabel-perform"),
+    { c: "", s: "", h: "" },
+  ],
   tabelticketlistven: () => [
     import("./components/tabelticketlistven"),
     { c: "", s: "", h: "" },
