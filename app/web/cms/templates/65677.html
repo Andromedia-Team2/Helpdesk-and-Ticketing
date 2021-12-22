@@ -3,9 +3,14 @@
     meta={{
       dataLevel: [],
       dataSummary: {},
+      dateLevel: null,
+      dateVal: "",
+      employeeData: [],
     }}
     run={async () => {
-      await api("/api/get-stats").then((e) => {
+      await api("/api/get-stats", {
+        dateLevel: meta.dateLevel,
+      }).then((e) => {
         meta.dataLevel = e.data;
         console.log(meta.dataLevel);
       });
@@ -14,6 +19,26 @@
         meta.dataSummary = e.data;
         console.log(meta.dataSummary);
       });
+
+      await api("/api/get-performance").then((e) => {
+        meta.employeeData = e.data;
+      });
+
+      meta.action = {
+        dateLevelChange: (e) => {
+          runInAction(() => {
+            meta.dateVal = e.target.value;
+            meta.dateLevel = new Date(e.target.value);
+            console.log(meta.dateLevel);
+            api("/api/get-stats", {
+              dateLevel: meta.dateLevel,
+            }).then((e) => {
+              meta.dataLevel = e.data;
+              console.log(meta.dataLevel);
+            });
+          });
+        },
+      };
     }}
   />
   <div class="flex flex-col items-start justify-start bg-gray-50">
@@ -114,19 +139,17 @@
                           Ticket by level:
                         </div>
                       </div>
-                      <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                        <div class="flex items-start justify-start px-4 py-2 rounded-lg">
-                          <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                            10 november 2021
-                          </div>
+                      <div class="flex items-center justify-start">
+                        <div class="flex items-start justify-start py-2 rounded-lg">
+                          <input
+                            type="date"
+                            value={meta.dateVal}
+                            class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                            onChange={(e) => meta.action.dateLevelChange(e)}
+                          />
                         </div>
-                        <img
-                          src="/fimgs/1417_2096.x3.png"
-                          style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                        />
                       </div>
                     </div>
-                    <div class="border-gray-500" />
                     <doghnutchart data={meta.dataLevel} />
                     <div />
                   </div>
@@ -161,20 +184,9 @@
                         Performance
                       </div>
                     </div>
-                    <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                      <div class="flex items-start justify-start px-4 py-2 rounded-lg">
-                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                          10 november 2021
-                        </div>
-                      </div>
-                      <img
-                        src="/fimgs/1417_2115.x3.png"
-                        style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                      />
-                    </div>
                   </div>
                   <div class="border-gray-500" />
-                  <tabelclient />
+                  <tabelperform />
                 </div>
               </div>
             </div>

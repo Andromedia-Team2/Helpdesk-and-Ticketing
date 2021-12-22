@@ -52,7 +52,31 @@ const _FormData = () => {
   return new FormData();
 }
 
+const formatDay = (date) => {
+  date = new Date(date);
+
+  var day = ('0' + date.getDate()).slice(-2);
+  var month = ('0' + (date.getMonth() + 1)).slice(-2);
+  var year = date.getFullYear();
+
+  return year + '/' + month + '/' + day;
+}
+
+const formatDate = (date) => {
+  date = new Date(date);
+  const day = ('0' + date.getDate()).slice(-2);
+  const monthIndex = ('0' + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+  const myFormattedDate = day + "/" + (monthIndex) + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+  return myFormattedDate;
+}
+
 export const globalVar = {
   _FormData, 
   validateEmail,
-  validatePass,}
+  validatePass,
+  formatDate,
+  formatDay}
