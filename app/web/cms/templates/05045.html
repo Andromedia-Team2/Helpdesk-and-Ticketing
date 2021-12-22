@@ -1,150 +1,138 @@
 <>
-  <effect meta={{}} run={async () => {}} />
-  <div class="flex flex-col items-start justify-start bg-gray-50  self-stretch mb-20">
+  <effect
+    meta={{}}
+    run={async () => {
+      meta.action = {
+        edit: (e) => {
+          window.location.replace("/m/edit-profile");
+        },
+        change: (e) => {
+          window.location.replace("/m/change-pass");
+        },
+        signout: (e) => {
+          window.mobileApp.app.dialog.preloader(),
+            setTimeout(function () {
+              window.mobileApp.app.dialog.close();
+            }, 1500);
+          window.location.replace("/m/login");
+        },
+      };
+    }}
+  />
+  <div class="flex flex-col items-start justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start">
-      <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5 h-screen">
-        <div class="flex self-stretch items-start justify-start p-2">
-          <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
-            PROFILE
+      <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
+        <div class="flex self-stretch items-center justify-start">
+          <div class="flex items-center justify-start p-2">
+            <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+              PROFILE
+            </div>
           </div>
         </div>
-        <div class="flex self-stretch flex-col space-y-2 items-center justify-start p-6 bg-white shadow rounded-lg">
-          <div class="flex self-stretch space-x-3 items-start justify-start">
-            <div class="flex items-start justify-start  ">
+        <m-cardcontent class="flex self-stretch flex-col space-y-6 items-start justify-start p-6 bg-white shadow rounded-lg">
+          <div class="flex self-stretch space-x-6 items-center justify-start">
+            <div class="flex items-start justify-start ">
               <img
-                src="/fimgs/1036_1754.x1.svg"
+                src="/fimgs/1036_1754.x1.png"
                 style="width: 80px; min-width: 80px; max-width: 80px; height: 80px; min-height: 80px; max-height: 80px;"
               />
             </div>
-            <div class="flex flex-col space-y-2 items-start justify-start w-stretch">
-              <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-700">
+            <div class="flex flex-1 flex-col space-y-1 items-start justify-start">
+              <div class="text-3xl font-medium tracking-wide leading-10 text-gray-700">
                 Han Solo
               </div>
-              <div class="text-sm tracking-wide leading-normal text-center text-gray-500 ">
+              <div class="text-sm tracking-wide leading-tight text-red-900">
                 han.solo@startrek.com
               </div>
             </div>
           </div>
-          <m-link
-            class="flex space-x-3 items-start justify-start "
-            href="/m/edit-profile"
-          >
-            <m-button
-              class="flex space-x-3 items-start justify-start px-4 py-2 bg-green-500 shadow rounded-full"
-              style="height : 35px"
-            >
-              <img
-                src="/fimgs/1036_1758.x1.svg"
-                style=" width: 20px; min-width: 20px; max-width: 20px; height: 20px; min-height: 20px; max-height: 20px;"
-              />
-              <div class="flex items-start justify-start">
-                <div class="text-sm font-medium tracking-wide leading-tight text-fuchsia-50 text-white">
-                  Edit Profile
-                </div>
-              </div>
-            </m-button>
-          </m-link>
-        </div>
-        <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start px-6 py-2 bg-white shadow rounded-lg">
-          <div class="flex self-stretch items-center justify-start">
-            <div class="flex items-start justify-start p-2.5">
-              <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
-                PERSONAL DATA
-              </div>
-            </div>
-          </div>
-          <div
-            class="flex self-stretch flex-col items-start justify-start"
-            style="height: 405px; min-height: 405px; max-height: 405px;"
-          >
-            <div class="flex self-stretch flex-col items-start justify-start">
-              <div class="flex self-stretch flex-col items-start justify-start">
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch items-start justify-start p-2.5">
-                    <div class="text-sm tracking-wide leading-tight text-gray-500">
-                      Company
+          <m-list-item class="flex self-stretch flex-col space-y-1 items-start justify-start">
+            <div class="flex self-stretch space-x-5 items-start justify-start">
+              <ul>
+                <li>
+                  <div class="flex flex-1 mb-2">
+                    <div
+                      class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                      style="width:80px;"
+                    >
+                      Username
+                    </div>
+                    <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                      startrek11
                     </div>
                   </div>
-                  <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
+                </li>
+                <li>
+                  <div class="flex flex-1 mb-2">
+                    <div
+                      class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                      style="width:80px;"
+                    >
+                      Company
+                    </div>
+                    <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
                       Startrek Ent.
                     </div>
                   </div>
-                </div>
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch items-start justify-start p-2.5">
-                    <div class="text-sm tracking-wide leading-tight text-gray-500">
+                </li>
+                <li>
+                  <div class="flex flex-1 mb-2">
+                    <div
+                      class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                      style="width:80px;"
+                    >
                       Phone
                     </div>
-                  </div>
-                  <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
-                      081649246857
+                    <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                      012345678
                     </div>
                   </div>
-                </div>
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch items-start justify-start p-2.5">
-                    <div class="text-sm tracking-wide leading-tight text-gray-500">
+                </li>
+                <li>
+                  <div class="flex flex-1">
+                    <div
+                      class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                      style="width:80px;"
+                    >
                       Address
                     </div>
-                  </div>
-                  <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
-                      Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta
+                    <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                      California
                     </div>
                   </div>
-                </div>
-                <div class="flex self-stretch flex-col items-start justify-start">
-                  <div class="flex self-stretch flex-col items-start justify-start">
-                    <div class="flex self-stretch items-start justify-start p-2.5">
-                      <div class="text-sm tracking-wide leading-tight text-gray-500">
-                        Username
-                      </div>
-                    </div>
-                    <div class="flex self-stretch items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
-                      <div class="text-sm tracking-wide leading-tight text-gray-700">
-                        startrek11
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex self-stretch space-x-3 items-end justify-start">
-                  <div class="flex flex-1 flex-col space-y-2 items-start justify-start">
-                    <div class="flex self-stretch items-start justify-start p-2.5">
-                      <div class="text-sm tracking-wide leading-tight text-gray-500">
-                        Password
-                      </div>
-                    </div>
-                    <div class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 bg-gray-300 border rounded-lg border-gray-500">
-                      <div class="text-sm tracking-wide leading-tight text-gray-700 w-full">
-                        11startrek
-                      </div>
-                      <div class="flex items-start justify-start p-1 rounded-tr-lg rounded-br-lg">
-                        <img
-                          src="/fimgs/I1035_1730_196_154.x1.svg"
-                          style="width: 20px; min-width: 20px; max-width: 20px; height: 20px; min-height: 20px; max-height: 20px;background-image: url('/fimgs/bg-6130b0b2d196028c462a76cb07bc8cb599a2bc89');background-size:100% 100%;background-repeat:no-repeat;"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex flex-col items-end justify-start">
-                    <m-link
-                      class="flex items-start justify-end px-4 py-2 bg-red-900 shadow rounded-full"
-                      href="/m/change-pass"
-                    >
-                      <div class="flex items-start justify-start">
-                        <div class="text-sm font-medium tracking-wide leading-tight text-fuchsia-50 text-white">
-                          change password
-                        </div>
-                      </div>
-                    </m-link>
-                  </div>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
-          </div>
-        </div>
+          </m-list-item>
+        </m-cardcontent>
+        <m-button
+          class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
+          style=" height: 37px; "
+          onClick={() => {
+            meta.action.edit();
+          }}
+        >
+          Edit Profile
+        </m-button>
+
+        <m-button
+          class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
+          style="height: 37px;"
+          onClick={() => {
+            meta.action.change();
+          }}
+        >
+          Change Password
+        </m-button>
+
+        <m-button
+          class="flex flex-1 items-center justify-center px-4 py-2 bg-white shadow-lg border rounded-full border-red-900 w-full text-sm font-medium tracking-wide leading-tight text-red-900"
+          onClick={() => {
+            meta.action.signout();
+          }}
+        >
+          Sign out
+        </m-button>
       </div>
     </div>
   </div>
