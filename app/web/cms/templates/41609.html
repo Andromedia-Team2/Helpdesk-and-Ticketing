@@ -1,125 +1,134 @@
 <>
   <effect
-    meta={{
-      myticket: [],
-    }}
+    meta={{}}
     run={async () => {
-      meta.myticket = await api("/api/get-ticket");
+      meta.action = {
+        move: (e) => {
+          runInAction(() => {
+            navigate("/m/view-ticket-progress");
+          });
+        },
+      };
     }}
   />
-  <div class="flex flex-col items-start justify-start bg-gray-50  self-stretch w-screen ">
-    <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
-      <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
+  <div class="flex flex-col items-start justify-start bg-gray-50">
+    <div class="flex flex-1 self-stretch flex-col space-y-3 px-6 py-3 items-start justify-start">
+      <div class="flex flex-1 self-stretch flex-col items-start justify-start">
         <div class="flex self-stretch flex-col space-y-3 items-start justify-start">
           <div class="flex self-stretch items-center justify-start px-3">
-            <div class="flex flex-1 items-center justify-between px-3 py-2 bg-white shadow rounded-lg">
+            <m-cardcontent class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg">
               <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
                 MY TICKET
               </div>
-              <m-link href="/m/open-ticket">
-                <m-button
-                  class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-900 shadow rounded-lg"
-                  style="height:30px"
-                >
-                  <img
-                    src="/fimgs/688_1787.x1.svg"
-                    style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;background-image: url('/fimgs/bg-b24bcae01668746da3b996d95c8fb176a9675ff7');background-size:100% 100%;background-repeat:no-repeat;"
-                  />
-                  <div class="text-sm tracking-wide leading-tight text-white">
-                    New Ticket
-                  </div>
-                </m-button>
-              </m-link>
-            </div>
+            </m-cardcontent>
           </div>
-          {meta.myticket?.data?.map((p) => (
-            <m-link
-              class="flex self-stretch flex-col items-center justify-start "
-              href="/m/view-ticket-progress"
+          <m-link
+            class="flex self-stretch flex-col items-center justify-start p-3"
+            onClick={() => {
+              meta.action.move();
+            }}
+          >
+            <div
+              class="flex self-stretch flex-col space-y-3 items-start justify-start pb-2 bg-white shadow rounded-lg"
+              style="height: 189px; min-height: 189px; max-height: 189px;"
             >
-              <div class="flex self-stretch flex-col items-center justify-start p-3">
-                <div class="flex self-stretch flex-col space-y-3 items-start justify-start pb-2 bg-white shadow rounded-lg">
-                  <div class="flex self-stretch flex-col items-start justify-start">
-                    <div class="flex self-stretch space-x-2.5 items-center justify-start p-2 bg-gray-200 rounded-tl-lg rounded-tr-lg">
-                      <div class="text-xs tracking-wide leading-none text-gray-600">
-                        Ticket type:
-                      </div>
-                      <div class="text-xs font-medium tracking-wide leading-none text-gray-800">
-                        {p.ticket.jenis_ticket.jenis_ticket}
-                      </div>
-                    </div>
-                    <div class="flex self-stretch items-start justify-start p-2">
-                      <div class="text-xs tracking-wide leading-none text-gray-800">
-                        {p.ticket.deskripsi_ticket}
-                      </div>
-                    </div>
+              <div
+                class="flex self-stretch flex-col items-start justify-start"
+                style="height: 125px; min-height: 125px; max-height: 125px;"
+              >
+                <div class="flex self-stretch space-x-2.5 items-center justify-start p-2 bg-gray-200 rounded-tl-lg rounded-tr-lg">
+                  <div class="text-xs tracking-wide leading-none text-gray-600">
+                    Ticket type:
                   </div>
-                  <div class="flex self-stretch items-center justify-between px-3">
-                    <div class="flex space-x-8 items-start justify-start">
-                      <div class="flex flex-col space-y-2 items-start justify-start">
-                        <div class="text-xs tracking-wide leading-none text-gray-600">
-                          Created at:
-                        </div>
-                        <div class="text-xs tracking-wide leading-none text-gray-800">
-                          {p.tanggalMasuk_ticket}
-                        </div>
-                      </div>
-                      <div class="flex flex-col space-y-2 items-start justify-start">
-                        <div class="text-xs tracking-wide leading-none text-gray-600">
-                          Solved at:
-                        </div>
-                        <div class="text-xs tracking-wide leading-none text-gray-800">
-                          {p.tanggalSolved_ticket !== null
-                            ? p.tanggalSolved_ticket
-                            : "Not Solved"}
-                        </div>
-                      </div>
-                    </div>
-                    {p.status_ticket.status_ticket == "OPEN" && (
-                      <div
-                        class="flex items-start justify-center p-2 bg-green-500 rounded-lg"
-                        style="min-width: 100px;"
-                      >
-                        <div class="text-xs font-medium tracking-wide leading-none text-white">
-                          {p.status_ticket.status_ticket}
-                        </div>
-                      </div>
-                    )}
-                    {p.status_ticket.status_ticket == "ASSIGNED" && (
-                      <div
-                        class="flex items-start justify-center p-2 bg-yellow-500 rounded-lg"
-                        style="min-width: 100px;"
-                      >
-                        <div class="text-xs font-medium tracking-wide leading-none text-white">
-                          {p.status_ticket.status_ticket}
-                        </div>
-                      </div>
-                    )}
-                    {p.status_ticket.status_ticket == "IN PROGRESS" && (
-                      <div
-                        class="flex items-start justify-center p-2 bg-red-500 rounded-lg"
-                        style="min-width: 100px;"
-                      >
-                        <div class="text-xs font-medium tracking-wide leading-none text-white">
-                          {p.status_ticket.status_ticket}
-                        </div>
-                      </div>
-                    )}
-                    {p.status_ticket.status_ticket == "RESOLVED" && (
-                      <div
-                        class="flex items-start justify-center p-2 bg-gray-800 rounded-lg"
-                        style="min-width: 100px;"
-                      >
-                        <div class="text-xs font-medium tracking-wide leading-none text-white">
-                          {p.status_ticket.status_ticket}
-                        </div>
-                      </div>
-                    )}
+                  <div class="text-xs font-medium tracking-wide leading-none text-gray-800">
+                    Maintenance Ticket
+                  </div>
+                </div>
+                <div class="flex self-stretch items-start justify-start p-2">
+                  <div class="text-xs tracking-wide leading-none text-gray-800">
+                    My server down for several minutes.
                   </div>
                 </div>
               </div>
-            </m-link>
-          ))}
+              <div class="flex self-stretch items-center justify-between px-3">
+                <div class="flex space-x-8 items-start justify-start">
+                  <div class="flex flex-col space-y-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      Created at:
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-800">
+                      19/10/2021
+                    </div>
+                  </div>
+                  <div class="flex flex-col space-y-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      Updated at:
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-800">
+                      19/10/2021
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex items-start justify-center p-2 bg-green-500 rounded-lg text-xs font-medium tracking-wide leading-none text-white"
+                  style="width:100px;"
+                >
+                  OPEN
+                </div>
+              </div>
+            </div>
+          </m-link>
+          <m-link class="flex self-stretch flex-col items-center justify-start p-3">
+            <div
+              class="flex self-stretch flex-col space-y-3 items-start justify-start pb-2 bg-white shadow rounded-lg"
+              style="height: 189px; min-height: 189px; max-height: 189px;"
+            >
+              <div
+                class="flex self-stretch flex-col items-start justify-start"
+                style="height: 125px; min-height: 125px; max-height: 125px;"
+              >
+                <div class="flex self-stretch space-x-2.5 items-center justify-start p-2 bg-gray-200 rounded-tl-lg rounded-tr-lg">
+                  <div class="text-xs tracking-wide leading-none text-gray-600">
+                    Ticket type:
+                  </div>
+                  <div class="text-xs font-medium tracking-wide leading-none text-gray-800">
+                    Maintenance Ticket
+                  </div>
+                </div>
+                <div class="flex self-stretch items-start justify-start p-2">
+                  <div class="text-xs tracking-wide leading-none text-gray-800">
+                    My server down for several minutes.
+                  </div>
+                </div>
+              </div>
+              <div class="flex self-stretch items-center justify-between px-3">
+                <div class="flex space-x-8 items-start justify-start">
+                  <div class="flex flex-col space-y-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      Created at:
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-800">
+                      19/10/2021
+                    </div>
+                  </div>
+                  <div class="flex flex-col space-y-2 items-start justify-start">
+                    <div class="text-xs tracking-wide leading-none text-gray-600">
+                      Updated at:
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-800">
+                      19/10/2021
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex items-start justify-center p-2 bg-red-500 rounded-lg text-xs font-medium tracking-wide leading-none text-white"
+                  style="width:100px;"
+                >
+                  IN PROGRESS
+                </div>
+              </div>
+            </div>
+          </m-link>
         </div>
       </div>
     </div>

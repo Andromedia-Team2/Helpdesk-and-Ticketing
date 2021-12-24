@@ -28,12 +28,13 @@
       };
     }}
   />
-  <div class="flex flex-col  self-stretch w-screen items-start justify-start bg-white">
+
+  <div class="flex flex-col  self-stretch w-screen items-start justify-start bg-white mb-20">
     <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
       <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start ">
         <div class="flex flex-1 self-stretch flex-col space-y-6 items-center justify-start px-3 ">
           <div class="flex self-stretch items-center justify-start">
-            <m-card class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg">
+            <m-card class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg ">
               <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
                 MY TICKET - OPEN TICKET
               </div>
@@ -65,6 +66,7 @@
                   required={true}
                 />
               </div>
+              <img src="/fimgs/909_1612.x1.png" style={`[style]`} />
               <div class="flex self-stretch flex-col items-start justify-start">
                 <div class="item-media">
                   <i class="icon demo-list-icon"></i>
@@ -73,15 +75,13 @@
                   <div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500">
                     Ticket Type
                   </div>
-                  <div
+                  <select
                     class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 item-input-wrap input-dropdown-wrap"
-                    style="width:full"
+                    style="width:stretch;"
                   >
-                    <select placeholder="Please choose...">
-                      <option value="Male">Technical Issue</option>
-                      <option value="Female">System Bug</option>
-                    </select>
-                  </div>
+                    <option>Technical Issue</option>
+                    <option>System Bug</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -151,16 +151,18 @@
                 style=" height: 37px; min-height: 37px; max-height: 37px;"
               >
                 <div class="flex flex-1 items-start justify-start w-full">
-                  <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
-                      Select File
-                    </div>
+                  <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700">
+                    Select File
                   </div>
-                  <div class="flex flex-1 items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500">
-                    <div class="text-sm tracking-wide leading-tight text-gray-700">
-                      No File Selected
-                    </div>
-                  </div>
+
+                  <m-input
+                    class="flex  items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
+                    style="height:53px;"
+                    type="text"
+                    placeholder="No File Selected"
+                    // value={meta.message}
+                    // onChange={(e) => meta.action.messageChange(e)}
+                  />
                 </div>
                 <m-button
                   class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
@@ -187,7 +189,7 @@
               </div>
             </div>
           </m-card>
-          <div class="flex space-x-6 items-start justify-start">
+          <div class="flex space-x-6 items-start justify-start pb-6">
             <m-link
               class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500"
               href="/m/dashboard"
