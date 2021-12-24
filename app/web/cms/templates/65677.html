@@ -8,6 +8,10 @@
       employeeData: [],
     }}
     run={async () => {
+      let modal = document.getElementById("my-modal");
+      let initiate = document.getElementById("my-initiate");
+      modal.style.display = "block";
+      initiate.style.display = "block";
       await api("/api/get-stats", {
         dateLevel: meta.dateLevel,
       }).then((e) => {
@@ -18,14 +22,14 @@
       await api("/api/get-sum").then((e) => {
         meta.dataSummary = e.data;
         console.log(meta.dataSummary);
-      });
-
-      await api("/api/get-performance").then((e) => {
-        meta.employeeData = e.data;
+        modal.style.display = "none";
+        initiate.style.display = "none";
       });
 
       meta.action = {
         dateLevelChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
           runInAction(() => {
             meta.dateVal = e.target.value;
             meta.dateLevel = new Date(e.target.value);
@@ -35,6 +39,8 @@
             }).then((e) => {
               meta.dataLevel = e.data;
               console.log(meta.dataLevel);
+              modal.style.display = "none";
+              initiate.style.display = "none";
             });
           });
         },
@@ -128,69 +134,145 @@
               />
             </div>
           </div>
-          <div class="flex self-stretch items-start justify-start">
-            <div class="flex flex-1 items-start justify-start">
-              <div class="flex flex-1 space-x-5 items-start justify-start">
-                <div class="flex flex-1 flex-col space-y-5 items-start justify-start">
-                  <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                    <div class="flex self-stretch items-center justify-between">
-                      <div class="flex items-start justify-start p-2">
-                        <div class="text-sm tracking-wide leading-tight text-gray-700">
-                          Ticket by level:
-                        </div>
-                      </div>
-                      <div class="flex items-center justify-start">
-                        <div class="flex items-start justify-start py-2 rounded-lg">
-                          <input
-                            type="date"
-                            value={meta.dateVal}
-                            class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
-                            onChange={(e) => meta.action.dateLevelChange(e)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <doghnutchart data={meta.dataLevel} />
-                    <div />
-                  </div>
-                  <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                    <div class="flex self-stretch items-center justify-between">
-                      <div class="flex items-start justify-start p-2">
-                        <div class="text-sm tracking-wide leading-tight text-gray-700">
-                          Ticket by type:
-                        </div>
-                      </div>
-                      <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                        <div class="flex items-start justify-start px-4 py-2 rounded-lg">
-                          <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                            10 november 2021
+          {user.role === "Vendor" && (
+            <div class="flex self-stretch items-start justify-start">
+              <div class="flex flex-1 items-start justify-start">
+                <div class="flex flex-1 space-x-5 items-start justify-start">
+                  <div class="flex flex-1 flex-col space-y-5 items-start justify-start">
+                    <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+                      <div class="flex self-stretch items-center justify-between">
+                        <div class="flex items-start justify-start p-2">
+                          <div class="text-sm tracking-wide leading-tight text-gray-700">
+                            Ticket by level:
                           </div>
                         </div>
-                        <img
-                          src="/fimgs/1417_2106.x3.png"
-                          style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                        />
+                        <div class="flex items-center justify-start">
+                          <div class="flex items-start justify-start py-2 rounded-lg">
+                            <input
+                              type="date"
+                              value={meta.dateVal}
+                              class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                              onChange={(e) => meta.action.dateLevelChange(e)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <hr class=" w-full pb-4"></hr>
+                      <doghnutchart data={meta.dataLevel} />
+                      <div />
+                    </div>
+                    <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+                      <div class="flex self-stretch items-center justify-between">
+                        <div class="flex items-start justify-start p-2">
+                          <div class="text-sm tracking-wide leading-tight text-gray-700">
+                            Ticket by type:
+                          </div>
+                        </div>
+                        <div class="flex items-center justify-start">
+                          <div class="flex items-start justify-start py-2 rounded-lg">
+                            <input
+                              type="date"
+                              value={meta.dateVal}
+                              class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                              onChange={(e) => meta.action.dateLevelChange(e)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <hr class=" w-full pb-4"></hr>
+                      <doghnutchart-dtype />
+                      <div />
+                    </div>
+                  </div>
+                  <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+                    <div class="flex self-stretch items-center justify-between">
+                      <div class="flex items-start justify-start p-2">
+                        <div class="text-base tracking-wide leading-normal text-gray-700">
+                          Performance
+                        </div>
                       </div>
                     </div>
                     <div class="border-gray-500" />
-                    <doghnutchart data={[40, 60, 120]} />
-                    <div />
+                    <tabelperform />
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {(user.role === "Employee" || user.role === "Client") && (
+            <div class="flex self-stretch items-start justify-start">
+              <div class="flex flex-1 space-x-5 items-start justify-start">
+                <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch items-center justify-between">
+                    <div class="flex items-start justify-start p-2">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        Ticket by level:
+                      </div>
+                    </div>
+                    <div class="flex items-start justify-start py-2 rounded-lg">
+                      <input
+                        type="date"
+                        value={meta.dateVal}
+                        class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                        onChange={(e) => meta.action.dateLevelChange(e)}
+                      />
+                    </div>
+                  </div>
+                  <hr class=" w-full pb-4"></hr>
+                  <div class="container">
+                    <doghnutchart data={meta.dataLevel} />
+                  </div>
+                  <div />
                 </div>
                 <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
                   <div class="flex self-stretch items-center justify-between">
                     <div class="flex items-start justify-start p-2">
-                      <div class="text-base tracking-wide leading-normal text-gray-700">
-                        Performance
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        Ticket by type:
                       </div>
                     </div>
+                    <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
+                      <div class="flex items-start justify-start px-4 py-2 rounded-lg">
+                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                          10 november 2021
+                        </div>
+                      </div>
+                      <img
+                        src="/fimgs/1416_3791.x3.png"
+                        style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
+                      />
+                    </div>
                   </div>
-                  <div class="border-gray-500" />
-                  <tabelperform />
+                  <hr class=" w-full pb-4"></hr>
+                  <div class="container">
+                    <doghnutchart-dtype />
+                  </div>
+                  <div />
                 </div>
               </div>
             </div>
-          </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal"
+  >
+    <div class="relative top-48 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div id="my-initiate" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full">
+          <div class="loader ease-linear rounded-full border-5 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Loading data ...
+        </h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Please wait a moment for the loading data
+          </p>
         </div>
       </div>
     </div>
