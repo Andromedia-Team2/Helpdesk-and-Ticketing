@@ -85,6 +85,9 @@ export default {
   "barchart-overallticket": () => [
     import("./components/barchart-overallticket"),
   ],
+  "barchart-overallemployee": () => [
+    import("./components/barchart-overallemployee"),
+  ],
   "linechart-overallemployee": () => [
     import("./components/linechart-overallemployee"),
   ],
@@ -108,6 +111,12 @@ export default {
   ],
   "groupchart-etype": () => [
     import("./components/groupchart-etype"),
+  ],
+  "groupchart-avgfirstreply": () => [
+    import("./components/groupchart-avgfirstreply"),
+  ],
+  "groupchart-avgticketsolved": () => [
+    import("./components/groupchart-avgticketsolved"),
   ],
   "doghnutchart-dlevel": () => [
     import("./components/doghnutchart-tlevel"),
