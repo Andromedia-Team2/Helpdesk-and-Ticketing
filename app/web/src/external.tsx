@@ -124,4 +124,13 @@ export default {
   "doghnutchart-dtype": () => [
     import("./components/doghnutchart-ttype"),
   ],
+  "doghnutchart-m-level": () => [
+    import("./components/doghnutchart-m-level"),
+  ],
+  "doghnutchart-m-type": () => [
+    import("./components/doghnutchart-m-type"),
+  ],
+  "barchart-m-totalticket": () => [
+    import("./components/barchart-m-totalticket"),
+  ],
 };
