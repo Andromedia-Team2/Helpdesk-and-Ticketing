@@ -21,7 +21,7 @@
                 </div>
               </div>
             </div>
-            <img src="/fimgs/909_1612.x1.png" style={`[style]`} />
+            <img src="/fimgs/909_1612.x1.png" />
             <div class="flex self-stretch items-center justify-start px-3">
               <div class="flex space-x-2.5 items-center justify-start pb-2">
                 <div class="text-xs tracking-wide leading-none text-gray-700 ">
@@ -123,12 +123,13 @@
               <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
                 <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
                   <div class="flex self-stretch flex-col space-y-3 items-start justify-start">
-                    <div
+                    <m-input
                       class="flex self-stretch items-start justify-start px-3 py-2 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                       style="height:101px;"
-                    >
-                      Lorem ipsum.
-                    </div>
+                      placeholder="Lorem Ipsum"
+                      type="text"
+                    />
+
                     <div class="flex self-stretch items-start justify-start">
                       <div class="flex flex-1 items-start justify-start">
                         <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
@@ -136,11 +137,19 @@
                             Select File
                           </div>
                         </div>
-                        <div class="flex flex-1 items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500">
-                          <div class="text-sm tracking-wide leading-tight text-gray-700">
-                            No File Selected
-                          </div>
-                        </div>
+                        <m-input
+                          class="flex flex-1 items-center justify-start py-1.5 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
+                          style="height:36px;"
+                          type="text"
+                          placeholder="No File Selected"
+                          // value={meta.message}
+                          // onChange={(e) => meta.action.messageChange(e)}
+                        />
+                        {/*<div class="flex flex-1 items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500">*/}
+                        {/*<div class="text-sm tracking-wide leading-tight text-gray-700">*/}
+                        {/*No File Selected*/}
+                        {/*</div>*/}
+                        {/*</div>*/}
                       </div>
                     </div>
                   </div>

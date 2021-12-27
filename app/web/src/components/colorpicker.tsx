@@ -1,6 +1,6 @@
 import React from 'react'
-import reactCSS from 'reactcss'
-import { SketchPicker } from 'react-color'
+// import reactCSS from 'reactcss'
+// import { SketchPicker } from 'react-color'
 
 class Picker extends React.Component {
   state = {

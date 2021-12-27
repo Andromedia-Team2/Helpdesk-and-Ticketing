@@ -1,0 +1,144 @@
+<>
+  <effect meta={{}} run={async () => {}} />
+  <div class="flex items-start justify-start h-full">
+    <div class="flex  self-stretch flex-col items-start justify-start ml-2 mr-2 pt-6 bg-gray-50">
+      <div
+        class="flex self-stretch flex-col space-y-6 items-center justify-start px-3"
+        style="height: 528px; min-height: 528px; max-height: 528px;"
+      >
+        <div
+          class="flex self-stretch flex-col space-y-6 items-center justify-start"
+          style="height: 294px; min-height: 294px; max-height: 294px;"
+        >
+          <div class="flex self-stretch items-start justify-center">
+            <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+              Verification
+            </div>
+          </div>
+          <img
+            src="/fimgs/1599_2082.x1.png"
+            style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;"
+          />
+        </div>
+        <div
+          class="flex self-stretch flex-col space-y-3 items-center justify-start"
+          style="height: 140px; min-height: 140px; max-height: 140px;"
+        >
+          <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+            Enter the verification code we just sent you on your email address
+          </div>
+          <div class="flex self-stretch items-start justify-between space-x-2">
+            <m-input
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              style="width: 50px;height: 50px;margin-left:12px;"
+              type="number"
+              required={true}
+              maxlength="1"
+              margin-left="15px"
+              // value={...}
+              //     onChange={(e) => {
+              //       ...
+              //     }}
+            />
+
+            <m-input
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              style="width: 50px;height: 50px; "
+              type="number"
+              required={true}
+              maxlength="1"
+              margin-left="15px"
+              // value={...}
+              //     onChange={(e) => {
+              //       ...
+              //     }}
+            />
+            <m-input
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              style="width: 50px;height: 50px; "
+              type="number"
+              required={true}
+              maxlength="1"
+              margin-left="15px"
+              // value={...}
+              //     onChange={(e) => {
+              //       ...
+              //     }}
+            />
+            <m-input
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              style="width: 50px;height: 50px; "
+              type="number"
+              required={true}
+              maxlength="1"
+              margin-left="15px"
+              // value={...}
+              //     onChange={(e) => {
+              //       ...
+              //     }}
+            />
+            <m-input
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              style="width: 50px;height: 50px; "
+              type="number"
+              required={true}
+              maxlength="1"
+              margin-left="15px"
+              // value={...}
+              //     onChange={(e) => {
+              //       ...
+              //     }}
+            />
+            <m-input
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              style="width: 50px;height: 50px; "
+              type="number"
+              required={true}
+              maxlength="1"
+              margin-left="15px"
+              // value={...}
+              //     onChange={(e) => {
+              //       ...
+              //     }}
+            />
+          </div>
+          <div class="flex self-stretch space-x-3 items-start justify-center">
+            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+              if you didn’t receive a code.
+            </div>
+            <a
+              onClick={() => {
+                var toastCenter = window.mobileApp.app.toast.create({
+                  text: "Check Your Email",
+                  position: "center",
+                  closeTimeout: 3000,
+                });
+
+                // Open it
+                toastCenter.open();
+              }}
+              class={`flex items-center justify-end`}
+            >
+              <div class="text-xs font-medium tracking-wide leading-none text-center text-red-900">
+                Resend
+              </div>
+            </a>
+          </div>
+        </div>
+        <m-button
+          class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
+          style="height: 46px; min-height: 46px; max-height: 46px;"
+          onClick={() => {
+            window.mobileApp.app.dialog.preloader(),
+              setTimeout(function () {
+                window.mobileApp.app.dialog.close();
+              }, 1500);
+            navigate("/m/reset-pass");
+          }}
+        >
+          Verify
+        </m-button>
+      </div>
+    </div>
+  </div>
+</>

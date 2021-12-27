@@ -40,7 +40,7 @@
               </div>
             </m-card>
           </div>
-          <m-card class="flex self-stretch flex-col items-start justify-start bg-white shadow rounded-lg">
+          <m-card class="flex self-stretch flex-col items-start justify-start bg-white shadow rounded-lg ">
             <div class="flex items-start justify-start px-3 py-2">
               <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
                 Ticket Information
@@ -67,20 +67,36 @@
                 />
               </div>
 
-              <div class="flex self-stretch flex-col items-start justify-start">
+              <div class="flex self-stretch flex-col items-start justify-start ">
                 <div class="item-media">
                   <i class="icon demo-list-icon"></i>
                 </div>
-                <div class="flex self-stretch flex-col items-start justify-start item-inner">
-                  <div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500">
-                    Ticket Type
-                  </div>
-                  <select
-                    class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 item-input-wrap input-dropdown-wrap"
-                    style="width:stretch;"
-                  >
-                    <option>Technical Issue</option>
-                    <option>System Bug</option>
+                {/*<div class="flex self-stretch flex-col items-start justify-start item-inner">*/}
+                {/*<div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500">*/}
+                {/*Ticket Type*/}
+                {/*</div>*/}
+                {/*<div*/}
+                {/*class=" item-input-wrap input-dropdown-wrap border rounded-lg border-gray-500"*/}
+                {/*style="height:35px;"*/}
+                {/*>*/}
+                {/*<select class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 ">*/}
+                {/*<option>Technical Issue</option>*/}
+                {/*<option>System Bug</option>*/}
+                {/*</select>*/}
+                {/*</div>*/}
+                {/*</div>*/}
+
+                <div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500 w-full">
+                  Ticket Type
+                </div>
+
+                <div
+                  class="border rounded-lg border-gray-500 input-dropdown-wrap w-full"
+                  style="height:35px;"
+                >
+                  <select class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 w-full">
+                    <option style="width:100px;">Technical Issue</option>
+                    <option style="width:100px;">System Bug</option>
                   </select>
                 </div>
               </div>

@@ -18,12 +18,15 @@
     <m-page class="flex self-stretch items-start justify-start h-stretch ">
       {children}
     </m-page>
+
     <m-toolbar
-      class="flex self-stretch items-start justify-between px-6 bg-white shadow fixed bottom-0 "
+      tabbar={true}
+      class="flex self-stretch items-start justify-between px-6 bg-white shadow fixed bottom-0  "
       style="height:75px;"
     >
       <m-link
-        class="flex flex-col items-center justify-center pl-4"
+        tabLinkActive
+        class="flex flex-col items-center justify-center pl-4 "
         href="/m/dashboard"
       >
         <div class="flex items-start justify-start">
@@ -32,7 +35,7 @@
             style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"
           />
         </div>
-        <div class="text-xs font-medium tracking-wide leading-none text-gray-400">
+        <div class="text-xs font-medium tracking-wide leading-none text-gray-400 ">
           Home
         </div>
       </m-link>
