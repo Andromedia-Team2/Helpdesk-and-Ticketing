@@ -133,4 +133,7 @@ export default {
   "barchart-m-totalticket": () => [
     import("./components/barchart-m-totalticket"),
   ],
+  "colorpicker": () => [
+    import("./components/colorpicker"),
+  ],
 };
