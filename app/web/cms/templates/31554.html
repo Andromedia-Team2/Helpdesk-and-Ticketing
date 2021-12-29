@@ -37,7 +37,7 @@
         "/ticket-data/add",
         "/ticket-data/view/" + params.id,
       ],
-      reportData: ["/report-ticket-client"],
+      reportData: ["/dashboard-client"],
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
@@ -73,7 +73,7 @@
           "/dashboard-vendor",
           "/dashboard-admin",
           "/report-vendor",
-          "/report-ticket-client",
+          "/dashboard-client",
           "/report-ticket-vendor",
         ];
       } else if (user.role == "Client") {
@@ -87,13 +87,13 @@
           "/view-profile",
           "/edit-profile",
           "/dropify",
-          "/report-ticket-client",
+          "/dashboard-client",
           "/dashboard-client",
           "/dashboard-employee",
           "/dashboard-vendor",
           "/dashboard-admin",
           "/report-vendor",
-          "/report-ticket-client",
+          "/dashboard-client",
           "/report-ticket-vendor",
         ];
       } else if (user.role == "Employee") {
@@ -119,7 +119,7 @@
           "/dashboard-vendor",
           "/dashboard-admin",
           "/report-vendor",
-          "/report-ticket-client",
+          "/dashboard-client",
           "/report-ticket-vendor",
           // end fawwaz
         ];
@@ -719,9 +719,9 @@
                         <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
                           <a
                             class="flex items-center w-full px-4 py-2 "
-                            href="/report-ticket-client"
+                            href="/dashboard-client"
                           >
-                            Report Ticket Client
+                            Dashboard Client
                           </a>
                         </li>
                         <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">

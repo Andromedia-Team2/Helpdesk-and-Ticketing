@@ -15,9 +15,9 @@ const LineChart = () => {
             label: 'Ticket By Level',
             data: [120, 200, 10],
             backgroundColor: [
-              'rgb(239, 68, 68)',
-              'rgb(234, 179, 8)',
-              'rgb(59, 130, 246)'
+              '#ef4444',
+              '#eab308',
+              '#3b82f6'
             ],
             hoverOffset: 4
           }]

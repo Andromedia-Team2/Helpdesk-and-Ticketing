@@ -14,8 +14,8 @@ const LineChart = () => {
             label: 'Ticket By Type',
             data: [15, 9],
             backgroundColor: [
-              'rgb(239, 68, 68)',
-              'rgb(234, 179, 8)',
+              '#ef4444',
+              '#eab308',
             ],
             hoverOffset: 4
           }]

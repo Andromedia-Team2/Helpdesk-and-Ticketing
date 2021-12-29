@@ -16,13 +16,13 @@
                 </div>
               </div>
               <img
-                src="/fimgs/880_3774.x3.png"
+                src="/fimgs/1647_2247.x3.png"
                 class="flex items-start justify-start p-3"
                 style="width: 104px; min-width: 104px; max-width: 104px; height: 104px; min-height: 104px; max-height: 104px;"
               />
               <img
-                src="/fimgs/880_3776.x3.png"
-                style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                src="/fimgs/1647_2249.x3.png"
+                style="width: 10px; min-width: 10px; max-width: 10px; height: 120px; min-height: 120px; max-height: 120px;"
               />
             </div>
             <div class="flex items-center justify-between bg-white shadow rounded-lg">
@@ -36,11 +36,14 @@
               </div>
               <div class="flex items-start justify-start p-3">
                 <img
-                  src="/fimgs/880_3782.x3.png"
-                  style="width: 80px; min-width: 80px; max-width: 80px; height: 80px; min-height: 80px; max-height: 80px;background-image: url('/fimgs/bg-2a6278349cf902eccb278d7bafaa4ad3d08a2ec7');background-size:100% 100%;background-repeat:no-repeat;"
+                  src="/fimgs/1647_2255.x3.png"
+                  style="width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px;background-image: url('/fimgs/bg-2a6278349cf902eccb278d7bafaa4ad3d08a2ec7');background-size:100% 100%;background-repeat:no-repeat;"
                 />
               </div>
-              <div />
+              <img
+                src="/fimgs/1647_2256.x3.png"
+                style="width: 10px; min-width: 10px; max-width: 10px; height: 120px; min-height: 120px; max-height: 120px;"
+              />
             </div>
             <div class="flex items-center justify-between bg-white shadow rounded-lg">
               <div class="flex flex-col space-y-3 items-start justify-start p-3">
@@ -53,13 +56,13 @@
               </div>
               <div class="flex items-start justify-start p-3">
                 <img
-                  src="/fimgs/880_3789.x3.png"
-                  style="width: 80px; min-width: 80px; max-width: 80px; height: 80px; min-height: 80px; max-height: 80px;background-image: url('/fimgs/bg-3488a1685dd8d7da4750dd77dc036ba7eb399886');background-size:100% 100%;background-repeat:no-repeat;"
+                  src="/fimgs/1647_2262.x3.png"
+                  style="width: 60px; min-width: 60px; max-width: 60px; height: 60px; min-height: 60px; max-height: 60px;background-image: url('/fimgs/bg-3488a1685dd8d7da4750dd77dc036ba7eb399886');background-size:100% 100%;background-repeat:no-repeat;"
                 />
               </div>
               <img
-                src="/fimgs/880_3790.x3.png"
-                style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                src="/fimgs/1647_2263.x3.png"
+                style="width: 10px; min-width: 10px; max-width: 10px; height: 120px; min-height: 120px; max-height: 120px;"
               />
             </div>
           </div>
@@ -85,12 +88,9 @@
                   </div>
                 </div>
               </div>
-              <div class="border-gray-500" />
-              <div class="flex flex-1 self-stretch items-start justify-start">
-                <div class="flex flex-col space-y-96 justify-center transform -rotate-45"></div>
-                <div class="flex flex-col space-y-3 items-start justify-start">
-                  <div class="container"></div>
-                </div>
+              <hr class=" w-full pb-4"></hr>
+              <div class="chart">
+                <doughnutchart-client-level />
               </div>
             </div>
             <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
@@ -114,21 +114,38 @@
                   </div>
                 </div>
               </div>
-              <div class="border-gray-500" />
-              <div class="flex flex-1 self-stretch items-start justify-start">
-                <div class="flex flex-col space-y-96 justify-center pl-8 pt-8">
-                  <div class="transform rotate-90 bg-green-300 rounded-full" />
-                </div>
-                <div class="flex flex-col space-y-3 items-start justify-start"></div>
+              <hr class=" w-full pb-4"></hr>
+              <div class="chart">
+                <doughnutchart-client-type />
               </div>
             </div>
           </div>
           <div class="flex self-stretch flex-col space-y-6 items-start justify-start p-6 bg-white shadow rounded-lg">
-            <div class="flex self-stretch items-center justify-between"></div>
-            <div class="border-gray-500" />
-            <div class="flex self-stretch space-x-7 items-start justify-start">
-              <div class="flex flex-col space-y-16 items-start justify-start"></div>
+            <div class="flex self-stretch items-center justify-between">
+              <div class="flex flex-col items-center justify-start">
+                <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                  Total Tickets
+                </div>
+              </div>
+              <div class="flex items-center justify-start border rounded-lg border-gray-500">
+                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
+                    2021
+                  </div>
+                </div>
+                <div class="flex flex-col items-center justify-center transform -rotate-90">
+                  <div
+                    class="transform rotate-90"
+                    style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                  />
+                </div>
+              </div>
             </div>
+            <hr class=" w-full pb-4"></hr>
+            <div class="container">
+              <barchart-totalticket />
+            </div>
+            <div />
           </div>
         </div>
       </div>
