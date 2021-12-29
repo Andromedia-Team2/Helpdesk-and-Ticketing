@@ -13,7 +13,7 @@ const BarChart = () => {
           labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
           datasets: [
             {
-              label: 'Status Ticket',
+              label: 'Total Ticket',
               data: [1, 4, 2, 3, 1, 2, 2, 1, 3, 4, 1, 2],
               backgroundColor:'#ef4444',
               borderRadius:5
