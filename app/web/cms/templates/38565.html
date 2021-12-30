@@ -20,14 +20,14 @@
     </m-page>
 
     <m-toolbar
-      tabbar={true}
       class="flex self-stretch items-start justify-between px-6 bg-white shadow fixed bottom-0  "
       style="height:75px;"
     >
       <m-link
-        tabLinkActive
         class="flex flex-col items-center justify-center pl-4 "
-        href="/m/dashboard"
+        onClick={() => {
+          navigate("/m/dashboard");
+        }}
       >
         <div class="flex items-start justify-start">
           <img
@@ -41,7 +41,9 @@
       </m-link>
       <m-link
         class="flex flex-col items-center justify-center"
-        href="/m/my-ticket"
+        onClick={() => {
+          navigate("/m/my-ticket");
+        }}
       >
         <div class="flex items-start justify-start">
           <img
@@ -55,7 +57,9 @@
       </m-link>
       <m-link
         class="flex flex-col items-center justify-center"
-        href="/m/open-ticket"
+        onClick={() => {
+          navigate("/m/open-ticket");
+        }}
       >
         <div class="flex items-start justify-start">
           <img
@@ -67,7 +71,12 @@
           Create
         </div>
       </m-link>
-      <m-link class="flex flex-col items-center justify-center" href="/m/notif">
+      <m-link
+        class="flex flex-col items-center justify-center"
+        onClick={() => {
+          navigate("/m/notif");
+        }}
+      >
         <div class="flex items-start justify-start">
           <img
             src="/fimgs/I1484_2294_1484_2143.x1.svg"
@@ -80,7 +89,18 @@
       </m-link>
       <m-link
         class="flex flex-col items-center justify-center pr-4"
-        href="/m/view-profile"
+        onClick={() => {
+          navigate("/m/view-profile");
+          <a>
+            <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+              <img
+                src="/fimgs/I1484_2483_1484_2249.x1.png"
+                style={`width: 30px; height: 30px; `}
+              />
+              Profile
+            </div>
+          </a>;
+        }}
       >
         <div class="flex items-start justify-start">
           <img
