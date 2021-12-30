@@ -7,9 +7,9 @@ const LineChart = () => {
       <Doughnut
         data={{
           labels: [
-            'High',
-            'Medium',
-            'Low',
+            'Technical support',
+            'Administration request',
+            'Complain and suggestion',
           ],
           datasets: [{
             label: 'Ticket By Level',

@@ -15,7 +15,7 @@ const BarChart = () => {
             {
                 label: 'Moza',
               data: [12, 19, 13, 15, 12, 13, 11, 23, 25, 50, 71, 92],
-              backgroundColor:'#003049',
+              backgroundColor:'#ef4444',
               borderRadius:5
             },
             {

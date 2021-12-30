@@ -133,7 +133,19 @@ export default {
   "barchart-m-totalticket": () => [
     import("./components/barchart-m-totalticket"),
   ],
+  "barchart-totalticket": () => [
+    import("./components/barchart-totalticket"),
+  ],
+  "doughnutchart-client-level": () => [
+    import("./components/doughnutchart-client-level"),
+  ],
+  "doughnutchart-client-type": () => [
+    import("./components/doughnutchart-client-type"),
+  ],
   "colorpicker": () => [
     import("./components/colorpicker"),
+  ],
+  "inputcolor": () => [
+    import("./components/input-color"),
   ],
 };

@@ -9,6 +9,8 @@
       email_employee: "",
       lokasi_employee: "",
       id_dep: 0,
+      identityColor: "#fff",
+      showColor: false,
       validationCheck() {
         this.message =
           this.id_department === "" ||
@@ -72,6 +74,18 @@
           runInAction(() => {
             modal.style.display = "none";
             failed.style.display = "none";
+          });
+        },
+        changeColor: (e) => {
+          runInAction(() => {
+            meta.identityColor = e.hex;
+            console.log("identityColor:" + meta.identityColor);
+            meta.showColor = false;
+          });
+        },
+        changeVisColor: (e) => {
+          runInAction(() => {
+            meta.showColor = e;
           });
         },
         addData: (e) => {
@@ -184,14 +198,36 @@
             />
           </div>
         </div>
-        <div class="flex self-stretch items-start justify-start pl-5">
+        <div class="flex self-stretch items-center justify-center pl-5">
           <div class="flex flex-1 items-start justify-start ">
             <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
               Identity Color
-              <br /> Employee
             </div>
             <div class="input w-full mr-5">
-              <colorpicker />
+              <div class="flex self-stretch items-center w-full justify-start py-2 pl-4 pr-5 rounded-lg focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline space-x-3">
+                <inputcolor
+                  color={meta.identityColor}
+                  onClick={() => {
+                    if (meta.showColor == false) {
+                      meta.action.changeVisColor(true);
+                    } else {
+                      meta.action.changeVisColor(false);
+                    }
+                  }}
+                />
+                <input
+                  type="text"
+                  class="font-medium w-full  bg-white text-gray-600 tracking-widest text-sm"
+                  value={meta.identityColor}
+                  disabled={true}
+                />
+              </div>
+              {meta.showColor && (
+                <colorpicker
+                  color={meta.identityColor}
+                  onChange={(e) => meta.action.changeColor(e)}
+                />
+              )}
             </div>
           </div>
         </div>

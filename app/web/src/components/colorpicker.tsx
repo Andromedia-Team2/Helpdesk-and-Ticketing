@@ -69,5 +69,3 @@ class Picker extends React.Component {
     )
   }
 }
-
-export default Picker
