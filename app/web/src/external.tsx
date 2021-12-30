@@ -145,4 +145,7 @@ export default {
   "colorpicker": () => [
     import("./components/colorpicker"),
   ],
+  "inputcolor": () => [
+    import("./components/input-color"),
+  ],
 };
