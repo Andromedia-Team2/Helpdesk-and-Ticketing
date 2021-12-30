@@ -1,165 +1,32 @@
-<>
-  <effect
-    meta={{
-      tabActive: "home",
-      async onClickTab(tab) {
-        runInAction(() => {
-          this.tabActive = tab;
-        });
-      },
-    }}
-    run={async ({}) => {}}
-  />
-  <div class="flex flex-1 self-stretch flex-col items-start justify-start">
-    <div
-      class="navbar flex self-stretch items-center justify-center px-6 py-3 bg-red-900 fixed top-0 shadow   "
-      style="--f7-navbar-bg-color: red-900"
-    >
-      <div class="flex self-stretch items-center justify-start">
-        <img
-          src="/fimgs/I1484_2010_1467_1974.x3.png"
-          style="width: 106.92px; height: 35px; "
-        />
-      </div>
-    </div>
-    <div />
-    {/**/}
-
-    <m-page class="flex self-stretch items-start justify-start h-stretch ">
-      {children}
-    </m-page>
-    <m-toolbar
-      class="flex self-stretch items-start justify-between px-6 bg-white shadow fixed bottom-0  "
-      style="height:75px;"
-    >
-      <m-link
-        class={`flex flex-1 flex-col items-center justify-center`}
-        href="/m/dashboard"
-        onClick={(e) => meta.onClickTab("home")}
-        tabLinkActive={meta.tabActive === "home"}
-      >
-        {meta.tabActive === "home" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
-            <img
-              src="/fimgs/I1484_2420_1484_2125.x3.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Home
-          </div>
-        )}
-        {meta.tabActive !== "home" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
-            <img
-              src="/fimgs/I1484_2483_1484_2229.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Home
-          </div>
-        )}
-      </m-link>
-
-      <m-link
-        class={`flex flex-1 flex-col items-center justify-center`}
-        href="/m/my-ticket"
-        onClick={(e) => meta.onClickTab("ticket")}
-        tabLinkActive={meta.tabActive === "ticket"}
-      >
-        {meta.tabActive === "ticket" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
-            <img
-              src="/fimgs/I1484_2294_1484_2213.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Ticket
-          </div>
-        )}
-        {meta.tabActive !== "ticket" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
-            <img
-              src="/fimgs/I1484_2483_1484_2198.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Ticket
-          </div>
-        )}
-      </m-link>
-      <m-link
-        class={`flex flex-1 flex-col items-center justify-center`}
-        href="/m/open-ticket"
-        onClick={(e) => meta.onClickTab("create")}
-        tabLinkActive={meta.tabActive === "create"}
-      >
-        {meta.tabActive === "create" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
-            <img
-              src="/fimgs/I1484_2378_1484_2233.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Create
-          </div>
-        )}
-        {meta.tabActive !== "create" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
-            <img
-              src="/fimgs/I1484_2441_1484_2181.x3.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Create
-          </div>
-        )}
-      </m-link>
-
-      <m-link
-        class={`flex flex-1 flex-col items-center justify-center`}
-        href="/m/notif"
-        onClick={(e) => meta.onClickTab("news")}
-        tabLinkActive={meta.tabActive === "news"}
-      >
-        {meta.tabActive === "news" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
-            <img
-              src="/fimgs/I1484_2441_1484_2246.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            News
-          </div>
-        )}
-        {meta.tabActive !== "news" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
-            <img
-              src="/fimgs/I1484_2483_1484_2205.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            News
-          </div>
-        )}
-      </m-link>
-
-      <m-link
-        class={`flex flex-1 flex-col items-center justify-center`}
-        href="/m/view-profile"
-        onClick={(e) => meta.onClickTab("profile")}
-        tabLinkActive={meta.tabActive === "profile"}
-      >
-        {meta.tabActive === "profile" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
-            <img
-              src="/fimgs/I1484_2483_1484_2249.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Profile
-          </div>
-        )}
-        {meta.tabActive !== "profile" && (
-          <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
-            <img
-              src="/fimgs/I1484_2420_1484_2117.x1.png"
-              style={`width: 30px; height: 30px; `}
-            />
-            Profile
-          </div>
-        )}
-      </m-link>
-    </m-toolbar>
-  </div>
-</>
+<m-toolbar tabbar labels>
+  <m-link
+    class="flex flex-col items-center justify-center pl-4 "
+    tabLinkActive
+    text="Home"
+    src="/fimgs/I1484_2273_1484_2217.x1.svg"
+  >
+    {/*<div class="flex items-start justify-start">*/}
+    {/*<img*/}
+    {/*src="/fimgs/I1484_2273_1484_2217.x1.svg"*/}
+    {/*style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"*/}
+    {/*/>*/}
+    {/*</div>*/}
+    {/*<div class="text-xs font-medium tracking-wide leading-none text-gray-400 ">*/}
+    {/*Home*/}
+    {/*</div>*/}
+  </m-link>
+  <m-link
+    href="/m/login"
+    text="Tab 2"
+    iconIos="f7:calendar_fill"
+    iconAurora="f7:calendar_fill"
+    iconMd="material:today"
+  ></m-link>
+  <m-link
+    tabLink="#tab-3"
+    text="Tab 3"
+    iconIos="f7:cloud_upload_fill"
+    iconAurora="f7:cloud_upload_fill"
+    iconMd="material:file_upload"
+  ></m-link>
+</m-toolbar>
