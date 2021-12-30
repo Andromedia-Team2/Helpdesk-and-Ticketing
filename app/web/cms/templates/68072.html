@@ -34,10 +34,11 @@
     >
       <m-link
         class={`flex flex-1 flex-col items-center justify-center`}
-        onClick={(e) => meta.onClickTab("home")}
-        tabLinkActive={meta.tabActive === "home"}
+        tabLink="#dashboard"
+        onClick={(e) => meta.onClickTab("dashboard")}
+        tabLinkActive={meta.tabActive === "dashboard"}
       >
-        {meta.tabActive === "home" && (
+        {meta.tabActive === "dashboard" && (
           <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
             <img
               src="/fimgs/I1484_2420_1484_2125.x3.png"
@@ -46,7 +47,7 @@
             Home
           </div>
         )}
-        {meta.tabActive !== "home" && (
+        {meta.tabActive !== "dashboard" && (
           <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
             <img
               src="/fimgs/I1484_2483_1484_2229.x1.png"
@@ -59,6 +60,7 @@
 
       <m-link
         class={`flex flex-1 flex-col items-center justify-center`}
+        tabLink="#ticket"
         onClick={(e) => meta.onClickTab("ticket")}
         tabLinkActive={meta.tabActive === "ticket"}
       >
@@ -83,6 +85,7 @@
       </m-link>
       <m-link
         class={`flex flex-1 flex-col items-center justify-center`}
+        tabLink="#create"
         onClick={(e) => meta.onClickTab("create")}
         tabLinkActive={meta.tabActive === "create"}
       >
@@ -108,6 +111,7 @@
 
       <m-link
         class={`flex flex-1 flex-col items-center justify-center`}
+        tabLink="#news"
         onClick={(e) => meta.onClickTab("news")}
         tabLinkActive={meta.tabActive === "news"}
       >
@@ -133,6 +137,7 @@
 
       <m-link
         class={`flex flex-1 flex-col items-center justify-center`}
+        tabLink="#profile"
         onClick={(e) => meta.onClickTab("profile")}
         tabLinkActive={meta.tabActive === "profile"}
       >

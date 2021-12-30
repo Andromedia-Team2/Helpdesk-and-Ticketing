@@ -1,32 +1,1382 @@
-<m-toolbar tabbar labels>
-  <m-link
-    class="flex flex-col items-center justify-center pl-4 "
-    tabLinkActive
-    text="Home"
-    src="/fimgs/I1484_2273_1484_2217.x1.svg"
+<>
+  <effect
+    meta={{
+      tabActive: "dashboard",
+      tabLink: "",
+      name: "",
+      subject: "",
+      message: "",
+      id_user: 0,
+      password: "",
+      newPassword: "",
+      confirmPassword: "",
+
+      pass_type1: "password",
+      pass_type2: "password",
+      pass_type3: "password",
+
+      validationCheck() {
+        this.message =
+          this.password === "" || this.password === null
+            ? "Your current password is empty. Make sure all forms are filled and try again."
+            : this.newPassword === "" || this.newPassword === null
+            ? "Your new password is empty. Make sure all forms are filled and try again."
+            : !validatePass(this.newPassword)
+            ? "Password length 8-16, Include Uppercase, Lowercase & No space"
+            : this.confirmPassword === "" || this.confirmPassword === null
+            ? "Your confirmation password is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
+      async onClickTab(tab) {
+        runInAction(() => {
+          this.tabActive = tab;
+        });
+      },
+    }}
+    run={async () => {
+      meta.action = {
+        nameChange: (e) => {
+          runInAction(() => {
+            meta.name = e.target.value;
+            console.log(meta.name);
+          });
+        },
+        subjectChange: (e) => {
+          runInAction(() => {
+            meta.subject = e.target.value;
+            console.log(meta.subject);
+          });
+        },
+        messageChange: (e) => {
+          runInAction(() => {
+            meta.message = e.target.value;
+            console.log(meta.message);
+          });
+        },
+        edit: (e) => {
+          window.location.replace("/m/edit-profile");
+        },
+        change: (e) => {
+          window.location.replace("/m/change-pass");
+        },
+        signout: (e) => {
+          window.mobileApp.app.dialog.preloader(),
+            setTimeout(function () {
+              window.mobileApp.app.dialog.close();
+            }, 1500);
+          window.location.replace("/m/login");
+        },
+      };
+    }}
+  />
+  <div
+    class={`flex items-end justify-center bg-white w-full`}
+    style={"margin-bottom: 50px;"}
   >
-    {/*<div class="flex items-start justify-start">*/}
-    {/*<img*/}
-    {/*src="/fimgs/I1484_2273_1484_2217.x1.svg"*/}
-    {/*style="width: 30px; min-width: 30px; max-width: 30px; height: 30px; min-height: 30px; max-height: 30px;"*/}
-    {/*/>*/}
-    {/*</div>*/}
-    {/*<div class="text-xs font-medium tracking-wide leading-none text-gray-400 ">*/}
-    {/*Home*/}
-    {/*</div>*/}
-  </m-link>
-  <m-link
-    href="/m/login"
-    text="Tab 2"
-    iconIos="f7:calendar_fill"
-    iconAurora="f7:calendar_fill"
-    iconMd="material:today"
-  ></m-link>
-  <m-link
-    tabLink="#tab-3"
-    text="Tab 3"
-    iconIos="f7:cloud_upload_fill"
-    iconAurora="f7:cloud_upload_fill"
-    iconMd="material:file_upload"
-  ></m-link>
-</m-toolbar>
+    <div
+      class={`flex flex-1 self-stretch flex-col items-center justify-start bg-gradient-to-b from-white to-white`}
+    >
+      <div
+        class="navbar flex self-stretch items-center justify-center px-6 py-3 bg-red-900  shadow   "
+        style="--f7-navbar-bg-color: red-900"
+      >
+        <div class="flex self-stretch items-center justify-start">
+          <img
+            src="/fimgs/I1484_2010_1467_1974.x3.png"
+            style="width: 106.92px; height: 35px; "
+          />
+        </div>
+      </div>
+      <m-tabs
+        class={`flex flex-1 self-stretch flex-col items-start justify-start`}
+      >
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="dashboard"
+        >
+          <div class="flex flex-col items-start justify-start bg-gray-50 overflow-y-auto pb-10">
+            <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+              <div class="flex flex-1 self-stretch flex-col space-y-5 items-start justify-start px-6">
+                <div class="flex self-stretch items-start justify-between pt-4">
+                  <div class="flex items-center justify-start bg-white shadow rounded-lg">
+                    <div class="flex flex-col space-y-1 items-start justify-start p-2">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-500">
+                        Open
+                      </div>
+                      <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
+                        1
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/881_4181.x3.png"
+                      style="width: 10px; min-width: 10px; max-width: 10px; height: 68px; min-height: 68px; max-height: 68px;"
+                    />
+                  </div>
+                  <div class="flex items-center justify-start bg-white shadow rounded-lg">
+                    <div class="flex flex-col space-y-1 items-start justify-start p-2">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-500">
+                        In Progress
+                      </div>
+                      <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
+                        4
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/881_4188.x3.png"
+                      style="width: 10px; min-width: 10px; max-width: 10px; height: 68px; min-height: 68px; max-height: 68px;"
+                    />
+                  </div>
+                  <div class="flex items-center justify-start bg-white shadow rounded-lg">
+                    <div class="flex flex-col space-y-1 items-start justify-start p-2">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-500">
+                        Resolved
+                      </div>
+                      <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
+                        3
+                      </div>
+                    </div>
+                    <img
+                      src="/fimgs/881_4195.x3.png"
+                      style="width: 10px; min-width: 10px; max-width: 10px; height: 68px; min-height: 68px; max-height: 68px;"
+                    />
+                  </div>
+                </div>
+                <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch items-center justify-start">
+                    <div class="flex items-start justify-start p-2">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        Ticket by Level:
+                      </div>
+                    </div>
+                    <div class="flex flex-1 items-center justify-start border rounded-lg border-gray-500">
+                      <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                          November 2021
+                        </div>
+                      </div>
+                      <div class="flex flex-col items-center justify-center transform -rotate-90">
+                        <div
+                          class="transform rotate-90"
+                          style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <hr class=" w-full mt-4 pb-4"></hr>
+                  <div class="container">
+                    <doghnutchart-m-level />
+                  </div>
+                </div>
+                <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch items-center justify-start">
+                    <div class="flex items-start justify-start p-2">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        Ticket by Type:
+                      </div>
+                    </div>
+                    <div class="flex flex-1 items-center justify-start border rounded-lg border-gray-500">
+                      <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
+                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                          November 2021
+                        </div>
+                      </div>
+                      <div class="flex flex-col items-center justify-center transform -rotate-90">
+                        <div
+                          class="transform rotate-90"
+                          style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <hr class=" w-full mt-4 pb-4"></hr>
+                  <div class="container">
+                    <doghnutchart-m-type />
+                  </div>
+                </div>
+                <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-3 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+                    <div class="flex flex-col items-center justify-start">
+                      <div class="text-sm tracking-wide leading-tight text-center text-gray-700">
+                        Total Tickets
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-start border rounded-lg border-gray-500">
+                      <div class="flex items-start justify-start px-4 py-2 rounded-lg">
+                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                          2021
+                        </div>
+                      </div>
+                      <div class="flex flex-col items-center justify-center transform -rotate-90">
+                        <div
+                          class="transform rotate-90"
+                          style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex items-start justify-start" />
+                  </div>
+                  <hr class=" w-full mt-4 pb-4"></hr>
+                  <div class="container mb-96	">
+                    <barchart-m-totalticket />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="ticket"
+        >
+          <div class="flex flex-1 self-stretch flex-col space-y-3 px-6 py-3 items-start justify-start">
+            <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+              <div class="flex self-stretch flex-col space-y-3 items-start justify-start">
+                <div class="flex self-stretch items-center justify-start px-3">
+                  <m-cardcontent class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg">
+                    <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                      MY TICKET
+                    </div>
+                  </m-cardcontent>
+                </div>
+                <m-link
+                  class="flex self-stretch flex-col items-center justify-start p-3"
+                  tabLink="#progress"
+                  onClick={() => {
+                    meta.action.move();
+                  }}
+                >
+                  <div
+                    class="flex self-stretch flex-col space-y-3 items-start justify-start pb-2 bg-white shadow rounded-lg"
+                    style="height: 189px; min-height: 189px; max-height: 189px;"
+                  >
+                    <div
+                      class="flex self-stretch flex-col items-start justify-start"
+                      style="height: 125px; min-height: 125px; max-height: 125px;"
+                    >
+                      <div class="flex self-stretch space-x-2.5 items-center justify-start p-2 bg-gray-200 rounded-tl-lg rounded-tr-lg">
+                        <div class="text-xs tracking-wide leading-none text-gray-600">
+                          Ticket type:
+                        </div>
+                        <div class="text-xs font-medium tracking-wide leading-none text-gray-800">
+                          Maintenance Ticket
+                        </div>
+                      </div>
+                      <div class="flex self-stretch items-start justify-start p-2">
+                        <div class="text-xs tracking-wide leading-none text-gray-800">
+                          My server down for several minutes.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex self-stretch items-center justify-between px-3">
+                      <div class="flex space-x-8 items-start justify-start">
+                        <div class="flex flex-col space-y-2 items-start justify-start">
+                          <div class="text-xs tracking-wide leading-none text-gray-600">
+                            Created at:
+                          </div>
+                          <div class="text-xs tracking-wide leading-none text-gray-800">
+                            19/10/2021
+                          </div>
+                        </div>
+                        <div class="flex flex-col space-y-2 items-start justify-start">
+                          <div class="text-xs tracking-wide leading-none text-gray-600">
+                            Updated at:
+                          </div>
+                          <div class="text-xs tracking-wide leading-none text-gray-800">
+                            19/10/2021
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="flex items-start justify-center p-2 bg-green-500 rounded-lg text-xs font-medium tracking-wide leading-none text-white"
+                        style="width:100px;"
+                      >
+                        OPEN
+                      </div>
+                    </div>
+                  </div>
+                </m-link>
+                <m-link class="flex self-stretch flex-col items-center justify-start p-3">
+                  <div
+                    class="flex self-stretch flex-col space-y-3 items-start justify-start pb-2 bg-white shadow rounded-lg"
+                    style="height: 189px; min-height: 189px; max-height: 189px;"
+                  >
+                    <div
+                      class="flex self-stretch flex-col items-start justify-start"
+                      style="height: 125px; min-height: 125px; max-height: 125px;"
+                    >
+                      <div class="flex self-stretch space-x-2.5 items-center justify-start p-2 bg-gray-200 rounded-tl-lg rounded-tr-lg">
+                        <div class="text-xs tracking-wide leading-none text-gray-600">
+                          Ticket type:
+                        </div>
+                        <div class="text-xs font-medium tracking-wide leading-none text-gray-800">
+                          Maintenance Ticket
+                        </div>
+                      </div>
+                      <div class="flex self-stretch items-start justify-start p-2">
+                        <div class="text-xs tracking-wide leading-none text-gray-800">
+                          My server down for several minutes.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex self-stretch items-center justify-between px-3">
+                      <div class="flex space-x-8 items-start justify-start">
+                        <div class="flex flex-col space-y-2 items-start justify-start">
+                          <div class="text-xs tracking-wide leading-none text-gray-600">
+                            Created at:
+                          </div>
+                          <div class="text-xs tracking-wide leading-none text-gray-800">
+                            19/10/2021
+                          </div>
+                        </div>
+                        <div class="flex flex-col space-y-2 items-start justify-start">
+                          <div class="text-xs tracking-wide leading-none text-gray-600">
+                            Updated at:
+                          </div>
+                          <div class="text-xs tracking-wide leading-none text-gray-800">
+                            19/10/2021
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="flex items-start justify-center p-2 bg-red-500 rounded-lg text-xs font-medium tracking-wide leading-none text-white"
+                        style="width:100px;"
+                      >
+                        IN PROGRESS
+                      </div>
+                    </div>
+                  </div>
+                </m-link>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="create"
+        >
+          <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
+            <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start ">
+              <div class="flex flex-1 self-stretch flex-col space-y-6 items-center justify-start px-3 ">
+                <div class="flex self-stretch items-center justify-start">
+                  <m-card class="flex flex-1 items-center justify-start px-3 py-2 bg-white shadow rounded-lg ">
+                    <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                      MY TICKET - OPEN TICKET
+                    </div>
+                  </m-card>
+                </div>
+                <m-card class="flex self-stretch flex-col items-start justify-start bg-white shadow rounded-lg ">
+                  <div class="flex items-start justify-start px-3 py-2">
+                    <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                      Ticket Information
+                    </div>
+                  </div>
+                  <div class="flex self-stretch flex-col items-center justify-start p-3">
+                    <div
+                      class="flex self-stretch flex-col items-start justify-start"
+                      style="height: 78px; min-height: 78px; max-height: 78px;"
+                    >
+                      <div class="flex self-stretch items-start justify-start p-2.5">
+                        <div class="text-sm tracking-wide leading-tight text-gray-500">
+                          Name
+                        </div>
+                      </div>
+                      <m-input
+                        class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                        style="height:35px"
+                        type="text"
+                        placeholder="Han Solo"
+                        value={meta.name}
+                        onChange={(e) => meta.action.nameChange(e)}
+                        required={true}
+                      />
+                    </div>
+
+                    <div class="flex self-stretch flex-col items-start justify-start ">
+                      <div class="item-media">
+                        <i class="icon demo-list-icon"></i>
+                      </div>
+                      {/*<div class="flex self-stretch flex-col items-start justify-start item-inner">*/}
+                      {/*<div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500">*/}
+                      {/*Ticket Type*/}
+                      {/*</div>*/}
+                      {/*<div*/}
+                      {/*class=" item-input-wrap input-dropdown-wrap border rounded-lg border-gray-500"*/}
+                      {/*style="height:35px;"*/}
+                      {/*>*/}
+                      {/*<select class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 ">*/}
+                      {/*<option>Technical Issue</option>*/}
+                      {/*<option>System Bug</option>*/}
+                      {/*</select>*/}
+                      {/*</div>*/}
+                      {/*</div>*/}
+
+                      <div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500 w-full">
+                        Ticket Type
+                      </div>
+
+                      <div
+                        class="border rounded-lg border-gray-500 input-dropdown-wrap w-full"
+                        style="height:35px;"
+                      >
+                        <select class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 w-full">
+                          <option style="width:100px;">Technical Issue</option>
+                          <option style="width:100px;">System Bug</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </m-card>
+                <m-card class="flex self-stretch flex-col space-y-5 items-start justify-start px-4 py-3 bg-white shadow rounded-lg">
+                  <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                    Message
+                  </div>
+                  <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
+                    <div class="flex self-stretch items-start justify-start">
+                      <div
+                        class="flex flex-1 flex-col items-start justify-start"
+                        style="height: 78px; min-height: 78px; max-height: 78px;"
+                      >
+                        <div class="flex items-start justify-start p-2.5">
+                          <div class="text-sm tracking-wide leading-tight text-gray-500">
+                            Subject
+                          </div>
+                        </div>
+
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="text"
+                          placeholder="Lorem Ipsum"
+                          value={meta.subject}
+                          onChange={(e) => meta.action.subjectChange(e)}
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                    <div class="flex self-stretch items-start justify-start">
+                      <div class="flex flex-1 flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <div class="text-sm tracking-wide leading-tight text-gray-500">
+                            Message
+                          </div>
+                        </div>
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="text"
+                          placeholder="Enter Your Text Here"
+                          value={meta.message}
+                          onChange={(e) => meta.action.messageChange(e)}
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </m-card>
+                <m-card class="flex self-stretch flex-col space-y-3 items-start justify-start p-3 bg-white shadow rounded-lg">
+                  <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                    Attachments
+                  </div>
+                  <div
+                    class="flex self-stretch flex-col space-y-2 items-start justify-start"
+                    style=" height: 130px; min-height: 130px; max-height: 130px;"
+                  >
+                    <div class="flex items-start justify-start p-2.5">
+                      <div class="text-sm tracking-wide leading-tight text-gray-500">
+                        Subject
+                      </div>
+                    </div>
+                    <div
+                      class="flex self-stretch space-x-6 items-center justify-start"
+                      style=" height: 37px; min-height: 37px; max-height: 37px;"
+                    >
+                      <div class="flex flex-1 items-start justify-start w-full">
+                        <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700">
+                          Select File
+                        </div>
+
+                        <m-input
+                          class="flex  items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
+                          style="height:53px;"
+                          type="text"
+                          placeholder="No File Selected"
+                          // value={meta.message}
+                          // onChange={(e) => meta.action.messageChange(e)}
+                        />
+                      </div>
+                      <m-button
+                        class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
+                        style="height:30px"
+                        onClick={() => {
+                          window.mobileApp.app.dialog.preloader(),
+                            setTimeout(function () {
+                              window.mobileApp.app.dialog.close();
+                            }, 1500);
+                        }}
+                      >
+                        <img
+                          src="/fimgs/688_1787.x1.svg"
+                          style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;"
+                        />
+                        <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                          Add
+                        </div>
+                      </m-button>
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-500">
+                      Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf,
+                      .zip, .csv, .sql, .tar, .gz
+                    </div>
+                  </div>
+                </m-card>
+                <div class="flex space-x-6 items-start justify-start pb-6">
+                  <m-link
+                    class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500"
+                    // href="/m/dashboard"
+                    tabLink="#dashboard"
+                  >
+                    <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
+                      cancel
+                    </div>
+                  </m-link>
+                  <m-link
+                    class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full"
+                    onClick={() => {
+                      window.mobileApp.app.dialog.confirm(
+                        "Apakah data yang anda masukkan sudah benar?",
+                        "Konfirmasi",
+                        () => {}
+                      );
+                    }}
+                    tabLink="#dashboard"
+                  >
+                    <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                      create ticket
+                    </div>
+                  </m-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="news"
+        >
+          <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+            <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start py-2.5">
+              <div class="flex self-stretch items-center w-full py-2 pl-8 pr-6">
+                <div class="flex self-stretch items-center w-full ">
+                  {" "}
+                  <img src="/fimgs/1444_1898.x1.svg" />
+                  <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                    Notification
+                  </div>
+                </div>
+
+                <m-button class="flex items-center justify-center px-8 py-1 bg-white shadow rounded-sm ">
+                  <div class="text-xs font-medium tracking-wide leading-none text-red-900">
+                    mark all as read
+                  </div>
+                </m-button>
+              </div>
+              <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow">
+                <div class="flex self-stretch space-x-3 items-center justify-start">
+                  <div class="flex flex text-sm tracking-wide leading-tight text-gray-700 w-full">
+                    Ticket that you sent on 19 Oktober 2021 has been resolved
+                  </div>
+                  <div
+                    class=" items-center justify-center bg-green-500 rounded-full"
+                    style="width: 9px; height: 9px; "
+                  />
+                </div>
+                <div class="flex self-stretch items-center justify-end">
+                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                    22/10/2021 14:20
+                  </div>
+                </div>
+              </m-cardcontent>
+
+              <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow">
+                <div class="flex self-stretch space-x-3 items-center justify-start">
+                  <div class="flex flex text-sm tracking-wide leading-tight text-gray-700 w-full">
+                    Your ticket has been answered
+                  </div>
+                  <div
+                    class=" items-center justify-center bg-green-500 rounded-full"
+                    style="width: 9px; height: 9px; "
+                  />
+                </div>
+                <div class="flex self-stretch items-center justify-end">
+                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                    22/10/2021 14:20
+                  </div>
+                </div>
+              </m-cardcontent>
+              <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-gray-200 shadow">
+                <div class="flex self-stretch items-center justify-start">
+                  <div class="text-sm tracking-wide leading-tight text-gray-700">
+                    Your ticket has been answered
+                  </div>
+                </div>
+                <div class="flex self-stretch items-center justify-end">
+                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                    21/10/2021 10:20
+                  </div>
+                </div>
+              </m-cardcontent>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="profile"
+        >
+          <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+            <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
+              <div class="flex self-stretch items-center justify-start">
+                <div class="flex items-center justify-start p-2">
+                  <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                    PROFILE
+                  </div>
+                </div>
+              </div>
+              <m-cardcontent class="flex self-stretch flex-col space-y-6 items-start justify-start p-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch space-x-6 items-center justify-start">
+                  <div class="flex items-start justify-start ">
+                    <img
+                      src="/fimgs/1036_1754.x2.png"
+                      style="width: 80px;  height: 80px; "
+                    />
+                  </div>
+                  <div class="flex flex-1 flex-col space-y-1 items-start justify-start">
+                    <div class="text-3xl font-medium tracking-wide leading-10 text-gray-700">
+                      Han Solo
+                    </div>
+                    <div class="text-sm tracking-wide leading-tight text-red-900">
+                      han.solo@startrek.com
+                    </div>
+                  </div>
+                </div>
+                <m-list-item class="flex self-stretch flex-col space-y-1 items-start justify-start">
+                  <div class="flex self-stretch space-x-5 items-start justify-start">
+                    <ul>
+                      <li>
+                        <div class="flex flex-1 mb-2">
+                          <div
+                            class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                            style="width:80px;"
+                          >
+                            Username
+                          </div>
+                          <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                            startrek11
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="flex flex-1 mb-2">
+                          <div
+                            class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                            style="width:80px;"
+                          >
+                            Company
+                          </div>
+                          <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                            Startrek Ent.
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="flex flex-1 mb-2">
+                          <div
+                            class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                            style="width:80px;"
+                          >
+                            Phone
+                          </div>
+                          <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                            012345678
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="flex flex-1">
+                          <div
+                            class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-500"
+                            style="width:80px;"
+                          >
+                            Address
+                          </div>
+                          <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
+                            California
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </m-list-item>
+              </m-cardcontent>
+              <m-link
+                class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
+                style=" height: 37px; "
+                tabLink="#edit"
+              >
+                Edit Profile
+              </m-link>
+
+              <m-link
+                class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
+                style="height: 37px;"
+                tabLink="#pass"
+              >
+                Change Password
+              </m-link>
+
+              <m-button
+                class="flex flex-1 items-center justify-center px-4 py-2 bg-white shadow-lg border rounded-full border-red-900 w-full text-sm font-medium tracking-wide leading-tight text-red-900"
+                onClick={() => {
+                  meta.action.signout();
+                }}
+              >
+                Sign out
+              </m-button>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={
+            "flex self-stretch flex-col items-center justif-center w-full h-full"
+          }
+          id="edit"
+        >
+          <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+            <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
+              <div class="flex self-stretch items-start justify-start p-2">
+                <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                  PROFILE - EDIT PROFILE
+                </div>
+              </div>
+              <div class="flex self-stretch flex-col items-center justify-start p-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+                  <div class="flex self-stretch items-center justify-center ">
+                    {/*<label*/}
+                    {/*for="file-upload"*/}
+                    {/*class={`flex flex-col items-start justify-start items-center`}*/}
+                    {/*>*/}
+                    {/*<input*/}
+                    {/*type={`file`}*/}
+                    {/*onChange={(e) => {*/}
+                    {/*runInAction(async () => {*/}
+                    {/*const upload = await meta.upload(e.target.files[0]);*/}
+                    {/*runInAction(() => {*/}
+                    {/*console.log(upload.path);*/}
+                    {/*meta.attachment = upload.path;*/}
+                    {/*});*/}
+                    {/*meta.action.uploadProfile();*/}
+                    {/*});*/}
+                    {/*}}*/}
+                    {/*id="file-upload"*/}
+                    {/*style="visibility:hidden;"*/}
+                    {/*/>*/}
+                    {/*<img*/}
+                    {/*src={meta.photo}*/}
+                    {/*class="flex flex-col items-center justify-center p-2.5 rounded-full"*/}
+                    {/*style="width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"*/}
+                    {/*/>*/}
+                    {/*</label>*/}
+                  </div>
+                  <div class="flex self-stretch flex-col space-y-2 items-start justify-start">
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="flex self-stretch items-start justify-start p-2.5">
+                        <label class="text-sm tracking-wide leading-tight text-gray-500">
+                          Display Name
+                        </label>
+                      </div>
+                      <m-input
+                        class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                        style="height:35px"
+                        type="text"
+                        placeholder="Full Name"
+                        value={meta.name}
+                        onChange={(e) => meta.action.namaChange(e)}
+                        required={true}
+                      />
+                    </div>
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="flex self-stretch items-start justify-start p-2.5">
+                        <label class="text-sm tracking-wide leading-tight text-gray-500">
+                          Email
+                        </label>
+                      </div>
+                      <m-input
+                        class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                        style="height:35px"
+                        type="email"
+                        placeholder="Email"
+                        value={meta.email}
+                        onChange={(e) => meta.action.emailChange(e)}
+                        required={true}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-6 bg-white shadow rounded-lg">
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch flex-col items-start justify-start">
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-start p-2.5">
+                            <label class="text-sm tracking-wide leading-tight text-gray-500">
+                              Username
+                            </label>
+                          </div>
+                          <m-input
+                            class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                            style="height:35px"
+                            type="text"
+                            placeholder="startrek11"
+                            value={meta.username}
+                            onChange={(e) => meta.action.usernameChange(e)}
+                            required={true}
+                          />
+                        </div>
+                      </div>
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Company
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="text"
+                          placeholder="Company"
+                          value={meta.company}
+                          onChange={(e) => meta.action.lokasiChange(e)}
+                          required={true}
+                        />
+                      </div>
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Phone
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="number"
+                          placeholder="Phone Number"
+                          value={meta.phone}
+                          onChange={(e) => meta.action.nomorChange(e)}
+                          required={true}
+                        />
+                      </div>
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Address
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="text"
+                          placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
+                          value={meta.address}
+                          onChange={(e) => meta.action.addressChange(e)}
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex self-stretch space-x-6 items-start justify-center">
+                  <div class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500">
+                    <m-link href="/m/view-profile">
+                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
+                        cancel
+                      </div>
+                    </m-link>
+                  </div>
+                  <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
+                    <m-link
+                      onClick={() => {
+                        meta.action.editData();
+                      }}
+                    >
+                      <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                        save changes
+                      </div>
+                    </m-link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={
+            "flex self-stretch flex-col items-center justif-center w-full h-full"
+          }
+          id="pass"
+        >
+          <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+            <div
+              class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5"
+              // style="width: 414px;  height: 772px;"
+            >
+              <div class="flex self-stretch  items-start justify-start p-2 text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                PROFILE - CHANGE PASSWORD
+              </div>
+
+              <div class="flex  self-stretch flex-col space-y-3 items-center justify-center p-6 bg-white shadow rounded-lg ">
+                <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                  CHANGE YOUR PASSWORD
+                </div>
+                <div class="flex self-stretch flex-col space-y-8 items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start">
+                    <div class="flex flex-1 flex-col space-y-2 items-start justify-start">
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Current Password
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10"
+                          style="height:35px"
+                          type="password"
+                          value={meta.password}
+                          onChange={(e) => meta.action.passwordChange(e)}
+                          placeholder="Password"
+                          required
+                        >
+                          {/*<a class="">*/}
+                          {/*<svg*/}
+                          {/*xmlns="http://www.w3.org/2000/svg"*/}
+                          {/*width="16"*/}
+                          {/*height="16"*/}
+                          {/*viewBox="0 0 24 24"*/}
+                          {/*>*/}
+                          {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
+                          {/*</svg>*/}
+                          {/*</a>*/}
+                        </m-input>
+                      </div>
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            New Password
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10 w-full"
+                          style="height:35px"
+                          type="password"
+                          value={meta.newPassword}
+                          onChange={(e) => meta.action.newChange(e)}
+                          placeholder="New Password"
+                          required
+                        >
+                          {/*<a class="">*/}
+                          {/*<svg*/}
+                          {/*xmlns="http://www.w3.org/2000/svg"*/}
+                          {/*width="16"*/}
+                          {/*height="16"*/}
+                          {/*viewBox="0 0 24 24"*/}
+                          {/*>*/}
+                          {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
+                          {/*</svg>*/}
+                          {/*</a>*/}
+                        </m-input>
+                      </div>
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Confirm New Password
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10"
+                          style="height:35px"
+                          type="password"
+                          value={meta.confirmPassword}
+                          onChange={(e) => meta.action.confirmChange(e)}
+                          placeholder="type your password here ..."
+                          required
+                        >
+                          {/*<a class="">*/}
+                          {/*<svg*/}
+                          {/*xmlns="http://www.w3.org/2000/svg"*/}
+                          {/*width="16"*/}
+                          {/*height="16"*/}
+                          {/*viewBox="0 0 24 24"*/}
+                          {/*>*/}
+                          {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
+                          {/*</svg>*/}
+                          {/*</a>*/}
+                        </m-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex self-stretch space-x-6 items-start justify-center">
+                    <div class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500">
+                      <m-link href="/m/view-profile">
+                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
+                          cancel
+                        </div>
+                      </m-link>
+                    </div>
+                    <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
+                      <m-link
+                        onClick={() => {
+                          meta.action.editData();
+                        }}
+                      >
+                        <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                          save changes
+                        </div>
+                      </m-link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class="flex self-stretch flex-col items-center justify-center w-full h-full"
+          id="edit"
+        ></m-tab>
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="progress"
+        >
+          <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start p-4 mb-4">
+            <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
+              <div class="flex flex-1 self-stretch flex-col space-y-3 items-center justify-start px-3">
+                <div class="flex self-stretch flex-col space-y-3 items-center justify-start py-1 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch items-center justify-between px-3 py-2 rounded-lg">
+                    <div class="text-sm font-medium tracking-wide leading-normal text-center text-gray-800">
+                      MY TICKET - VIEW TICKET
+                    </div>
+
+                    <div class="flex space-x-3 items-center justify-start ml-10">
+                      <div class="text-xs tracking-wide leading-none text-gray-700">
+                        Status:
+                      </div>
+                      <div class="flex items-start justify-center px-3 py-1 bg-red-500 rounded-lg">
+                        <div class="text-xs font-medium tracking-wide leading-none text-white">
+                          IN PROGRESS
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <img src="/fimgs/909_1612.x1.png" />
+                  <div class="flex self-stretch items-center justify-start px-3">
+                    <div class="flex space-x-2.5 items-center justify-start pb-2">
+                      <div class="text-xs tracking-wide leading-none text-gray-700 ">
+                        Ticket Type:
+                      </div>
+                      <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                        Maintenance ticket
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex self-stretch flex-col space-y-6 items-start justify-start p-2 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch flex-col space-y-5 items-start justify-start">
+                    <div class="flex self-stretch items-end justify-start">
+                      <div class="flex flex-1 space-x-3 items-center justify-start">
+                        <img
+                          src="/fimgs/907_1561.x3.png"
+                          style="width: 44px; min-width: 44px; max-width: 44px; height: 46px; min-height: 46px; max-height: 46px;background-image: url('/fimgs/bg-57fb28d4e5806027cbc1f1d9326b9965c9861ee1');background-size:100% 100%;background-repeat:no-repeat;"
+                        />
+                        <div class="flex flex-1 flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-between">
+                            <div class="text-sm font-medium tracking-wide leading-tight text-center text-gray-700">
+                              Han Solo
+                            </div>
+                            <div class="text-xs font-medium tracking-wide leading-none text-center text-gray-700">
+                              Submitted
+                            </div>
+                          </div>
+                          <div class="flex self-stretch items-center justify-between">
+                            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                              han.solo@startrek.com
+                            </div>
+                            <div class="text-xs tracking-wide leading-none text-gray-700">
+                              19/10/2021 19:20
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="flex self-stretch items-start justify-start p-2.5 bg-gray-200 rounded-tl-lg rounded-tr-lg">
+                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-800">
+                          Subject: My server down for several minutes.
+                        </div>
+                      </div>
+                      <div class="flex self-stretch items-start justify-start p-2.5 border rounded-bl-lg rounded-br-lg border-gray-300">
+                        <div class="text-sm tracking-wide leading-tight text-gray-700">
+                          Something happen with my website hosting, please fix
+                          it.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col space-y-2 items-start justify-start">
+                    <img
+                      src="/fimgs/701_1322.x3.png"
+                      style="width: 276px; min-width: 276px; max-width: 276px; height: 161px; min-height: 161px; max-height: 161px;background-image: url('/fimgs/bg-62768f691e4efd5728e33100aa3376a517301aef');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                    <div class="text-xs tracking-wide leading-none text-gray-700">
+                      image 1.png
+                    </div>
+                  </div>
+                </div>
+                <div class="flex self-stretch flex-col items-start justify-start p-2 bg-gray-100 shadow rounded-lg">
+                  <div class="flex self-stretch flex-col space-y-5 items-start justify-start">
+                    <div class="flex self-stretch items-end justify-start">
+                      <div class="flex flex-1 space-x-3 items-center justify-start">
+                        <div class="flex flex-1 flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-end">
+                            <div class="text-sm font-medium tracking-wide leading-tight text-center text-gray-700">
+                              Imam Kurfian
+                            </div>
+                          </div>
+                          <div class="flex self-stretch items-center justify-between">
+                            <div class="text-xs tracking-wide leading-none text-gray-700">
+                              21/10/2021 10:20
+                            </div>
+                            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                              imam.12@tech.com
+                            </div>
+                          </div>
+                        </div>
+                        <img
+                          src="/fimgs/907_1562.x3.png"
+                          class="flex items-start justify-center shadow rounded-full"
+                          style="width: 40px; min-width: 40px; max-width: 40px; height: 40px; min-height: 40px; max-height: 40px;"
+                        />
+                      </div>
+                    </div>
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        Disable your wordpress plugins.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex self-stretch items-start justify-start bg-white shadow rounded-lg">
+                  <div class="flex flex-1 flex-col items-start justify-start px-6 py-3">
+                    <div class="flex self-stretch flex-col space-y-3 items-center justify-start ">
+                      <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
+                        <div class="flex self-stretch flex-col space-y-3 items-start justify-start">
+                          <m-input
+                            class="flex self-stretch items-start justify-start px-3 py-2 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                            style="height:101px;"
+                            placeholder="Lorem Ipsum"
+                            type="text"
+                          />
+
+                          <div class="flex self-stretch items-start justify-start">
+                            <div class="flex flex-1 items-start justify-start">
+                              <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
+                                <div class="text-sm tracking-wide leading-tight text-gray-700">
+                                  Select File
+                                </div>
+                              </div>
+                              <m-input
+                                class="flex flex-1 items-center justify-start py-1.5 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
+                                style="height:36px;"
+                                type="text"
+                                placeholder="No File Selected"
+                                // value={meta.message}
+                                // onChange={(e) => meta.action.messageChange(e)}
+                              />
+                              {/*<div class="flex flex-1 items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500">*/}
+                              {/*<div class="text-sm tracking-wide leading-tight text-gray-700">*/}
+                              {/*No File Selected*/}
+                              {/*</div>*/}
+                              {/*</div>*/}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="text-xs tracking-wide leading-none text-gray-500">
+                          Allowed File Extensions: .jpg, .gif, .jpeg, .png,
+                          .pdf, .zip, .csv, .sql, .tar, .gz
+                        </div>
+                      </div>
+                      <m-link
+                        class="flex space-x-3 items-center justify-start px-3 py-2 bg-red-900 rounded-full"
+                        // href="/m/dashboard"
+                        tabLink="#dashboard"
+                      >
+                        <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                          send
+                        </div>
+                        <div class="flex items-center justify-center">
+                          <img
+                            src="/fimgs/712_1154.x1.svg"
+                            style="width: 10px; min-width: 10px; max-width: 10px; height: 10px; min-height: 10px; max-height: 10px;background-image: url('/fimgs/bg-2bfa9fe2ca84d0e11b66dd721fd0a69eac8f96bb');background-size:100% 100%;background-repeat:no-repeat;"
+                          />
+                        </div>
+                      </m-link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+      </m-tabs>
+      <div
+        class={`flex self-stretch flex-col items-center justify-start pt-2 pb-4 bg-white bg-opacity-50 shadow-inner fixed w-full bottom-0`}
+        style={"backdrop-filter : blur(70px);"}
+      >
+        <div class="flex self-stretch items-center justify-center">
+          <m-link
+            class={`flex flex-1 flex-col items-center justify-center`}
+            tabLink="#dashboard"
+            onClick={(e) => meta.onClickTab("dashboard")}
+            tabLinkActive={meta.tabActive === "dashboard"}
+          >
+            {meta.tabActive === "dashboard" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+                <img
+                  src="/fimgs/I1484_2420_1484_2125.x3.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Home
+              </div>
+            )}
+            {meta.tabActive !== "dashboard" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
+                <img
+                  src="/fimgs/I1484_2483_1484_2229.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Home
+              </div>
+            )}
+          </m-link>
+          <m-link
+            class={`flex flex-1 flex-col items-center justify-center`}
+            tabLink="#ticket"
+            onClick={(e) => meta.onClickTab("ticket")}
+            tabLinkActive={meta.tabActive === "ticket"}
+          >
+            {meta.tabActive === "ticket" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+                <img
+                  src="/fimgs/I1484_2294_1484_2213.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Ticket
+              </div>
+            )}
+            {meta.tabActive !== "ticket" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
+                <img
+                  src="/fimgs/I1484_2483_1484_2198.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Ticket
+              </div>
+            )}
+          </m-link>
+          <m-link
+            class={`flex flex-1 flex-col items-center justify-center`}
+            tabLink="#create"
+            onClick={(e) => meta.onClickTab("create")}
+            tabLinkActive={meta.tabActive === "create"}
+          >
+            {meta.tabActive === "create" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+                <img
+                  src="/fimgs/I1484_2378_1484_2233.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Create
+              </div>
+            )}
+            {meta.tabActive !== "create" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
+                <img
+                  src="/fimgs/I1484_2441_1484_2181.x3.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Create
+              </div>
+            )}
+          </m-link>
+          <m-link
+            class={`flex flex-1 flex-col items-center justify-center`}
+            tabLink="#news"
+            onClick={(e) => meta.onClickTab("news")}
+            tabLinkActive={meta.tabActive === "news"}
+          >
+            {meta.tabActive === "news" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+                <img
+                  src="/fimgs/I1484_2441_1484_2246.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                News
+              </div>
+            )}
+            {meta.tabActive !== "news" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
+                <img
+                  src="/fimgs/I1484_2483_1484_2205.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                News
+              </div>
+            )}
+          </m-link>
+          <m-link
+            class={`flex flex-1 flex-col items-center justify-center`}
+            tabLink="#profile"
+            onClick={(e) => meta.onClickTab("profile")}
+            tabLinkActive={meta.tabActive === "profile"}
+          >
+            {meta.tabActive === "profile" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+                <img
+                  src="/fimgs/I1484_2483_1484_2249.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Profile
+              </div>
+            )}
+            {meta.tabActive !== "profile" && (
+              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
+                <img
+                  src="/fimgs/I1484_2420_1484_2117.x1.png"
+                  style={`width: 30px; height: 30px; `}
+                />
+                Profile
+              </div>
+            )}
+          </m-link>
+        </div>
+      </div>
+    </div>
+  </div>
+</>
