@@ -14,7 +14,12 @@ export default () => {
                 
                 { mData: 'nama_perusahaan' },
                 { mData: 'nama_vendor' },
-                { mData: 'email_vendor' },
+                {
+                  mData: null,
+                  mRender: function (data, type, full) {
+                    return (full.users.email);
+                  }
+                },
                 { mData: 'nomor_vendor' },
                 { mData: 'lokasi_vendor' },
                 {

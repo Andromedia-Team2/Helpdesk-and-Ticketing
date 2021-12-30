@@ -9,6 +9,8 @@
       pass_type1: "password",
       pass_type2: "password",
       pass_type3: "password",
+      data: {},
+      task: "",
 
       validationCheck() {
         this.message =
@@ -86,12 +88,17 @@
           if (error_msg) {
             failed.style.display = "block";
           } else {
-            loading.style.display = "block";
-            api("/api/password/edit", {
+            meta.data = {
               id_user: meta.id_user,
               password: meta.password,
               newPassword: meta.newPassword,
               confirmPassword: meta.confirmPassword,
+            };
+            meta.task = "change";
+            loading.style.display = "block";
+            api("/api/password/edit", {
+              data: { ...meta.data },
+              task: meta.task,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {

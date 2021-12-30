@@ -73,11 +73,11 @@
           initiate.style.display = "none";
           meta.value = e;
         });
+      meta.email = meta.value.email;
       meta.username = meta.value.username;
       meta.password = meta.value.password;
       if (user.role == "Vendor") {
         meta.name = user.dataUser.nama_vendor;
-        meta.email = user.dataUser.email_vendor;
         meta.company = user.dataUser.nama_perusahaan;
         meta.phone = user.dataUser.nomor_vendor;
         meta.address = user.dataUser.lokasi_vendor;
@@ -86,7 +86,6 @@
           : (meta.photo = "uploads/profiles/default.png");
       } else if (user.role == "Client") {
         meta.name = user.dataUser.nama_client;
-        meta.email = user.dataUser.email_client;
         meta.company = user.dataUser.perusahaan_client;
         meta.phone = user.dataUser.nomor_client;
         meta.address = user.dataUser.lokasi_client;
@@ -95,9 +94,9 @@
           : (meta.photo = "uploads/profiles/default.png");
       } else if (user.role == "Employee") {
         meta.name = user.dataUser.nama_employee;
-        meta.email = user.dataUser.email_employee;
         meta.phone = user.dataUser.nomor_employee;
         meta.address = user.dataUser.lokasi_employee;
+        meta.company = "Kosong";
         user.dataUser.foto_profile !== null
           ? (meta.photo = "uploads/" + user.dataUser.foto_profile)
           : (meta.photo = "uploads/profiles/default.png");
@@ -311,23 +310,25 @@
               />
             </div>
           </div>
-          <div class="flex self-stretch flex-col items-start justify-start">
+          {user.role !== "Employee" && (
             <div class="flex self-stretch flex-col items-start justify-start">
-              <div class="flex self-stretch items-start justify-start px-2.5 py-2">
-                <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                  Company
+              <div class="flex self-stretch flex-col items-start justify-start">
+                <div class="flex self-stretch items-start justify-start px-2.5 py-2">
+                  <div class="text-lg tracking-wide leading-relaxed text-gray-500">
+                    Company
+                  </div>
                 </div>
+                <input
+                  class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-base text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={meta.company}
+                  onChange={(e) => meta.action.lokasiChange(e)}
+                  placeholder="Company Name"
+                  required
+                />
               </div>
-              <input
-                class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-base text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
-                type="text"
-                value={meta.company}
-                onChange={(e) => meta.action.lokasiChange(e)}
-                placeholder="Company Name"
-                required
-              />
             </div>
-          </div>
+          )}
           <div class="flex self-stretch flex-col items-start justify-start">
             <div class="flex self-stretch flex-col items-start justify-start">
               <div class="flex self-stretch items-start justify-start px-2.5 py-2">
@@ -337,7 +338,7 @@
               </div>
               <input
                 class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-base text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
-                type="number"
+                type="text"
                 value={meta.phone}
                 onChange={(e) => meta.action.nomorChange(e)}
                 placeholder="Phone Number"

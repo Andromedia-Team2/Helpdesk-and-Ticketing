@@ -43,6 +43,9 @@
           where: {
             id_client: meta.id_client,
           },
+          include: {
+            users: true,
+          },
         })
         .then((e) => {
           modal.style.display = "none";
@@ -53,7 +56,7 @@
       meta.id_user = meta.value.id_user;
       meta.nama_client = meta.value.nama_client;
       meta.nomor_client = meta.value.nomor_client;
-      meta.email_client = meta.value.email_client;
+      meta.email_client = meta.value.users.email;
       meta.lokasi_client = meta.value.lokasi_client;
       meta.perusahaan_client = meta.value.perusahaan_client;
       meta.action = {

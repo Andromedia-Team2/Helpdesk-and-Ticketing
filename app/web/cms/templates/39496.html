@@ -66,8 +66,16 @@
           include: {
             level_ticket: true,
             status_ticket: true,
-            client: true,
-            employee: true,
+            client: {
+              include: {
+                users: true,
+              },
+            },
+            employee: {
+              include: {
+                users: true,
+              },
+            },
             department: true,
             ticket: {
               include: {
@@ -314,7 +322,7 @@
                     </div>
                     <div class="flex self-stretch items-center justify-between">
                       <div class="text-lg tracking-wide leading-relaxed text-center text-gray-500">
-                        {meta.value?.client?.email_client}
+                        {meta.value?.client?.users?.email}
                       </div>
                       <div class="text-base hidden md:block tracking-wide leading-normal text-gray-700">
                         {formatDate(meta.value?.tanggalMasuk_ticket)}
@@ -484,10 +492,10 @@
                               </div>
                               <div class="text-lg tracking-wide leading-relaxed text-center text-gray-500">
                                 {p.users.id_role === 3 &&
-                                  meta.value?.client?.email_client}
+                                  meta.value?.client?.users.email}
 
                                 {p.users.id_role === 4 &&
-                                  meta.value?.employee?.email_employee}
+                                  meta.value?.employee?.users.email}
                               </div>
                             </div>
                           </div>
@@ -568,9 +576,9 @@
                             <div class="flex self-stretch items-center justify-between">
                               <div class="text-lg tracking-wide leading-relaxed text-center text-gray-500">
                                 {p.users.id_role === 3 &&
-                                  meta.value?.client?.email_client}
+                                  meta.value?.client?.users.email}
                                 {p.users.id_role === 4 &&
-                                  meta.value?.employee?.email_employee}
+                                  meta.value?.employee?.users.email}
                               </div>
                               <div class="text-base hidden md:block tracking-wide leading-normal text-gray-700">
                                 {formatDay(p.tanggal_waktu_percakapan)}

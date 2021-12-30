@@ -11,7 +11,6 @@ model client {
   id_client         Int              @id @unique @default(autoincrement())
   id_user           Int?             @unique
   nama_client       String           @db.VarChar(150)
-  email_client      String           @unique @db.VarChar(150)
   lokasi_client     String           @db.VarChar(150)
   nomor_client      String           @db.VarChar(15)
   foto_profile      String?          @db.VarChar(100)
@@ -41,12 +40,12 @@ model employee {
   id_department   Int
   nama_employee   String           @db.VarChar(150)
   nomor_employee  String           @db.VarChar(15)
-  email_employee  String           @db.VarChar(150)
   status_employee String           @db.VarChar(150)
   lokasi_employee String           @db.VarChar(150)
   foto_profile    String?          @db.VarChar(100)
   id_vendor       Int?
   id_user         Int?             @unique
+  identityColor   String           @db.VarChar
   department      department       @relation(fields: [id_department], references: [id_department])
   users           users?           @relation(fields: [id_user], references: [id_user])
   vendor          vendor?          @relation(fields: [id_vendor], references: [id_vendor])
@@ -159,7 +158,8 @@ model users {
   id_role    Int?
   username   String       @unique @db.VarChar(100)
   password   String       @db.VarChar(100)
-  token      String?      @db.VarChar(100)
+  token      String?      @unique @db.VarChar(100)
+  email      String       @unique @db.VarChar(100)
   role       role?        @relation(fields: [id_role], references: [id_role])
   client     client?
   employee   employee?
@@ -173,7 +173,6 @@ model vendor {
   id_vendor       Int              @id @unique @default(autoincrement())
   id_user         Int              @unique
   nama_vendor     String           @db.VarChar(150)
-  email_vendor    String           @db.VarChar(150)
   lokasi_vendor   String           @db.VarChar(150)
   nomor_vendor    String           @db.VarChar(15)
   nama_perusahaan String           @db.VarChar(150)

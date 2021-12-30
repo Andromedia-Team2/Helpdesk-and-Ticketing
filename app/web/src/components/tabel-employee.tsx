@@ -17,7 +17,12 @@ export default () => {
                     } 
                 },
                 { mData: 'nama_employee' },
-                { mData: 'email_employee' },
+                {
+                  mData: null,
+                  mRender: function (data, type, full) {
+                    return (full.users.email);
+                  }
+                },
                 { mData: 'nomor_employee' },
                 { mData: 'lokasi_employee' },
                 {
