@@ -4,11 +4,47 @@
       newPassword: "",
       confirmPassword: "",
       message: "",
+      token: null,
+      pass_type: "password",
       pass_type1: "password",
-      pass_type2: "password",
-      pass_type3: "password",
+      data: {},
+      task: "",
+
+      validationCheck() {
+        this.message =
+          this.newPassword === "" || this.newPassword === null
+            ? "Your new password is empty. Make sure all forms are filled and try again."
+            : !validatePass(this.newPassword)
+            ? "Password length 8-16, Include Uppercase, Lowercase & No space"
+            : this.confirmPassword === "" || this.confirmPassword === null
+            ? "Your confirmation password is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
     }}
     run={async () => {
+      meta.token = params?.token;
+      let modal = document.getElementById("my-modal");
+      let success = document.getElementById("my-success");
+      let loading = document.getElementById("my-loading");
+      let failed = document.getElementById("my-failed");
+      let initiate = document.getElementById("my-initiate");
+      let block = document.getElementById("my-block");
+      if (meta.token === "None" || params.token === undefined) {
+        window.location.replace("/login");
+      } else {
+        modal.style.display = "block";
+        initiate.style.display = "block";
+        const users = await db.users.findUnique({
+          where: {
+            token: meta.token,
+          },
+        });
+        if (users === null) {
+          initiate.style.display = "none";
+          block.style.display = "block";
+        }
+      }
       meta.action = {
         newChange: (e) => {
           runInAction(() => {
@@ -22,131 +58,299 @@
             console.log(meta.confirmPassword);
           });
         },
-        showHidePass2: () => {
+        showHidePass: () => {
           runInAction(() => {
-            meta.pass_type2 === "password"
-              ? (meta.pass_type2 = "text")
-              : (meta.pass_type2 = "password");
+            meta.pass_type === "password"
+              ? (meta.pass_type = "text")
+              : (meta.pass_type = "password");
           });
         },
-        showHidePass3: () => {
+        showHidePass1: () => {
           runInAction(() => {
-            meta.pass_type3 === "password"
-              ? (meta.pass_type3 = "text")
-              : (meta.pass_type3 = "password");
+            meta.pass_type1 === "password"
+              ? (meta.pass_type1 = "text")
+              : (meta.pass_type1 = "password");
           });
         },
-        alert: (e) => {
-          window.location.replace("/alert");
+        tryAgain: () => {
+          runInAction(() => {
+            modal.style.display = "none";
+            failed.style.display = "none";
+          });
+        },
+        editData: (e) => {
+          let error_msg = meta.validationCheck();
+          modal.style.display = "block";
+          if (error_msg) {
+            failed.style.display = "block";
+          } else {
+            meta.data = {
+              token: meta.token,
+              newPassword: meta.newPassword,
+              confirmPassword: meta.confirmPassword,
+            };
+            meta.task = "forgot";
+            loading.style.display = "block";
+            api("/api/password/edit", {
+              data: { ...meta.data },
+              task: meta.task,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                loading.style.display = "none";
+                success.style.display = "block";
+                window.location.replace("/login");
+              } else {
+                meta.message = e.message;
+                failed.style.display = "block";
+                loading.style.display = "none";
+                console.log(e);
+              }
+            });
+          }
         },
       };
     }}
   />
-  <div
-    class="flex flex-col items-center justify-center bg-gray-50"
-    style="background-image: url('/fimgs/bg-cc907efaa4f25486f7149412174411cf313856da');background-size:100% 100%;background-repeat:no-repeat;"
-  >
+  {params.token !== "None" && params.token !== undefined && (
     <div
-      class="items-center justify-center"
-      style="width: 350px; max-width: 350px;"
+      class="flex flex-col items-center justify-center bg-gray-50"
+      style="background-image: url('/fimgs/bg-cc907efaa4f25486f7149412174411cf313856da');background-size:100% 100%;background-repeat:no-repeat;"
     >
-      <div class="flex flex-1 flex-col items-center justify-center p-6 bg-white shadow rounded-lg ">
-        <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
-          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
-            <div class="flex self-stretch items-start justify-center">
-              <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
-                Reset password
-              </div>
-            </div>
-            <img
-              src="/fimgs/1381_2279.x1.png"
-              style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;"
-            />
-          </div>
-          <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
-            <div class="text-base tracking-wide leading-normal text-center text-gray-800">
-              Set your new password to protect your account
-            </div>
-            <div class="flex flex-col items-start justify-start w-full">
-              <div class="flex flex-col space-y-1 items-start justify-start">
-                <div class="text-xs tracking-wide leading-none text-gray-500">
-                  New Password
+      <div
+        class="items-center justify-center"
+        style="width: 350px; max-width: 350px;"
+      >
+        <div class="flex flex-1 flex-col items-center justify-center p-6 bg-white shadow rounded-lg ">
+          <div class="flex self-stretch flex-col space-y-6 items-center justify-start">
+            <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+              <div class="flex self-stretch items-start justify-center">
+                <div class="text-xl font-medium tracking-wide leading-loose text-center text-gray-800">
+                  Reset password
                 </div>
               </div>
-              <div class="relative w-full text-gray-600 focus-within:text-gray-400">
-                <span class="absolute inset-y-0 right-0 flex items-center pr-4">
-                  <button
-                    type="submit"
-                    class="p-1 focus:outline-none focus:shadow-outline"
-                    onClick={() => {
-                      meta.action.showHidePass3();
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="#4b5563"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
-                    </svg>
-                  </button>
-                </span>
-                <input
-                  type={meta.pass_type3}
-                  value={meta.confirmPassword}
-                  onChange={(e) => meta.action.confirmChange(e)}
-                  placeholder="****"
-                  required
-                  class="flex items-center tracking-widest justify-between py-2 w-full pl-4 pr-14 border rounded-lg text-base text-gray-600 font-medium pr-5 bg-white focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline mt-1"
-                />
-              </div>
+              <img
+                src="/fimgs/1381_2279.x1.png"
+                style="width: 240px; min-width: 240px; max-width: 240px; height: 240px; min-height: 240px; max-height: 240px;"
+              />
             </div>
-            <div class="flex flex-col items-start justify-start w-full">
-              <div class="flex flex-col space-y-1 items-start justify-start">
-                <div class="text-xs tracking-wide leading-none text-gray-500">
-                  Confirm New Password
+            <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+              <div class="text-base tracking-wide leading-normal text-center text-gray-800">
+                Set your new password to protect your account
+              </div>
+              <div class="flex flex-col items-start justify-start w-full">
+                <div class="flex flex-col space-y-1 items-start justify-start">
+                  <div class="text-xs tracking-wide leading-none text-gray-500">
+                    New Password
+                  </div>
+                </div>
+                <div class="relative w-full text-gray-600 focus-within:text-gray-400">
+                  <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+                    <button
+                      type="submit"
+                      class="p-1 focus:outline-none focus:shadow-outline"
+                      onClick={() => {
+                        meta.action.showHidePass();
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="#4b5563"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                      </svg>
+                    </button>
+                  </span>
+                  <input
+                    type={meta.pass_type}
+                    value={meta.newPassword}
+                    onChange={(e) => meta.action.newChange(e)}
+                    placeholder="****"
+                    required
+                    class="flex items-center tracking-widest justify-between py-2 w-full pl-4 pr-14 border rounded-lg text-base text-gray-600 font-medium pr-5 bg-white focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline mt-1"
+                  />
                 </div>
               </div>
-              <div class="relative w-full text-gray-600 focus-within:text-gray-400">
-                <span class="absolute inset-y-0 right-0 flex items-center pr-4">
-                  <button
-                    type="submit"
-                    class="p-1 focus:outline-none focus:shadow-outline"
-                    onClick={() => {
-                      meta.action.showHidePass3();
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="#4b5563"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+              <div class="flex flex-col items-start justify-start w-full">
+                <div class="flex flex-col space-y-1 items-start justify-start">
+                  <div class="text-xs tracking-wide leading-none text-gray-500">
+                    Confirm New Password
+                  </div>
+                </div>
+                <div class="relative w-full text-gray-600 focus-within:text-gray-400">
+                  <span class="absolute inset-y-0 right-0 flex items-center pr-4">
+                    <button
+                      type="submit"
+                      class="p-1 focus:outline-none focus:shadow-outline"
+                      onClick={() => {
+                        meta.action.showHidePass1();
+                      }}
                     >
-                      <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
-                    </svg>
-                  </button>
-                </span>
-                <input
-                  type={meta.pass_type3}
-                  value={meta.confirmPassword}
-                  onChange={(e) => meta.action.confirmChange(e)}
-                  placeholder="****"
-                  required
-                  class="flex items-center tracking-widest justify-between py-2 w-full pl-4 pr-14 border rounded-lg text-base text-gray-600 font-medium pr-5 bg-white focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline mt-1"
-                />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="#4b5563"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                      </svg>
+                    </button>
+                  </span>
+                  <input
+                    type={meta.pass_type1}
+                    value={meta.confirmPassword}
+                    onChange={(e) => meta.action.confirmChange(e)}
+                    placeholder="****"
+                    required
+                    class="flex items-center tracking-widest justify-between py-2 w-full pl-4 pr-14 border rounded-lg text-base text-gray-600 font-medium pr-5 bg-white focus:border-gray-500 border border-gray-500 appearance-none focus:outline-none focus:shadow-outline mt-1"
+                  />
+                </div>
               </div>
             </div>
+            <button
+              class="flex items-center justify-start px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
+              onClick={() => {
+                meta.action.editData();
+              }}
+            >
+              Reset Password
+            </button>
           </div>
-          <button
-            class="flex items-center justify-start px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
-            onClick={() => {
-              meta.action.alert();
-            }}
+        </div>
+      </div>
+    </div>
+  )}
+  <div
+    class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal"
+  >
+    <div class="relative top-48 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div id="my-success" class="mt-3 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100">
+          <svg
+            class="h-10 w-10 text-red-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Reset Password
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Successful!</h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Password has been successfully updated!
+          </p>
+        </div>
+      </div>
+      <div id="my-loading" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full">
+          <div class="loader ease-linear rounded-full border-5 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Processing ...
+        </h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Please wait a moment for the saving process
+          </p>
+        </div>
+      </div>
+      <div id="my-initiate" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full">
+          <div class="loader ease-linear rounded-full border-5 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Cheking data ...
+        </h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Please wait a moment for the Checking data
+          </p>
+        </div>
+      </div>
+      <div id="my-failed" class="mt-3 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full">
+          <svg
+            class="h-24 w-24 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-red-600">
+          Change Password Failed
+        </h3>
+        <div class="mt-3 px-3 py-3">
+          <p class="text-sm text-gray-500">{meta.message}</p>
+        </div>
+        <div class="px-3 py-2">
+          <button
+            onClick={() => {
+              meta.action.tryAgain();
+            }}
+            class="flex items-center w-full justify-center bg-red-900 shadow rounded-2xl"
+          >
+            <div class="text-base px-4 py-1 font-medium tracking-wide leading-relaxed text-white">
+              I'm understand, try again
+            </div>
+          </button>
+        </div>
+      </div>
+      <div id="my-block" class="mt-3 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full">
+          <svg
+            class="h-24 w-24 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-red-600">
+          Token Expired
+        </h3>
+        <div class="mt-3 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Your token has expired, please enter your email on the forgot
+            password page again.
+          </p>
+        </div>
+        <div class="px-3 py-2">
+          <button
+            onClick={() => {
+              window.location.replace("/login");
+            }}
+            class="flex items-center w-full justify-center bg-red-900 shadow rounded-2xl"
+          >
+            <div class="text-base px-4 py-1 font-medium tracking-wide leading-relaxed text-white">
+              Go to Login Page
+            </div>
           </button>
         </div>
       </div>

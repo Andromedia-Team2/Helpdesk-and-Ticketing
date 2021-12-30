@@ -22,7 +22,6 @@
       if (user.role == "Vendor") {
         meta.id_user = user.dataUser.id_user;
         meta.name = user.dataUser.nama_vendor;
-        meta.email = user.dataUser.email_vendor;
         meta.company = user.dataUser.nama_perusahaan;
         meta.phone = user.dataUser.nomor_vendor;
         meta.address = user.dataUser.lokasi_vendor;
@@ -32,7 +31,6 @@
       } else if (user.role == "Client") {
         meta.id_user = user.dataUser.id_user;
         meta.name = user.dataUser.nama_client;
-        meta.email = user.dataUser.email_client;
         meta.company = user.dataUser.perusahaan_client;
         meta.phone = user.dataUser.nomor_client;
         meta.address = user.dataUser.lokasi_client;
@@ -40,9 +38,17 @@
           ? (meta.photo = "uploads/" + user.dataUser.foto_profile)
           : (meta.photo = "uploads/profiles/default.png");
       } else if (user.role == "Employee") {
+        await db.vendor
+          .findUnique({
+            where: {
+              id_vendor: user.dataUser.id_vendor,
+            },
+          })
+          .then((e) => {
+            meta.company = e.nama_perusahaan;
+          });
         meta.id_user = user.dataUser.id_user;
         meta.name = user.dataUser.nama_employee;
-        meta.email = user.dataUser.email_employee;
         meta.phone = user.dataUser.nomor_employee;
         meta.address = user.dataUser.lokasi_employee;
         user.dataUser.foto_profile !== null
@@ -72,6 +78,7 @@
         });
       meta.username = meta.value.username;
       meta.password = meta.value.password;
+      meta.email = meta.value.email;
       meta.action = {
         change: (e) => {
           navigate("/change-pass");
@@ -97,7 +104,7 @@
             {meta.name}
           </div>
           <div class="text-lg tracking-widest text-center text-gray-500">
-            <h4>Vendor</h4>
+            <h4>{user.role}</h4>
           </div>
           <hr class="mt-6 w-full"></hr>
           {user.role !== "Super Admin" && (
@@ -178,18 +185,16 @@
                     {meta.email}
                   </div>
                 </div>
-                {user.role !== "Employee" && (
-                  <div class="flex self-stretch flex-col items-start justify-start">
-                    <div class="flex self-stretch items-start justify-start px-2.5 py-2">
-                      <div class="text-lg tracking-wide leading-relaxed text-gray-500">
-                        Company
-                      </div>
-                    </div>
-                    <div class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-base text-gray-600 tracking-widest border border-gray-200">
-                      {meta.company}
+                <div class="flex self-stretch flex-col items-start justify-start">
+                  <div class="flex self-stretch items-start justify-start px-2.5 py-2">
+                    <div class="text-lg tracking-wide leading-relaxed text-gray-500">
+                      Company
                     </div>
                   </div>
-                )}
+                  <div class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-base text-gray-600 tracking-widest border border-gray-200">
+                    {meta.company}
+                  </div>
+                </div>
                 <div class="flex self-stretch flex-col items-start justify-start">
                   <div class="flex self-stretch items-start justify-start px-2.5 py-2">
                     <div class="text-lg tracking-wide leading-relaxed text-gray-500">

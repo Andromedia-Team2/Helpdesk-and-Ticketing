@@ -42,6 +42,9 @@
           where: {
             id_vendor: meta.id_vendor,
           },
+          include: {
+            users: true,
+          },
         })
         .then((e) => {
           modal.style.display = "none";
@@ -51,7 +54,7 @@
       meta.id_user = meta.value.id_user;
       meta.nama_vendor = meta.value.nama_vendor;
       meta.nomor_vendor = meta.value.nomor_vendor;
-      meta.email_vendor = meta.value.email_vendor;
+      meta.email_vendor = meta.value.users.email;
       meta.lokasi_vendor = meta.value.lokasi_vendor;
       meta.nama_perusahaan = meta.value.nama_perusahaan;
       meta.action = {

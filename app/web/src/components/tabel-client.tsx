@@ -14,7 +14,12 @@ export default () => {
             aoColumns: [
                 { mData: 'perusahaan_client' },
                 { mData: 'nama_client' },
-                { mData: 'email_client' },
+                {
+                  mData: null,
+                  mRender: function (data, type, full) {
+                    return (full.users.email);
+                  }
+                },
                 { mData: 'nomor_client' },
                 { mData: 'lokasi_client' },
                 {

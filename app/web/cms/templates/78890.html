@@ -12,6 +12,8 @@
       email_employee: "",
       lokasi_employee: "",
       id_dep: 0,
+      identityColor: "#fff",
+      showColor: false,
       validationCheck() {
         this.message =
           this.id_department === "" ||
@@ -47,6 +49,9 @@
           where: {
             id_employee: meta.id_employee,
           },
+          include: {
+            users: true,
+          },
         })
         .then((e) => {
           modal.style.display = "none";
@@ -55,10 +60,11 @@
         });
       meta.id_vendor = meta.value.id_vendor;
       meta.id_user = meta.value.id_user;
+      meta.identityColor = meta.value.identityColor;
       meta.id_department = meta.value.id_department;
       meta.nama_employee = meta.value.nama_employee;
       meta.nomor_employee = meta.value.nomor_employee;
-      meta.email_employee = meta.value.email_employee;
+      meta.email_employee = meta.value.users.email;
       (meta.lokasi_employee = meta.value.lokasi_employee),
         console.log(meta.id_vendor);
       meta.action = {
@@ -98,6 +104,18 @@
             failed.style.display = "none";
           });
         },
+        changeColor: (e) => {
+          runInAction(() => {
+            meta.identityColor = e.hex;
+            console.log("identityColor:" + meta.identityColor);
+            meta.showColor = false;
+          });
+        },
+        changeVisColor: (e) => {
+          runInAction(() => {
+            meta.showColor = e;
+          });
+        },
         addData: (e) => {
           let error_msg = meta.validationCheck();
           modal.style.display = "block";
@@ -115,6 +133,7 @@
               shift_kerja: meta.shift_kerja,
               id_vendor: meta.id_vendor,
               lokasi_employee: meta.lokasi_employee,
+              identityColor: meta.identityColor,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
@@ -217,10 +236,44 @@
             />
           </div>
         </div>
+
+        <div class="flex self-stretch items-center justify-center pl-5">
+          <div class="flex flex-1 items-start justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Identity Color
+            </div>
+            <div class="input w-full mr-5">
+              <div class="flex self-stretch items-center bg-gray-100 w-full justify-start py-2 pl-4 pr-5 rounded-lg focus:border-gray-500 border focus:outline-none focus:shadow-outline space-x-3">
+                <inputcolor
+                  color={meta.identityColor}
+                  onClick={() => {
+                    if (meta.showColor == false) {
+                      meta.action.changeVisColor(true);
+                    } else {
+                      meta.action.changeVisColor(false);
+                    }
+                  }}
+                />
+                <input
+                  type="text"
+                  class="font-medium w-full bg-gray-100 text-gray-600 tracking-widest text-sm"
+                  value={meta.identityColor}
+                  disabled={true}
+                />
+              </div>
+              {meta.showColor && (
+                <colorpicker
+                  color={meta.identityColor}
+                  onChange={(e) => meta.action.changeColor(e)}
+                />
+              )}
+            </div>
+          </div>
+        </div>
         <div class="flex self-stretch items-start justify-start px-5">
           <div class="flex flex-1 items-start justify-start ">
             <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
-              Phone
+              Address
             </div>
             <textarea
               value={meta.lokasi_employee}

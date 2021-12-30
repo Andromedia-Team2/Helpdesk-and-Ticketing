@@ -6,7 +6,8 @@
   "dependencies": {
     "argon2": "^0.28.2",
     "crypto-js": "^4.1.1",
-    "dropify": "^0.2.2"
+    "dropify": "^0.2.2",
+    "nodemailer": "^6.7.2"
   },
   "types": "./src/index.ts",
   "main": "./build/index.js"
