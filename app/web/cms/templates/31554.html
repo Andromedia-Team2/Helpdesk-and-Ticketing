@@ -71,9 +71,12 @@
           "/dashboard-employee",
           "/dashboard-vendor",
           "/dashboard-admin",
+          "/#rateofservice",
+          "#rateofservice",
           "/report-vendor",
           "/dashboard-client",
           "/report-ticket-vendor",
+          "/notification",
         ];
       } else if (user.role == "Client") {
         meta.nama = user.dataUser.nama_client;
@@ -710,9 +713,9 @@
                         <li class="hover:bg-gray-200 dark:hover:text-gray-200">
                           <a
                             class="flex items-center w-full px-4 py-2 "
-                            href="#"
+                            href="/notification"
                           >
-                            Report User
+                            Notification
                           </a>
                         </li>
                       </ul>
