@@ -77,7 +77,7 @@ model history_ticket {
   status_ticket          status_ticket @relation(fields: [id_status_ticket], references: [id_status_ticket])
   ticket                 ticket        @relation(fields: [id_ticket], references: [id_ticket])
   vendor                 vendor        @relation(fields: [id_vendor], references: [id_vendor])
-  notifikasi             notifikasi?
+  notifikasi             notifikasi[]
   percakapan             percakapan[]
 
   @@index([id_client], name: "history_ticket_id_client")
@@ -185,7 +185,7 @@ model vendor {
 
 model notifikasi {
   id_notification      Int            @id @default(autoincrement())
-  id_historyTicket     Int            @unique
+  id_historyTicket     Int
   status_notifications String         @db.VarChar(100)
   type_notification    String         @db.VarChar(100)
   date_notification    DateTime       @db.Timestamp(6)

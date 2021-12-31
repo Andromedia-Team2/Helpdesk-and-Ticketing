@@ -6,6 +6,7 @@
       talks: [],
       value: {},
       id_ticket: 0,
+      id_history_ticket: 0,
       id_department: 0,
       id_employee: null,
       id_level_ticket: 0,
@@ -89,6 +90,8 @@
           initiate.style.display = "none";
           meta.value = e;
         });
+
+      meta.id_history_ticket = meta.value?.id_history_ticket;
       meta.value?.client?.foto_profile !== null
         ? (meta.photo = "/uploads/" + meta.value?.client?.foto_profile)
         : (meta.photo = "/uploads/profiles/default.png");
@@ -167,6 +170,7 @@
               id_status_ticket: 2,
               id_department: meta.id_department,
               tanggal_assign: new Date(),
+              id_history_ticket: meta.id_history_ticket,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
