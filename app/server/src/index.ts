@@ -61,6 +61,33 @@ const sendUserInfo = (email, username, password) => {
     });
 }
 
+const sendNotif = (email, message) => {
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'duckysquishy@gmail.com', // fill your mail
+            pass: 'hspnflejntkyokod' // fill your password
+        }
+    });
+
+    var mailOptions = {
+        from: 'duckysquishy@gmail.com', // fill your mail
+        to: email,
+        subject: 'Ticket Notification',
+        text: message
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            return false;
+        } else {
+            console.log('Email sent: ' + info.response);
+            return true;
+        }
+    });
+}
+
 const generateToken = () => {
     //Math.floor(100000 + Math.random() * 900000)
     const mToken = Math.random().toString(36).substring(2, 8) + Math.random().toString(36).substring(2, 8);
@@ -128,5 +155,5 @@ const minutesDifference = (date1,date2) => {
 }
 
 export const ext = {
-    argon2, sendVerifEmail, sendUserInfo, generateToken, generateLongToken, formatD, format, pump, fs, path, daysDifference, hoursDifference, minutesDifference
+    argon2, sendVerifEmail, sendUserInfo, sendNotif, generateToken, generateLongToken, formatD, format, pump, fs, path, daysDifference, hoursDifference, minutesDifference
 }
