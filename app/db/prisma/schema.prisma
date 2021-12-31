@@ -93,6 +93,7 @@ model jenis_ticket {
   jenis_ticket           String   @db.VarChar(100)
   id_vendor              Int
   deskripsi_jenis_ticket String   @db.VarChar(300)
+  identityColor          String   @db.VarChar(50)
   vendor                 vendor   @relation(fields: [id_vendor], references: [id_vendor])
   ticket                 ticket[]
 
