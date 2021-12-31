@@ -11,6 +11,7 @@
       id_vendor: 0,
       vendor: {},
       id_notif: 0,
+      email: "",
 
       validationCheck() {
         this.message =
@@ -54,8 +55,12 @@
         where: {
           id_vendor: meta.id_vendor,
         },
+        include: {
+          users: true,
+        },
       });
-      meta.id_notif = meta.vendor.id_user;
+      meta.id_notif = meta.vendor?.id_user;
+      meta.email = meta.vendor?.users?.email;
       await api("/api/get-jenis").then((e) => {
         modal.style.display = "none";
         initiate.style.display = "none";
@@ -109,6 +114,7 @@
               id_client: meta.id_client,
               id_vendor: meta.id_vendor,
               id_notif: meta.id_notif,
+              email: meta.email,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
