@@ -108,6 +108,7 @@ model level_ticket {
   history_ticket         history_ticket[]
 }
 
+<<<<<<< HEAD
 model notifikasi {
   id_notification      Int            @id @default(autoincrement())
   id_historyTicket     Int            @unique
@@ -119,6 +120,8 @@ model notifikasi {
   @@index([id_notification], name: "Notifikasi_id_notification")
 }
 
+=======
+>>>>>>> 806384c370e93512b52b8ca19a5e79a1c050b18a
 model percakapan {
   id_percakapan            Int            @id @unique @default(autoincrement())
   isi_percakapan           String         @db.VarChar(1000)
@@ -169,6 +172,7 @@ model users {
   role       role?        @relation(fields: [id_role], references: [id_role])
   client     client?
   employee   employee?
+  notifikasi notifikasi[]
   percakapan percakapan[]
   vendor     vendor?
 
@@ -191,4 +195,17 @@ model vendor {
   jenis_ticket    jenis_ticket[]
 
   @@index([id_user], name: "do__fk")
+}
+
+model notifikasi {
+  id_notification      Int            @id @default(autoincrement())
+  id_historyTicket     Int            @unique
+  status_notifications String         @db.VarChar(100)
+  type_notification    String         @db.VarChar(100)
+  date_notification    DateTime       @db.Timestamp(6)
+  id_user              Int?
+  history_ticket       history_ticket @relation(fields: [id_historyTicket], references: [id_history_ticket])
+  users                users?         @relation(fields: [id_user], references: [id_user])
+
+  @@index([id_notification], name: "Notifikasi_id_notification")
 }
