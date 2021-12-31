@@ -77,6 +77,7 @@ model history_ticket {
   status_ticket          status_ticket @relation(fields: [id_status_ticket], references: [id_status_ticket])
   ticket                 ticket        @relation(fields: [id_ticket], references: [id_ticket])
   vendor                 vendor        @relation(fields: [id_vendor], references: [id_vendor])
+  Notifikasi             Notifikasi?
   percakapan             percakapan[]
 
   @@index([id_client], name: "history_ticket_id_client")
@@ -108,10 +109,14 @@ model level_ticket {
 }
 
 model Notifikasi {
-  id_notifikasi     Int      @id @default(autoincrement())
-  open_ticket       DateTime @db.Date
-  unfinished_ticket DateTime @db.Date
-  closed_ticket     DateTime @db.Date
+  id_notification      Int            @id @default(autoincrement())
+  id_historyTicket     Int            @unique
+  status_notifications String         @db.VarChar(100)
+  type_notification    String         @db.VarChar(100)
+  date_notification    DateTime       @db.Timestamp(6)
+  history_ticket       history_ticket @relation(fields: [id_historyTicket], references: [id_history_ticket])
+
+  @@index([id_notification], name: "Notifikasi_id_notification")
 }
 
 model percakapan {
