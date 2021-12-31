@@ -3,7 +3,6 @@
     meta={{
       guarrantedUrl: [],
       nama: "",
-      showNotif: false,
       showSide: true,
       showProfil: false,
       showMaster: false,
@@ -128,9 +127,6 @@
         navigate("/login");
       }
       meta.action = {
-        changeStatus: (e) => {
-          meta.showNotif = e;
-        },
         changeSide: (e) => {
           meta.showSide = e;
         },
@@ -202,14 +198,12 @@
                 onClick={() => {
                   if (meta.showSide == false) {
                     meta.action.changeSide(true);
-                    meta.action.changeStatus(false);
                     meta.action.changeProfil(false);
                     meta.action.changeMaster(false);
                     meta.action.changeUser(false);
                     meta.action.changeReport(false);
                   } else {
                     meta.action.changeSide(false);
-                    meta.action.changeStatus(false);
                     meta.action.changeProfil(false);
                     meta.action.changeMaster(false);
                     meta.action.changeUser(false);
@@ -242,15 +236,7 @@
                 <button
                   class="text-xl text-white px-2 py-2 focus:outline-none rounded-lg hover:bg-red-800"
                   onClick={() => {
-                    if (meta.showNotif == false) {
-                      meta.action.changeStatus(true);
-                      meta.action.changeProfil(false);
-                      meta.action.changeMaster(false);
-                      meta.action.changeUser(false);
-                      meta.action.changeReport(false);
-                    } else {
-                      meta.action.changeStatus(false);
-                    }
+                    navigate("/notif");
                   }}
                 >
                   <svg
@@ -263,14 +249,6 @@
                   </svg>
                 </button>
               </div>
-              {meta.showNotif && (
-                <div
-                  id="myNotif"
-                  class="absolute right-0 mt-2 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                >
-                  <p class="p-2 text-sm text-gray-700">Not Results ...</p>
-                </div>
-              )}
             </div>
             <div class="ml-3 relative">
               <div>
@@ -306,7 +284,6 @@
                   type="button"
                   onClick={() => {
                     if (meta.showProfil == false) {
-                      meta.action.changeStatus(false);
                       meta.action.changeProfil(true);
                       meta.action.changeMaster(false);
                       meta.action.changeUser(false);
@@ -425,7 +402,6 @@
                       aria-haspopup="true"
                       onClick={() => {
                         if (meta.showMaster == false) {
-                          meta.action.changeStatus(false);
                           meta.action.changeProfil(false);
                           meta.action.changeMaster(true);
                           meta.action.changeUser(false);
@@ -524,7 +500,6 @@
                       aria-haspopup="true"
                       onClick={() => {
                         if (meta.showUser == false) {
-                          meta.action.changeStatus(false);
                           meta.action.changeProfil(false);
                           meta.action.changeMaster(false);
                           meta.action.changeUser(true);
@@ -650,7 +625,6 @@
                     aria-haspopup="true"
                     onClick={() => {
                       if (meta.showReport == false) {
-                        meta.action.changeStatus(false);
                         meta.action.changeProfil(false);
                         meta.action.changeMaster(false);
                         meta.action.changeUser(false);
