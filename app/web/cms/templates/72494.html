@@ -9,6 +9,8 @@
       deskripsi_ticket: "",
       attachment: "",
       id_vendor: 0,
+      vendor: {},
+      id_notif: 0,
 
       validationCheck() {
         this.message =
@@ -37,6 +39,9 @@
       },
     }}
     run={async () => {
+      meta.namaClient = user.dataUser.nama_client;
+      meta.id_client = user.dataUser.id_client;
+      meta.id_vendor = user.dataUser.id_vendor;
       let modal = document.getElementById("my-modal");
       let success = document.getElementById("my-success");
       let loading = document.getElementById("my-loading");
@@ -45,14 +50,17 @@
       //meta.ticketType = await api("/api/get-jenis");
       modal.style.display = "block";
       initiate.style.display = "block";
+      meta.vendor = await db.vendor.findUnique({
+        where: {
+          id_vendor: meta.id_vendor,
+        },
+      });
+      meta.id_notif = meta.vendor.id_user;
       await api("/api/get-jenis").then((e) => {
         modal.style.display = "none";
         initiate.style.display = "none";
         meta.ticketType = e;
       });
-      meta.namaClient = user.dataUser.nama_client;
-      meta.id_client = user.dataUser.id_client;
-      meta.id_vendor = user.dataUser.id_vendor;
       meta.action = {
         ticketTypeChange: (e, f) => {
           runInAction(() => {
@@ -100,6 +108,7 @@
               id_status_ticket: 1,
               id_client: meta.id_client,
               id_vendor: meta.id_vendor,
+              id_notif: meta.id_notif,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
@@ -155,6 +164,7 @@
             <div class="flex flex-col w-full items-center justify-start leading-tight focus:outline-none focus:bg-white ">
               <select
                 name="id_jenis_ticket"
+                class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 mr-4 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
                 onChange={(e) => {
                   meta.action.ticketTypeChange(
                     e.target.value,
