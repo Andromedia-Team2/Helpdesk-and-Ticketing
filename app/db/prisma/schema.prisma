@@ -108,6 +108,18 @@ model level_ticket {
   history_ticket         history_ticket[]
 }
 
+
+model notifikasi {
+  id_notification      Int            @id @default(autoincrement())
+  id_historyTicket     Int            @unique
+  status_notifications String         @db.VarChar(100)
+  type_notification    String         @db.VarChar(100)
+  date_notification    DateTime       @db.Timestamp(6)
+  history_ticket       history_ticket @relation(fields: [id_historyTicket], references: [id_history_ticket])
+
+  @@index([id_notification], name: "Notifikasi_id_notification")
+}
+
 model percakapan {
   id_percakapan            Int            @id @unique @default(autoincrement())
   isi_percakapan           String         @db.VarChar(1000)
