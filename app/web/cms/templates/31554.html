@@ -97,6 +97,7 @@
           "/report-vendor",
           "/dashboard-client",
           "/report-ticket-vendor",
+          "/notification",
         ];
       } else if (user.role == "Employee") {
         meta.nama = user.dataUser.nama_employee;
@@ -107,6 +108,7 @@
           "/ticket-data/view/" + params.id,
           "/view-profile",
           "/edit-profile",
+          "/notification",
         ];
       } else if (user.role == "Super Admin") {
         meta.nama = "Super Admin";
