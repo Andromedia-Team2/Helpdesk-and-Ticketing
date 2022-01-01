@@ -15,6 +15,7 @@
       msg: "",
       attachment: "",
       photo: "/uploads/profiles/default.png",
+      email: "",
 
       validationCheck() {
         this.msg =
@@ -91,6 +92,7 @@
           meta.value = e;
         });
 
+      meta.email = meta.value?.client?.users?.email;
       meta.id_history_ticket = meta.value?.id_history_ticket;
       meta.value?.client?.foto_profile !== null
         ? (meta.photo = "/uploads/" + meta.value?.client?.foto_profile)
@@ -193,6 +195,7 @@
             tanggal_solved: new Date(),
             id_status_ticket: 4,
             id_history_ticket: parseInt(meta.value.id_history_ticket),
+            email: meta.email,
           }).then((e) => {
             console.log(e);
             if (e.status == "SUCCESS") {
