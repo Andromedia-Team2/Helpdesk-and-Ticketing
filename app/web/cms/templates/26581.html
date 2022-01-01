@@ -9,54 +9,66 @@
       let success = document.getElementById("my-success");
       let loading = document.getElementById("my-loading");
       let initiate = document.getElementById("my-initiate");
-      let failed = document.getElementById("my-failed");
       modal.style.display = "block";
       initiate.style.display = "block";
-      await api("/api/notifications").then((e) => {
+      await api("/api/notifications", {
+        id_notif: 0,
+        task: "all",
+      }).then((e) => {
         modal.style.display = "none";
         initiate.style.display = "none";
         meta.value = e.data;
         meta.count = e.count;
       });
       meta.action = {
-        addData: (e) => {
-          let error_msg = meta.validationCheck();
+        readAll: () => {
           modal.style.display = "block";
-          if (error_msg) {
-            failed.style.display = "block";
-          } else {
-            loading.style.display = "block";
-            api("/api/ticket-data/add", {
-              judul_ticket: meta.judul_ticket,
-              deskripsi_ticket: meta.deskripsi_ticket,
-              tanggal_masuk: new Date(),
-              attachment: meta.attachment,
-              id_jenis_ticket: meta.id_jenis_ticket,
-              id_status_ticket: 1,
-              id_client: meta.id_client,
-              id_vendor: meta.id_vendor,
-              id_notif: meta.id_notif,
-              email: meta.email,
-            }).then((e) => {
+          loading.style.display = "block";
+          api("/api/notifications", {
+            id_notif: 0,
+            task: "read all",
+          }).then((e) => {
+            console.log(e);
+            if (e.status == "SUCCESS") {
+              loading.style.display = "none";
+              success.style.display = "block";
+              window.location.reload();
+            } else {
+              modal.style.display = "none";
+              loading.style.display = "none";
               console.log(e);
-              if (e.status == "SUCCESS") {
-                loading.style.display = "none";
-                success.style.display = "block";
-                navigate("/ticket-data");
+            }
+          });
+        },
+        read: (id_notif, jenis, id) => {
+          modal.style.display = "block";
+          loading.style.display = "block";
+          api("/api/notifications", {
+            id_notif,
+            task: "read",
+          }).then((e) => {
+            console.log(e);
+            if (e.status == "SUCCESS") {
+              loading.style.display = "none";
+              success.style.display = "block";
+              if (jenis === "Message") {
+                navigate("/ticket-data/view/" + id);
               } else {
-                modal.style.display = "none";
-                loading.style.display = "none";
-                console.log(e);
+                navigate("/ticket-data");
               }
-            });
-          }
+            } else {
+              modal.style.display = "none";
+              loading.style.display = "none";
+              console.log(e);
+            }
+          });
         },
       };
     }}
   />
   <div class="flex flex-col items-start justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-center justify-start bg-white">
-      <div class="flex flex-1 self-stretch flex-col space-y-6 items-start justify-start px-6 py-4">
+      <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start px-6 py-4">
         <div class="flex self-stretch items-start justify-start">
           <div class="flex flex-1 items-center justify-between py-2.5 pl-6 pr-8">
             <div class="flex space-x-2 items-center justify-start">
@@ -69,61 +81,107 @@
               </div>
             </div>
             <div class="flex items-start justify-start px-2 py-1 bg-white shadow rounded-sm">
-              <div class="text-sm font-medium tracking-wide leading-tight text-red-900">
+              <div
+                class="text-sm font-medium tracking-wide leading-tight text-red-900"
+                onClick={() => {
+                  meta.action.readAll();
+                }}
+              >
                 mark all as read
               </div>
             </div>
           </div>
         </div>
-        <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start pl-6 pr-8">
-          {meta.value?.map((p) => (
-            <div class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow">
-              <div class="flex self-stretch space-x-3 items-center justify-start">
-                <div class="text-base tracking-wide leading-normal text-gray-700">
-                  {p.type_notification === "Ticket Entrance" &&
-                    "There is new open ticket with subject: " +
-                      p.history_ticket.ticket.judul_ticket +
-                      ". ready to assign to related department."}
-                  {p.type_notification === "Ticket Assign" &&
-                    "There is new open ticket with subject: " +
-                      p.history_ticket.ticket.judul_ticket +
-                      ". ready to assign to related department."}
-                  {p.type_notification === "Ticket Solved" &&
-                    "There is new open ticket with subject: " +
-                      p.history_ticket.ticket.judul_ticket +
-                      ". ready to assign to related department."}
-                  {p.type_notification === "Message" &&
-                    "There is new open ticket with subject: " +
-                      p.history_ticket.ticket.judul_ticket +
-                      ". ready to assign to related department."}
+        {meta.value?.map((p) => (
+          <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start pl-6 pr-8">
+            {p.status_notifications === "Diterima" && (
+              <div
+                class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow"
+                onClick={() => {
+                  meta.action.read(
+                    p.id_notification,
+                    p.type_notification,
+                    p.history_ticket.id_ticket
+                  );
+                }}
+              >
+                <div class="flex self-stretch space-x-3 items-center justify-start">
+                  <div class="text-base tracking-wide leading-normal text-gray-700">
+                    {p.type_notification === "Ticket Entrance" &&
+                      "There is new open ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        ". Ready to assign to related department."}
+                    {p.type_notification === "Ticket Assign" &&
+                      "There is new assign ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        " to your Department. Please check it immediately."}
+                    {p.type_notification === "Ticket Solved" &&
+                      "Your ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        " Has been solved. Please check it immediately and give us your review."}
+                    {p.type_notification === "Message" &&
+                      "your ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        " just got a reply . Please check it immediately."}
+                  </div>
+                  <img
+                    src="/fimgs/1667_2109.x3.png"
+                    class="bg-green-500 rounded-full"
+                    style="width: 9px; min-width: 9px; max-width: 9px; height: 9px; min-height: 9px; max-height: 9px;"
+                  />
                 </div>
-                <img
-                  src="/fimgs/1667_2109.x3.png"
-                  class="bg-green-500 rounded-full"
-                  style="width: 9px; min-width: 9px; max-width: 9px; height: 9px; min-height: 9px; max-height: 9px;"
-                />
-              </div>
-              <div class="flex self-stretch items-center justify-end">
-                <div class="text-xs tracking-wide leading-none text-right text-gray-700">
-                  {formatDay(p.date_notification)}
+                <div class="flex self-stretch items-center justify-end">
+                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                    {formatDay(p.date_notification)}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-          <div class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-gray-200 shadow">
-            <div class="flex self-stretch items-center justify-start">
-              <div class="text-base tracking-wide leading-normal text-gray-700">
-                There is new open ticket with subject: Lorem ipsum. ready to
-                assign to related department.
+            )}
+            {p.status_notifications === "Dibaca" && (
+              <div
+                class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-gray-200 shadow"
+                onClick={() => {
+                  meta.action.read(
+                    p.id_notification,
+                    p.type_notification,
+                    p.history_ticket.id_ticket
+                  );
+                }}
+              >
+                <div class="flex self-stretch space-x-3 items-center justify-start">
+                  <div class="text-base tracking-wide leading-normal text-gray-700">
+                    {p.type_notification === "Ticket Entrance" &&
+                      "There is new open ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        ". Ready to assign to related department."}
+                    {p.type_notification === "Ticket Assign" &&
+                      "There is new assign ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        " to your Department. Please check it immediately."}
+                    {p.type_notification === "Ticket Solved" &&
+                      "Your ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        " Has been solved. Please check it immediately and give us your review."}
+                    {p.type_notification === "Message" &&
+                      "your ticket with subject: " +
+                        p.history_ticket.ticket.judul_ticket +
+                        " just got a reply . Please check it immediately."}
+                  </div>
+                  <img
+                    src="/fimgs/1667_2109.x3.png"
+                    class="bg-green-500 rounded-full"
+                    style="width: 9px; min-width: 9px; max-width: 9px; height: 9px; min-height: 9px; max-height: 9px;"
+                  />
+                </div>
+                <div class="flex self-stretch items-center justify-end">
+                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                    {formatDay(p.date_notification)}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="flex self-stretch items-center justify-end">
-              <div class="text-xs tracking-wide leading-none text-right text-gray-700">
-                21/10/2021 10:20
-              </div>
-            </div>
+            )}
           </div>
-        </div>
+        ))}
         <div class="shadow" />
       </div>
     </div>
@@ -153,7 +211,7 @@
         </div>
         <h3 class="text-lg leading-6 font-medium text-gray-900">Successful!</h3>
         <div class="mt-2 px-3 py-3">
-          <p class="text-sm text-gray-500">Data has been successfully added!</p>
+          <p class="text-sm text-gray-500">All notification has been read!</p>
         </div>
       </div>
       <div id="my-loading" class="mt-6 hidden text-center">
@@ -165,7 +223,7 @@
         </h3>
         <div class="mt-2 px-3 py-3">
           <p class="text-sm text-gray-500">
-            Please wait a moment for the saving process
+            Please wait a moment for the process
           </p>
         </div>
       </div>
@@ -180,42 +238,6 @@
           <p class="text-sm text-gray-500">
             Please wait a moment for the loading data
           </p>
-        </div>
-      </div>
-      <div id="my-failed" class="mt-3 hidden text-center">
-        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full">
-          <svg
-            class="h-24 w-24 text-red-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <h3 class="text-lg leading-6 font-medium text-red-600">
-          Failed to Save
-        </h3>
-        <div class="mt-3 px-3 py-3">
-          <p class="text-sm text-gray-500">{meta.message}</p>
-        </div>
-        <div class="px-3 py-2">
-          <button
-            onClick={() => {
-              meta.action.tryAgain();
-            }}
-            class="flex items-center w-full justify-center bg-red-900 shadow rounded-2xl"
-          >
-            <div class="text-base px-4 py-1 font-medium tracking-wide leading-relaxed text-white">
-              I'm understand, try again
-            </div>
-          </button>
         </div>
       </div>
     </div>
