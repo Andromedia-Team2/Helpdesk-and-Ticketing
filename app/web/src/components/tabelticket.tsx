@@ -45,12 +45,6 @@ export default () => {
             return (full.ticket.jenis_ticket.jenis_ticket);
           }
         },
-        {
-          mData: null,
-          mRender: function (data, type, full) {
-            return (full.ticket.jenis_ticket.jenis_ticket);
-          }
-        },
          {
           mData: null,
           mRender: function (data, type, full) {
@@ -65,6 +59,12 @@ export default () => {
             }else{
               return ("Not Solved")
             }
+          }
+        },
+        {
+          mData: null,
+          mRender: function (data, type, full) {
+            return (full.level_ticket.level_ticket);
           }
         },
         {
@@ -96,9 +96,9 @@ export default () => {
             <th className="py-3">No</th>
             <th className="py-3">Subject</th>
             <th className="py-3">Ticket Type</th>
-            <th className="py-3">Ticket Level</th>
             <th className="py-3">Create At</th>
             <th className="py-3">Finished At</th>
+            <th className="py-3">Ticket Level</th>
             <th className="py-3">Status</th>
           </tr>
         </thead>
