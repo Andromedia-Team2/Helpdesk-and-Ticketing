@@ -36,7 +36,7 @@
         "/ticket-data/add",
         "/ticket-data/view/" + params.id,
       ],
-      reportData: ["/dashboard-client"],
+      reportData: ["/report-ticket-vendor"],
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
@@ -629,14 +629,7 @@
                     }
                     aria-haspopup="true"
                     onClick={() => {
-                      if (meta.showReport == false) {
-                        meta.action.changeProfil(false);
-                        meta.action.changeMaster(false);
-                        meta.action.changeUser(false);
-                        meta.action.changeReport(true);
-                      } else {
-                        meta.action.changeReport(false);
-                      }
+                      navigate("/report-ticket-vendor");
                     }}
                   >
                     <span class="inline-flex items-center">
@@ -654,75 +647,7 @@
                       </svg>
                       <span class="ml-4 text-base">Report</span>
                     </span>
-                    <svg
-                      class="w-4 h-4"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      id="report"
-                      style={
-                        meta.reportData.includes(location.pathname)
-                          ? "transform: rotate(0deg)"
-                          : "transform: rotate(270deg)"
-                      }
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
                   </button>
-                  <div class="pl-4 pr-4">
-                    {meta.showReport && (
-                      <ul
-                        id="myReport"
-                        class="mt-2 w-full overflow-hidden text-sm font-medium text-gray-800  bg-gray-50 rounded-md dark:text-gray-400 dark:bg-gray-900 shadow-inner"
-                        aria-label="submenu"
-                      >
-                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
-                          <a
-                            class="flex items-center w-full px-4 py-2 "
-                            href="/dashboard-vendor"
-                          >
-                            Dashboard Vendor
-                          </a>
-                        </li>
-                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
-                          <a
-                            class="flex items-center w-full px-4 py-2 "
-                            href="/dashboard-employee"
-                          >
-                            Dashboard Employee
-                          </a>
-                        </li>
-                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
-                          <a
-                            class="flex items-center w-full px-4 py-2 "
-                            href="/dashboard-client"
-                          >
-                            Dashboard Client
-                          </a>
-                        </li>
-                        <li class="hover:bg-gray-200 rounded-t-md dark:hover:text-gray-200">
-                          <a
-                            class="flex items-center w-full px-4 py-2 "
-                            href="/report-ticket-vendor"
-                          >
-                            Report Ticket Vendor
-                          </a>
-                        </li>
-                        <li class="hover:bg-gray-200 dark:hover:text-gray-200">
-                          <a
-                            class="flex items-center w-full px-4 py-2 "
-                            href="/notification"
-                          >
-                            Notification
-                          </a>
-                        </li>
-                      </ul>
-                    )}
-                  </div>
                 </li>
               </ul>
             </div>
