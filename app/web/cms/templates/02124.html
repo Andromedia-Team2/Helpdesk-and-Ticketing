@@ -30,7 +30,7 @@
       let failed = document.getElementById("my-failed");
       let initiate = document.getElementById("my-initiate");
       let block = document.getElementById("my-block");
-      if (meta.token === "None" || params.token === undefined) {
+      if (meta.token === "None" || meta.token === undefined) {
         window.location.replace("/login");
       } else {
         modal.style.display = "block";
@@ -43,6 +43,9 @@
         if (users === null) {
           initiate.style.display = "none";
           block.style.display = "block";
+        } else {
+          modal.style.display = "none";
+          initiate.style.display = "none";
         }
       }
       meta.action = {
