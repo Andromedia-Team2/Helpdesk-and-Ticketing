@@ -7,7 +7,6 @@
       showProfil: false,
       showMaster: false,
       showUser: false,
-      showReport: false,
       dashboard: ["/dashboard"],
       masterData: [
         "/department-data",
@@ -160,15 +159,6 @@
             }
           }
         },
-        changeReport: (e) => {
-          meta.showReport = e;
-          let img = document.getElementById("report");
-          if (e == true) {
-            img?.setAttribute("style", "transform: rotate(0deg);");
-          } else {
-            img?.setAttribute("style", "transform: rotate(270deg);");
-          }
-        },
         logout: (e) => {
           modal.style.display = "block";
           loading.style.display = "block";
@@ -187,8 +177,6 @@
         meta.action.changeMaster(true);
       } else if (meta.userData.includes(location.pathname)) {
         meta.action.changeUser(true);
-      } else if (meta.reportData.includes(location.pathname)) {
-        meta.action.changeReport(true);
       }
     }}
   />
@@ -206,13 +194,11 @@
                     meta.action.changeProfil(false);
                     meta.action.changeMaster(false);
                     meta.action.changeUser(false);
-                    meta.action.changeReport(false);
                   } else {
                     meta.action.changeSide(false);
                     meta.action.changeProfil(false);
                     meta.action.changeMaster(false);
                     meta.action.changeUser(false);
-                    meta.action.changeReport(false);
                   }
                 }}
               >
@@ -292,7 +278,6 @@
                       meta.action.changeProfil(true);
                       meta.action.changeMaster(false);
                       meta.action.changeUser(false);
-                      meta.action.changeReport(false);
                     } else {
                       meta.action.changeProfil(false);
                     }
@@ -304,8 +289,8 @@
                     class="h-8 w-8 rounded-full"
                     src={
                       user.dataUser?.foto_profile !== null
-                        ? "uploads/" + user.dataUser?.foto_profile
-                        : "uploads/profiles/default.png"
+                        ? "/uploads/" + user.dataUser?.foto_profile
+                        : "/uploads/profiles/default.png"
                     }
                   />{" "}
                   <div class="hidden md:block ">
@@ -330,10 +315,13 @@
                     Your Profile
                   </a>
                   <a
-                    href="https://docs.google.com/spreadsheets/d/1OycCwT6Ayg3Tan-Y0PB4WSO91vif70fbZFNuDfl7xp8/edit?usp=sharing"
+                    href=""
                     class="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
                     id="user-menu-item-1"
+                    onClick={() => {
+                      window.open("/uploads/guide/guide.docx");
+                    }}
                   >
                     <i class="fas fa-cog mr-2"></i>
                     Download Guidebook
@@ -410,7 +398,6 @@
                           meta.action.changeProfil(false);
                           meta.action.changeMaster(true);
                           meta.action.changeUser(false);
-                          meta.action.changeReport(false);
                         } else {
                           meta.action.changeMaster(false);
                         }
@@ -508,7 +495,6 @@
                           meta.action.changeProfil(false);
                           meta.action.changeMaster(false);
                           meta.action.changeUser(true);
-                          meta.action.changeReport(false);
                         } else {
                           meta.action.changeUser(false);
                         }
