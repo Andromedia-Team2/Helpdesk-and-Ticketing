@@ -70,9 +70,11 @@ model history_ticket {
   tanggalProgress_ticket DateTime?     @db.Timestamp(6)
   tanggalSolved_ticket   DateTime?     @db.Timestamp(6)
   solvedDay              DateTime?     @db.Date
+  id_jenis_ticket        Int?
   client                 client        @relation(fields: [id_client], references: [id_client])
   department             department?   @relation(fields: [id_department], references: [id_department])
   employee               employee?     @relation(fields: [id_employee], references: [id_employee])
+  jenis_ticket           jenis_ticket? @relation(fields: [id_jenis_ticket], references: [id_jenis_ticket])
   level_ticket           level_ticket? @relation(fields: [id_level_ticket], references: [id_level_ticket])
   status_ticket          status_ticket @relation(fields: [id_status_ticket], references: [id_status_ticket])
   ticket                 ticket        @relation(fields: [id_ticket], references: [id_ticket])
@@ -90,12 +92,13 @@ model history_ticket {
 }
 
 model jenis_ticket {
-  id_jenis_ticket        Int      @id @unique @default(autoincrement())
-  jenis_ticket           String   @db.VarChar(100)
+  id_jenis_ticket        Int              @id @unique @default(autoincrement())
+  jenis_ticket           String           @db.VarChar(100)
   id_vendor              Int
-  deskripsi_jenis_ticket String   @db.VarChar(300)
-  identityColor          String   @db.VarChar(50)
-  vendor                 vendor   @relation(fields: [id_vendor], references: [id_vendor])
+  deskripsi_jenis_ticket String           @db.VarChar(300)
+  identityColor          String           @db.VarChar(50)
+  vendor                 vendor           @relation(fields: [id_vendor], references: [id_vendor])
+  history_ticket         history_ticket[]
   ticket                 ticket[]
 
   @@index([id_vendor], name: "jenis_ticket_id_vendor")

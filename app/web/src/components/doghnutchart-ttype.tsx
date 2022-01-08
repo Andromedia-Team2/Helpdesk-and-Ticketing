@@ -1,22 +1,19 @@
 import React from 'react'
 import { Doughnut, defaults } from 'react-chartjs-2'
 
-const LineChart = () => {
+const LineChart = (x) => {
+  const labelName = x.data.labels;
+  const iData = x.data.iData;
+  const dataColor = x.data.color;
   return (
     <div>
       <Doughnut
         data={{
-          labels: [
-            'Technical Support',
-            'Administration Request',
-          ],
+          labels: labelName,
           datasets: [{
             label: 'Ticket By Type',
-            data: [15, 9],
-            backgroundColor: [
-              '#ef4444',
-              '#eab308',
-            ],
+            data: iData,
+            backgroundColor: dataColor,
             hoverOffset: 4
           }]
         }}
