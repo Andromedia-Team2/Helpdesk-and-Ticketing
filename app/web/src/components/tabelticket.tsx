@@ -26,12 +26,12 @@ export default () => {
     $("#dtable").DataTable({
       data: res.data,
       aoColumns: [
-        { 
+        {
           mData: null,
           mRender: function (data, type, full) {
             no = no + 1;
             return (no);
-          } 
+          }
         },
         {
           mData: null,
@@ -45,18 +45,18 @@ export default () => {
             return (full.ticket.jenis_ticket.jenis_ticket);
           }
         },
-         {
+        {
           mData: null,
           mRender: function (data, type, full) {
             return (format(full.tanggalMasuk_ticket));
           }
         },
-         {
+        {
           mData: null,
           mRender: function (data, type, full) {
-            if (full.tanggalSolved_ticket	 != null){
+            if (full.tanggalSolved_ticket != null) {
               return (format(full.tanggalSolved_ticket));
-            }else{
+            } else {
               return ("Not Solved")
             }
           }
@@ -64,7 +64,11 @@ export default () => {
         {
           mData: null,
           mRender: function (data, type, full) {
-            return (full.level_ticket.level_ticket);
+            if (full.level_ticket !== null) {
+              return (full.level_ticket.level_ticket);
+            } else {
+              return ("Not Specified");
+            }
           }
         },
         {
@@ -74,15 +78,15 @@ export default () => {
           "sWidth": "15%",
           mRender: function (data, type, full) {
             if (full.status_ticket.status_ticket == "OPEN") {
-              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-green-500 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-green-500 text-white rounded-xl'><b><a href='/ticket-data/view/" + full.ticket.id_ticket + "'>" + full.status_ticket.status_ticket + "</a></b></div>";
             } else if (full.status_ticket.status_ticket == "ASSIGNED") {
-              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-yellow-500 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-yellow-500 text-white rounded-xl'><b><a href='/ticket-data/view/" + full.ticket.id_ticket + "'>" + full.status_ticket.status_ticket + "</a></b></div>";
             } else if (full.status_ticket.status_ticket == "IN PROGRESS") {
-              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-red-500 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-red-500 text-white rounded-xl'><b><a href='/ticket-data/view/" + full.ticket.id_ticket + "'>" + full.status_ticket.status_ticket + "</a></b></div>";
             } else {
-              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-gray-800 text-white rounded-xl'><b><a href='/ticket-data/view/"+ full.ticket.id_ticket +"'>" + full.status_ticket.status_ticket + "</a></b></div>";
+              return "<div class='flex items-center justify-center text-xs font-medium mx-4 my-4 py-2 bg-gray-800 text-white rounded-xl'><b><a href='/ticket-data/view/" + full.ticket.id_ticket + "'>" + full.status_ticket.status_ticket + "</a></b></div>";
             }
-          }, 
+          },
         },
       ],
     });
@@ -90,7 +94,7 @@ export default () => {
 
   return (
     <div>
-        <table className="stripe w-full whitespace-no-wrap" id="dtable">
+      <table className="stripe w-full whitespace-no-wrap" id="dtable">
         <thead>
           <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
             <th className="py-3">No</th>
@@ -102,8 +106,8 @@ export default () => {
             <th className="py-3">Status</th>
           </tr>
         </thead>
-            <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 "></tbody>
-        </table>
+        <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 text-gray-700 dark:text-gray-400 "></tbody>
+      </table>
     </div>
-)
+  )
 }
