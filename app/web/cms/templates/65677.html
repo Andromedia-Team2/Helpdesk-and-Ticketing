@@ -3,8 +3,10 @@
     meta={{
       dataLevel: [],
       dataType: {},
+      dataTotal: [],
       dataSummary: {},
       dateLevel: null,
+      dateTot: null,
       dateVal: "",
       dateType: null,
       dateVal1: "",
@@ -27,6 +29,15 @@
         meta.sumType = e.data.types.iData.reduce((a, b) => a + b, 0);
         console.log(meta.dataLevel);
       });
+
+      if (user.role === "Client") {
+        await api("/api/get-tot", {
+          date: meta.dateTot,
+        }).then((e) => {
+          meta.dataTotal = e.data;
+          console.log(meta.dataTotal);
+        });
+      }
 
       await api("/api/get-sum").then((e) => {
         meta.dataSummary = e.data;
@@ -70,6 +81,20 @@
               meta.dataType = e.data.types;
               meta.sumType = e.data.types.iData.reduce((a, b) => a + b, 0);
               console.log(meta.dataType);
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        dateTotChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateTot = new Date(e.target.value);
+            api("/api/get-tot", {
+              date: meta.dateTot,
+            }).then((e) => {
+              meta.dataTotal = e.data;
               modal.style.display = "none";
               initiate.style.display = "none";
             });
@@ -267,11 +292,14 @@
                     Total Tickets
                   </div>
                 </div>
-                <div class="flex items-center justify-start border rounded-lg border-gray-500">
-                  <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                    <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                      2021
-                    </div>
+                <div class="flex items-center justify-start">
+                  <div class="flex flex-1 items-start justify-start px-4 py-2">
+                    <input
+                      type="date"
+                      value={meta.dateTot}
+                      class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                      onChange={(e) => meta.action.dateTotChange(e)}
+                    />
                   </div>
                   <div class="flex flex-col items-center justify-center transform -rotate-90">
                     <div
@@ -283,7 +311,7 @@
               </div>
               <hr class=" w-full" />
               <div class="container">
-                <barchart-totalticket />
+                <barchart-totalticket data={meta.dataTotal} />
               </div>
               <div />
             </div>

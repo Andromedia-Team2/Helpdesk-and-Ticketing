@@ -1,7 +1,8 @@
 import React from 'react'
 import { Bar, defaults } from 'react-chartjs-2'
 
-const BarChart = () => {
+const BarChart = (x) => {
+  var total = x.data;
   return (
     <div>
       <Bar
@@ -14,9 +15,9 @@ const BarChart = () => {
           datasets: [
             {
               label: 'Total Ticket',
-              data: [1, 4, 2, 3, 1, 2, 2, 1, 3, 4, 1, 2],
-              backgroundColor:'#ef4444',
-              borderRadius:5
+              data: total,
+              backgroundColor: '#ef4444',
+              borderRadius: 5
             },
           ],
         }}
