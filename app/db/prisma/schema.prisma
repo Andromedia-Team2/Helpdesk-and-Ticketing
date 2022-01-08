@@ -71,6 +71,8 @@ model history_ticket {
   tanggalSolved_ticket   DateTime?     @db.Timestamp(6)
   solvedDay              DateTime?     @db.Date
   id_jenis_ticket        Int?
+  tahun                  Int?
+  bulan                  Int?
   client                 client        @relation(fields: [id_client], references: [id_client])
   department             department?   @relation(fields: [id_department], references: [id_department])
   employee               employee?     @relation(fields: [id_employee], references: [id_employee])
