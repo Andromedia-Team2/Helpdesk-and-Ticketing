@@ -64,7 +64,7 @@ export default () => {
         {
           mData: null,
           mRender: function (data, type, full) {
-            return (full.level_ticket.level_ticket);
+            return (full.ticket.level_ticket.level_ticket);
           }
         },
         {
