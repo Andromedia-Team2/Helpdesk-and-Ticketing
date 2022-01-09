@@ -7,6 +7,10 @@
       dataLevel: null,
       dataType: null,
       dataDep: null,
+      dateOverall: null,
+      dateLevel: null,
+      dateType: null,
+      dateDep: null,
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
@@ -26,6 +30,73 @@
       meta.dataLevel = meta.value?.level;
       meta.dataType = meta.value?.mType;
       meta.dataDep = meta.value?.department;
+
+      meta.action = {
+        dateOverallChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateOverall = e.target.value;
+            meta.date = new Date(e.target.value);
+            api("/api/ticket-report", {
+              date: meta.date,
+              task: "overall",
+            }).then((e) => {
+              meta.dataOverall = e.data.overall;
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        dateLevelChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateLevel = e.target.value;
+            meta.date = new Date(e.target.value);
+            api("/api/ticket-report", {
+              date: meta.date,
+              task: "level",
+            }).then((e) => {
+              meta.dataLevel = e.data.level;
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        dateTypeChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateType = e.target.value;
+            meta.date = new Date(e.target.value);
+            api("/api/ticket-report", {
+              date: meta.date,
+              task: "type",
+            }).then((e) => {
+              meta.dataType = e.data.mType;
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        dateDepChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateDep = e.target.value;
+            meta.date = new Date(e.target.value);
+            api("/api/ticket-report", {
+              date: meta.date,
+              task: "department",
+            }).then((e) => {
+              meta.dataDep = e.data.department;
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+      };
     }}
   />
   <div class="flex flex-col items-start justify-start bg-gray-50">
@@ -73,16 +144,15 @@
               <div class="text-base tracking-wide leading-normal text-center text-gray-700">
                 Overall Tickets
               </div>
-              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                    by years
-                  </div>
+              <div class="flex items-center justify-start">
+                <div class="flex flex-1 items-start justify-start py-2">
+                  <input
+                    type="date"
+                    value={meta.dateOverall}
+                    class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                    onChange={(e) => meta.action.dateOverallChange(e)}
+                  />
                 </div>
-                <img
-                  src="/fimgs/1415_2851.x3.png"
-                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                />
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
@@ -102,16 +172,15 @@
               <div class="text-base tracking-wide leading-normal text-center text-gray-700">
                 Ticket By Level
               </div>
-              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                    by years
-                  </div>
+              <div class="flex items-center justify-start">
+                <div class="flex flex-1 items-start justify-start py-2">
+                  <input
+                    type="date"
+                    value={meta.dateLevel}
+                    class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                    onChange={(e) => meta.action.dateLevelChange(e)}
+                  />
                 </div>
-                <img
-                  src="/fimgs/1415_2851.x3.png"
-                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                />
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
@@ -131,16 +200,15 @@
               <div class="text-base tracking-wide leading-normal text-center text-gray-700">
                 Ticket By Type
               </div>
-              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                    by years
-                  </div>
+              <div class="flex items-center justify-start">
+                <div class="flex flex-1 items-start justify-start py-2">
+                  <input
+                    type="date"
+                    value={meta.dateType}
+                    class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                    onChange={(e) => meta.action.dateTypeChange(e)}
+                  />
                 </div>
-                <img
-                  src="/fimgs/1415_2851.x3.png"
-                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                />
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
@@ -160,16 +228,15 @@
               <div class="text-base tracking-wide leading-normal text-center text-gray-700">
                 Ticket By Departement
               </div>
-              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                    by years
-                  </div>
+              <div class="flex items-center justify-start">
+                <div class="flex flex-1 items-start justify-start py-2">
+                  <input
+                    type="date"
+                    value={meta.dateDep}
+                    class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                    onChange={(e) => meta.action.dateDepChange(e)}
+                  />
                 </div>
-                <img
-                  src="/fimgs/1415_2851.x3.png"
-                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                />
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
