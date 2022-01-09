@@ -121,39 +121,51 @@ const format = (date) => {
     return myFormattedDate;
 }
 
-const daysDifference = (date1,date2) => {
+const tahun = (date) => {
+    date = new Date(date);
+    const year = parseInt(date.getFullYear());
+    return year;
+}
+
+const bulan = (date) => {
+    date = new Date(date);
+    const month = parseInt(date.getMonth() + 1);
+    return month;
+}
+
+const daysDifference = (date1, date2) => {
     var myDate1 = new Date(date1).getTime();
     var myDate2 = new Date(date2).getTime();
     var difference = myDate1 - myDate2;
 
-    var daysDifference = Math.floor(difference/1000/60/60/24);
-    difference -= daysDifference*1000*60*60*24;
+    var daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
+    difference -= daysDifference * 1000 * 60 * 60 * 24;
 
     return daysDifference;
 }
 
-const hoursDifference = (date1,date2) => {
+const hoursDifference = (date1, date2) => {
     var myDate1 = new Date(date1).getTime();
     var myDate2 = new Date(date2).getTime();
     var difference = myDate1 - myDate2;
 
-    var hoursDifference = Math.floor(difference/1000/60/60);
-    difference -= hoursDifference*1000*60*60;
+    var hoursDifference = Math.floor(difference / 1000 / 60 / 60);
+    difference -= hoursDifference * 1000 * 60 * 60;
 
     return hoursDifference;
 }
 
-const minutesDifference = (date1,date2) => {
+const minutesDifference = (date1, date2) => {
     var myDate1 = new Date(date1).getTime();
     var myDate2 = new Date(date2).getTime();
     var difference = myDate1 - myDate2;
 
-    var minutesDifference = Math.floor(difference/1000/60);
-    difference -= minutesDifference*1000*60;
+    var minutesDifference = Math.floor(difference / 1000 / 60);
+    difference -= minutesDifference * 1000 * 60;
 
     return minutesDifference;
 }
 
 export const ext = {
-    argon2, sendVerifEmail, sendUserInfo, sendNotif, generateToken, generateLongToken, formatD, format, pump, fs, path, daysDifference, hoursDifference, minutesDifference
+    argon2, sendVerifEmail, sendUserInfo, sendNotif, generateToken, generateLongToken, formatD, format, tahun, bulan, pump, fs, path, daysDifference, hoursDifference, minutesDifference
 }

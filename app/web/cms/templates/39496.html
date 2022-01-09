@@ -10,6 +10,7 @@
       id_department: 0,
       id_employee: null,
       id_level_ticket: 0,
+      id_client: 0,
       chat: false,
       message: "",
       msg: "",
@@ -93,6 +94,7 @@
         });
 
       meta.email = meta.value?.client?.users?.email;
+      meta.id_client = meta.value?.client?.id_user;
       meta.id_history_ticket = meta.value?.id_history_ticket;
       meta.value?.client?.foto_profile !== null
         ? (meta.photo = "/uploads/" + meta.value?.client?.foto_profile)
@@ -196,6 +198,7 @@
             id_status_ticket: 4,
             id_history_ticket: parseInt(meta.value.id_history_ticket),
             email: meta.email,
+            id_user: meta.id_client,
           }).then((e) => {
             console.log(e);
             if (e.status == "SUCCESS") {
@@ -277,8 +280,9 @@
                     {meta.value?.ticket?.jenis_ticket?.jenis_ticket}
                   </div>
                 </div>
-                {user.role === "Client" &&
-                  meta.value?.status_ticket?.status_ticket !== "RESOLVED" && (
+                {user.role === "Employee" &&
+                  meta.value?.status_ticket?.status_ticket ===
+                    "IN PROGRESS" && (
                     <div class="flex self-stretch w-full md:space-x-3 items-center justify-start justify-end">
                       <div class="text-l hidden md:block tracking-wide leading-loose text-gray-600 items-center justify-left ">
                         if ticket is resolved, click here:

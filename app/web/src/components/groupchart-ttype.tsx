@@ -1,7 +1,22 @@
 import React from 'react'
 import { Line, defaults } from 'react-chartjs-2'
 
-const LineChart = () => {
+const LineChart = (x) => {
+  var dataType = x.data;
+  var dataset = Array();
+  var mData = {};
+  for (let i = 0; i < dataType.length; i++) {
+    mData = {
+      label: dataType[i].labels,
+      data: dataType[i].iData,
+      borderColor: dataType[i].color,
+      pointBackgroundColor: '#66717E',
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      borderWidth: 2
+    };
+    dataset.push(mData);
+  };
   return (
     <div>
       <Line
@@ -11,29 +26,7 @@ const LineChart = () => {
         }}
         data={{
           labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-          datasets: [
-            {
-              label: 'Technical Support',
-              data: [1, 12, 19, 3, 4, 8, 12, 23, 25, 32, 44, 45],
-              borderColor : '#D6D4A0',
-              // backgroundColor: '#312e8115',
-              pointBackgroundColor:'#66717E',
-              pointRadius:5,
-              pointHoverRadius:7,
-              borderWidth:2,
-              // tension:0.2
-            },{
-              label: 'Administration Request',
-              data: [11, 18, 2, 4, 8, 3, 12, 20, 21, 23, 25, 27],
-              borderColor : '#DB995A',
-              // backgroundColor: '#ff660015',
-              pointBackgroundColor:'#ffffff',
-              pointRadius:5,
-              pointHoverRadius:7,
-              borderWidth:2,
-              // tension:0.2
-            }
-          ],
+          datasets: dataset,
         }}
       />
     </div>

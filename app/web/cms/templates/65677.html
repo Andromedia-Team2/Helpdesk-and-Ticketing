@@ -2,9 +2,16 @@
   <effect
     meta={{
       dataLevel: [],
+      dataType: {},
+      dataTotal: [],
       dataSummary: {},
       dateLevel: null,
+      dateTot: null,
       dateVal: "",
+      dateType: null,
+      dateVal1: "",
+      sumLevel: 0,
+      sumType: 0,
       employeeData: [],
     }}
     run={async () => {
@@ -14,10 +21,23 @@
       initiate.style.display = "block";
       await api("/api/get-stats", {
         dateLevel: meta.dateLevel,
+        task: "both",
       }).then((e) => {
-        meta.dataLevel = e.data;
+        meta.dataLevel = e.data.stats;
+        meta.dataType = e.data.types;
+        meta.sumLevel = e.data.stats[0] + e.data.stats[1] + e.data.stats[2];
+        meta.sumType = e.data.types.iData.reduce((a, b) => a + b, 0);
         console.log(meta.dataLevel);
       });
+
+      if (user.role === "Client") {
+        await api("/api/get-tot", {
+          date: meta.dateTot,
+        }).then((e) => {
+          meta.dataTotal = e.data;
+          console.log(meta.dataTotal);
+        });
+      }
 
       await api("/api/get-sum").then((e) => {
         meta.dataSummary = e.data;
@@ -36,9 +56,45 @@
             console.log(meta.dateLevel);
             api("/api/get-stats", {
               dateLevel: meta.dateLevel,
+              task: "level",
             }).then((e) => {
-              meta.dataLevel = e.data;
+              meta.dataLevel = e.data.stats;
+              meta.sumLevel =
+                e.data.stats[0] + e.data.stats[1] + e.data.stats[2];
               console.log(meta.dataLevel);
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        dateTypeChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateVal1 = e.target.value;
+            meta.dateType = new Date(e.target.value);
+            console.log(meta.dateLevel);
+            api("/api/get-stats", {
+              dateLevel: meta.dateType,
+              task: "type",
+            }).then((e) => {
+              meta.dataType = e.data.types;
+              meta.sumType = e.data.types.iData.reduce((a, b) => a + b, 0);
+              console.log(meta.dataType);
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        dateTotChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateTot = new Date(e.target.value);
+            api("/api/get-tot", {
+              date: meta.dateTot,
+            }).then((e) => {
+              meta.dataTotal = e.data;
               modal.style.display = "none";
               initiate.style.display = "none";
             });
@@ -47,209 +103,217 @@
       };
     }}
   />
-  <div class="flex flex-col items-start justify-start bg-gray-50">
+  <div class="flex flex-col items-start mx-6 mx-6 mt-2 mb-6 justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start">
-      <div class="flex flex-1 self-stretch items-start justify-start px-6">
-        <div class="flex flex-1 flex-col space-y-5 items-start justify-start px-3 py-6">
+      <div class="flex flex-1 self-stretch items-start justify-start">
+        <div class="flex flex-1 self-stretch flex-col space-y-5 items-start justify-start px-3 py-6">
           <div class="flex self-stretch items-start justify-between">
             {(user.role === "Vendor" ||
               user.role === "Super Admin" ||
               user.role === "Client") && (
               <div class="flex items-center justify-between bg-white shadow rounded-lg">
                 <div class="flex flex-col space-y-3 items-start justify-start p-3">
-                  <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
+                  <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                     Open
                   </div>
-                  <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
+                  <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                     {meta.dataSummary?.open}
                   </div>
                 </div>
+                <div class="flex items-start justify-start py-3 pl-3 pr-6">
+                  <img
+                    src="/fimgs/1627_2505.x3.png"
+                    style="width: 48px; min-width: 48px; max-width: 48px; height: 48px; min-height: 48px; max-height: 48px;background-image: url('/fimgs/bg-8b161fe1fbd27f1556a48271e6bce7f06dad0a36');background-size:100% 100%;background-repeat:no-repeat;"
+                  />
+                </div>
                 <img
-                  src="/fimgs/1417_2084.x3.png"
-                  class="flex items-start justify-start p-3"
-                  style="width: 104px; min-width: 104px; max-width: 104px; height: 104px; min-height: 104px; max-height: 104px;"
-                />
-                <img
-                  src="/fimgs/1417_2086.x3.png"
-                  style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                  src="/fimgs/1627_2460.x3.png"
+                  style="width: 10px; min-width: 10px; max-width: 10px; height: 90px; min-height: 90px; max-height: 90px;"
                 />
               </div>
             )}
-            <div class="flex items-start justify-between bg-white shadow rounded-lg">
+            <div class="flex items-center justify-between bg-white shadow rounded-lg">
               <div class="flex flex-col space-y-3 items-start justify-start p-3">
-                <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
+                <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                   Assigned
                 </div>
-                <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
+                <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                   {meta.dataSummary?.assign}
                 </div>
               </div>
-              <div class="flex items-start justify-start p-3">
+              <div class="flex items-start justify-start py-3 pl-3 pr-6">
                 <img
-                  src="/fimgs/1417_2027.x3.png"
-                  style="width: 80px; min-width: 80px; max-width: 80px; height: 80px; min-height: 80px; max-height: 80px;background-image: url('/fimgs/bg-454b9bed72f826ab811fceee9aebe06411f3c2a3');background-size:100% 100%;background-repeat:no-repeat;"
+                  src="/fimgs/1627_2503.x3.png"
+                  style="width: 48px; min-width: 48px; max-width: 48px; height: 48px; min-height: 48px; max-height: 48px;background-image: url('/fimgs/bg-454b9bed72f826ab811fceee9aebe06411f3c2a3');background-size:100% 100%;background-repeat:no-repeat;"
                 />
               </div>
               <img
-                src="/fimgs/1417_2028.x3.png"
-                style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                src="/fimgs/1627_2504.x3.png"
+                style="width: 10px; min-width: 10px; max-width: 10px; height: 90px; min-height: 90px; max-height: 90px;"
               />
             </div>
             <div class="flex items-center justify-between bg-white shadow rounded-lg">
               <div class="flex flex-col space-y-3 items-start justify-start p-3">
-                <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
+                <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                   In Progress
                 </div>
-                <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
+                <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                   {meta.dataSummary?.progress}
                 </div>
               </div>
+              <div class="flex items-start justify-start py-3 pl-3 pr-6">
+                <img
+                  src="/fimgs/1627_2452.x3.png"
+                  style="width: 48px; min-width: 48px; max-width: 48px; height: 48px; min-height: 48px; max-height: 48px;background-image: url('/fimgs/bg-2a6278349cf902eccb278d7bafaa4ad3d08a2ec7');background-size:100% 100%;background-repeat:no-repeat;"
+                />
+              </div>
               <img
-                src="/fimgs/1417_2033.x3.png"
-                class="flex items-start justify-start p-3"
-                style="width: 104px; min-width: 104px; max-width: 104px; height: 104px; min-height: 104px; max-height: 104px;"
-              />
-              <img
-                src="/fimgs/1417_2035.x3.png"
-                style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                src="/fimgs/1627_2453.x3.png"
+                style="width: 10px; min-width: 10px; max-width: 10px; height: 90px; min-height: 90px; max-height: 90px;"
               />
             </div>
             <div class="flex items-center justify-between bg-white shadow rounded-lg">
               <div class="flex flex-col space-y-3 items-start justify-start p-3">
-                <div class="text-xl font-medium tracking-wide leading-loose text-gray-500">
+                <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                   Resolved
                 </div>
-                <div class="text-3xl font-medium tracking-wide leading-10 text-gray-500">
+                <div class="text-base font-medium tracking-wide leading-normal text-gray-500">
                   {meta.dataSummary?.resolved}
                 </div>
               </div>
+              <div class="flex items-start justify-start py-3 pl-3 pr-6">
+                <img
+                  src="/fimgs/1627_2466.x3.png"
+                  style="width: 48px; min-width: 48px; max-width: 48px; height: 48px; min-height: 48px; max-height: 48px;background-image: url('/fimgs/bg-3488a1685dd8d7da4750dd77dc036ba7eb399886');background-size:100% 100%;background-repeat:no-repeat;"
+                />
+              </div>
               <img
-                src="/fimgs/1417_2040.x3.png"
-                class="flex items-start justify-start p-3"
-                style="width: 104px; min-width: 104px; max-width: 104px; height: 104px; min-height: 104px; max-height: 104px;"
-              />
-              <img
-                src="/fimgs/1417_2042.x3.png"
-                style="width: 10px; min-width: 10px; max-width: 10px; height: 108px; min-height: 108px; max-height: 108px;"
+                src="/fimgs/1627_2467.x3.png"
+                style="width: 10px; min-width: 10px; max-width: 10px; height: 90px; min-height: 90px; max-height: 90px;"
               />
             </div>
           </div>
-          {user.role === "Vendor" && (
-            <div class="flex self-stretch items-start justify-start">
-              <div class="flex flex-1 items-start justify-start">
-                <div class="flex flex-1 space-x-5 items-start justify-start">
-                  <div class="flex flex-1 flex-col space-y-5 items-start justify-start">
-                    <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                      <div class="flex self-stretch items-center justify-between">
-                        <div class="flex items-start justify-start p-2">
-                          <div class="text-sm tracking-wide leading-tight text-gray-700">
-                            Ticket by level:
-                          </div>
-                        </div>
-                        <div class="flex items-center justify-start">
-                          <div class="flex items-start justify-start py-2 rounded-lg">
-                            <input
-                              type="date"
-                              value={meta.dateVal}
-                              class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
-                              onChange={(e) => meta.action.dateLevelChange(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <hr class=" w-full pb-4"></hr>
-                      <doghnutchart data={meta.dataLevel} />
-                      <div />
-                    </div>
-                    <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                      <div class="flex self-stretch items-center justify-between">
-                        <div class="flex items-start justify-start p-2">
-                          <div class="text-sm tracking-wide leading-tight text-gray-700">
-                            Ticket by type:
-                          </div>
-                        </div>
-                        <div class="flex items-center justify-start">
-                          <div class="flex items-start justify-start py-2 rounded-lg">
-                            <input
-                              type="date"
-                              value={meta.dateVal}
-                              class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
-                              onChange={(e) => meta.action.dateLevelChange(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <hr class=" w-full pb-4"></hr>
-                      <doghnutchart-dtype />
-                      <div />
-                    </div>
-                  </div>
-                  <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                    <div class="flex self-stretch items-center justify-between">
-                      <div class="flex items-start justify-start p-2">
-                        <div class="text-base tracking-wide leading-normal text-gray-700">
-                          Performance
-                        </div>
-                      </div>
-                    </div>
-                    <div class="border-gray-500" />
-                    <tabelperform />
+          <div class="flex self-stretch space-x-5 items-start justify-start">
+            <div class="flex flex-1 self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+              <div class="flex self-stretch items-center justify-start w-full">
+                <div class="flex items-start justify-start p-2">
+                  <div class="text-sm tracking-wide leading-tight text-gray-700">
+                    Ticket by level:
                   </div>
                 </div>
+                <div class="flex flex-1 items-center justify-start bg-red-2 w-full">
+                  <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg w-full">
+                    <input
+                      type="date"
+                      value={meta.dateVal}
+                      class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                      onChange={(e) => meta.action.dateLevelChange(e)}
+                    />
+                  </div>
+                  <div class="flex flex-col items-center justify-center transform -rotate-90">
+                    <div
+                      class="transform rotate-90"
+                      style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="w-full" />
+              {meta.sumLevel !== 0 ? (
+                <doghnutchart data={meta.dataLevel} />
+              ) : (
+                <div class="flex text-sm font-bold py-12 tracking-wide leading-tight text-gray-700 w-full h-full justify-center items-center">
+                  No Ticket Data Available For This Date
+                </div>
+              )}
+            </div>
+            <div class="flex flex-1 self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+              <div class="flex self-stretch items-center justify-start w-full">
+                <div class="flex items-start justify-start p-2">
+                  <div class="text-sm tracking-wide leading-tight text-gray-700">
+                    Ticket by type:
+                  </div>
+                </div>
+                <div class="flex flex-1 items-center justify-start w-full">
+                  <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg w-full">
+                    <input
+                      type="date"
+                      value={meta.dateVal1}
+                      class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                      onChange={(e) => meta.action.dateTypeChange(e)}
+                    />
+                  </div>
+                  <div class="flex flex-col items-center justify-center transform -rotate-90">
+                    <div
+                      class="transform rotate-90"
+                      style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="w-full" />
+              {meta.sumType !== 0 ? (
+                <doghnutchart-dtype data={meta.dataType} />
+              ) : (
+                <div class="flex text-sm font-bold py-12 tracking-wide leading-tight text-gray-700 w-full h-full justify-center items-center">
+                  No Ticket Data Available For This Date
+                </div>
+              )}
+            </div>
+          </div>
+          {user.role === "Vendor" && (
+            <div class="flex flex-1 self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
+              <div class="flex self-stretch items-center justify-start">
+                <div class="flex items-start justify-start p-2">
+                  <div class="text-base tracking-wide leading-normal text-gray-700">
+                    Performance
+                  </div>
+                </div>
+                <div class="flex flex-1 items-center justify-start">
+                  <div class="flex flex-col items-center justify-center transform -rotate-90">
+                    <div
+                      class="transform rotate-90"
+                      style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="w-full" />
+              <div class="w-full">
+                <tabelperform />
               </div>
             </div>
           )}
-          {(user.role === "Employee" || user.role === "Client") && (
-            <div class="flex self-stretch items-start justify-start">
-              <div class="flex flex-1 space-x-5 items-start justify-start">
-                <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                  <div class="flex self-stretch items-center justify-between">
-                    <div class="flex items-start justify-start p-2">
-                      <div class="text-sm tracking-wide leading-tight text-gray-700">
-                        Ticket by level:
-                      </div>
-                    </div>
-                    <div class="flex items-start justify-start py-2 rounded-lg">
-                      <input
-                        type="date"
-                        value={meta.dateVal}
-                        class="text-sm font-medium tracking-wide leading-tight text-gray-600 py-2 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
-                        onChange={(e) => meta.action.dateLevelChange(e)}
-                      />
-                    </div>
+          {user.role === "Client" && (
+            <div class="flex self-stretch flex-col space-y-6 items-start justify-start p-6 bg-white shadow rounded-lg">
+              <div class="flex self-stretch items-center justify-between">
+                <div class="flex flex-col items-center justify-start">
+                  <div class="text-base tracking-wide leading-normal text-center text-gray-700">
+                    Total Tickets
                   </div>
-                  <hr class=" w-full pb-4"></hr>
-                  <div class="container">
-                    <doghnutchart data={meta.dataLevel} />
-                  </div>
-                  <div />
                 </div>
-                <div class="flex flex-1 flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
-                  <div class="flex self-stretch items-center justify-between">
-                    <div class="flex items-start justify-start p-2">
-                      <div class="text-sm tracking-wide leading-tight text-gray-700">
-                        Ticket by type:
-                      </div>
-                    </div>
-                    <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                      <div class="flex items-start justify-start px-4 py-2 rounded-lg">
-                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                          10 november 2021
-                        </div>
-                      </div>
-                      <img
-                        src="/fimgs/1416_3791.x3.png"
-                        style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                      />
-                    </div>
+                <div class="flex items-center justify-start">
+                  <div class="flex flex-1 items-start justify-start px-4 py-2">
+                    <input
+                      type="date"
+                      value={meta.dateTot}
+                      class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                      onChange={(e) => meta.action.dateTotChange(e)}
+                    />
                   </div>
-                  <hr class=" w-full pb-4"></hr>
-                  <div class="container">
-                    <doghnutchart-dtype />
+                  <div class="flex flex-col items-center justify-center transform -rotate-90">
+                    <div
+                      class="transform rotate-90"
+                      style="background-image: url('/fimgs/bg-3d70c5faafc225db0ac8e34f0e4d696631bcdf5c');background-size:100% 100%;background-repeat:no-repeat;"
+                    />
                   </div>
-                  <div />
                 </div>
               </div>
+              <hr class=" w-full" />
+              <div class="container">
+                <barchart-totalticket data={meta.dataTotal} />
+              </div>
+              <div />
             </div>
           )}
         </div>

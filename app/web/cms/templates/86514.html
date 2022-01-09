@@ -52,11 +52,12 @@
             api("/api/login", {
               username: meta.username,
               password: meta.password,
+              task: "mobile",
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
                 //navigate("/coba");
-                window.location.replace("/m/dashboard");
+                window.location.replace("/m/test");
                 meta.timeOut(1000);
               } else {
                 meta.message = e.message;
