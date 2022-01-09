@@ -58,6 +58,7 @@
             api("/api/login", {
               username: meta.username,
               password: meta.password,
+              task: "web",
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
