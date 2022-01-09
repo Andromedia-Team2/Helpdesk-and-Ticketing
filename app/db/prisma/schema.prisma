@@ -28,6 +28,7 @@ model department {
   nama_department String           @db.VarChar(150)
   deskripsi       String           @db.VarChar(150)
   id_vendor       Int
+  identityColor   String?          @db.VarChar(100)
   vendor          vendor           @relation(fields: [id_vendor], references: [id_vendor])
   employee        employee[]
   history_ticket  history_ticket[]
