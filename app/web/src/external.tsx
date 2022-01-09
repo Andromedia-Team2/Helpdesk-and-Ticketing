@@ -106,6 +106,15 @@ export default {
   "linechart-overall": () => [
     import("./components/linechart"),
   ],
+  "linechart-employee-level-low": () => [
+    import("./components/linechart-employee-level-low"),
+  ],
+  "linechart-employee-level-medium": () => [
+    import("./components/linechart-employee-level-medium"),
+  ],
+  "linechart-employee-level-high": () => [
+    import("./components/linechart-employee-level-high"),
+  ],
   "groupchart-elevel": () => [
     import("./components/groupchart-elevel"),
   ],
