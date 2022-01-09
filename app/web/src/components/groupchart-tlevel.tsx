@@ -1,7 +1,10 @@
 import React from 'react'
 import { Line, defaults } from 'react-chartjs-2'
 
-const LineChart = () => {
+const LineChart = (x) => {
+  var high = x.data.high;
+  var medium = x.data.medium;
+  var low = x.data.low;
   return (
     <div>
       <Line
@@ -14,33 +17,33 @@ const LineChart = () => {
           datasets: [
             {
               label: 'Low',
-              data: [1, 12, 19, 3, 4, 8, 12, 23, 25, 32, 44, 45],
-              borderColor : '#D6D4A0',
+              data: low,
+              borderColor: '#D6D4A0',
               // backgroundColor: '#312e8115',
-              pointBackgroundColor:'#66717E',
-              pointRadius:5,
-              pointHoverRadius:7,
-              borderWidth:2,
+              pointBackgroundColor: '#66717E',
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              borderWidth: 2,
               // tension:0.2
-            },{
+            }, {
               label: 'Medium',
-              data: [11, 18, 2, 4, 8, 3, 12, 20, 21, 23, 25, 27],
-              borderColor : '#DB995A',
+              data: medium,
+              borderColor: '#DB995A',
               // backgroundColor: '#ff660015',
-              pointBackgroundColor:'#ffffff',
-              pointRadius:5,
-              pointHoverRadius:7,
-              borderWidth:2,
+              pointBackgroundColor: '#ffffff',
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              borderWidth: 2,
               // tension:0.2
-            },{
+            }, {
               label: 'High',
-              data: [1, 2, 4, 6, 8, 9, 11, 15, 18, 19, 22, 27],
-              borderColor : '#E24E1B',
+              data: high,
+              borderColor: '#E24E1B',
               // backgroundColor: '#ff660015',
-              pointBackgroundColor:'#ffffff',
-              pointRadius:5,
-              pointHoverRadius:7,
-              borderWidth:2,
+              pointBackgroundColor: '#ffffff',
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              borderWidth: 2,
               // tension:0.2
             },
           ],

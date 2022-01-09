@@ -1,8 +1,35 @@
 <>
-  <effect meta={{}} run={async () => {}} />
+  <effect
+    meta={{
+      value: null,
+      date: null,
+      dataOverall: null,
+      dataLevel: null,
+      dataType: null,
+      dataDep: null,
+    }}
+    run={async () => {
+      let modal = document.getElementById("my-modal");
+      let initiate = document.getElementById("my-initiate");
+      modal.style.display = "block";
+      initiate.style.display = "block";
+      await api("/api/ticket-report", {
+        date: meta.date,
+        task: "all",
+      }).then((e) => {
+        meta.value = e.data;
+        modal.style.display = "none";
+        initiate.style.display = "none";
+      });
+
+      meta.dataOverall = meta.value?.overall;
+      meta.dataLevel = meta.value?.level;
+      meta.dataType = meta.value?.mType;
+      meta.dataDep = meta.value?.department;
+    }}
+  />
   <div class="flex flex-col items-start justify-start bg-gray-50">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start">
-      <regist-vendor />
       <div class="flex flex-1 self-stretch items-start justify-start px-12">
         <div class="flex flex-1 self-stretch flex-col space-y-1 items-start justify-start pt-6 rounded-2xl">
           <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
@@ -59,9 +86,11 @@
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container">
-              <barchart-overallticket />
-            </div>
+            {meta.dataOverall !== null && (
+              <div class="container">
+                <barchart-overallticket data={meta.dataOverall} />
+              </div>
+            )}
           </div>
           <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
             <div class="flex self-stretch items-center justify-between pt-3">
@@ -86,9 +115,11 @@
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container">
-              <groupchart-tlevel />
-            </div>
+            {meta.dataLevel !== null && (
+              <div class="container">
+                <groupchart-tlevel data={meta.dataLevel} />
+              </div>
+            )}
           </div>
           <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
             <div class="flex self-stretch items-center justify-between pt-3">
@@ -113,9 +144,11 @@
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container">
-              <groupchart-ttype />
-            </div>
+            {meta.dataType !== null && (
+              <div class="container">
+                <groupchart-ttype data={meta.dataType} />
+              </div>
+            )}
           </div>
           <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
             <div class="flex self-stretch items-center justify-between pt-3">
@@ -140,9 +173,11 @@
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container">
-              <groupchart-tdepartement />
-            </div>
+            {meta.dataDep !== null && (
+              <div class="container">
+                <groupchart-tdepartement data={meta.dataDep} />
+              </div>
+            )}
           </div>
           <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
             <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
@@ -409,6 +444,26 @@
             </div>
             <div />
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal"
+  >
+    <div class="relative top-48 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div id="my-initiate" class="mt-6 hidden text-center">
+        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full">
+          <div class="loader ease-linear rounded-full border-5 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        </div>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          Loading data ...
+        </h3>
+        <div class="mt-2 px-3 py-3">
+          <p class="text-sm text-gray-500">
+            Please wait a moment for the loading data
+          </p>
         </div>
       </div>
     </div>
