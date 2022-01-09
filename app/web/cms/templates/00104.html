@@ -68,10 +68,12 @@
         },
         signout: (e) => {
           window.mobileApp.app.dialog.preloader(),
-            setTimeout(function () {
+            api("/api/logout").then((e) => {
+              console.log(e);
+              //mengara ke home page
               window.mobileApp.app.dialog.close();
-            }, 1500);
-          window.location.replace("/m/login");
+              window.location.replace("/m/login");
+            });
         },
       };
     }}
