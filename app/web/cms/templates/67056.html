@@ -4,6 +4,8 @@
       nama_department: "",
       deskripsi: "",
       message: "",
+      identityColor: "#fff",
+      showColor: false,
       validationCheck() {
         this.message =
           this.nama_department === "" || this.nama_department === null
@@ -32,6 +34,18 @@
             console.log(meta.deskripsi);
           });
         },
+        changeColor: (e) => {
+          runInAction(() => {
+            meta.identityColor = e.hex;
+            console.log("identityColor:" + meta.identityColor);
+            meta.showColor = false;
+          });
+        },
+        changeVisColor: (e) => {
+          runInAction(() => {
+            meta.showColor = e;
+          });
+        },
         tryAgain: () => {
           runInAction(() => {
             modal.style.display = "none";
@@ -48,6 +62,7 @@
             api("/api/department-data/add", {
               nama_department: meta.nama_department,
               deskripsi: meta.deskripsi,
+              identityColor: meta.identityColor,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
@@ -88,6 +103,39 @@
               class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-white rounded-lg text-sm text-gray-600 tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
               placeholder="type your department name here ..."
             />
+          </div>
+        </div>
+        <div class="flex self-stretch items-center justify-center pl-5">
+          <div class="flex flex-1 items-start justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Identity Color
+            </div>
+            <div class="input w-full mr-5">
+              <div class="flex self-stretch items-center w-full justify-start py-2 pl-4 pr-5 rounded-lg focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline space-x-3">
+                <inputcolor
+                  color={meta.identityColor}
+                  onClick={() => {
+                    if (meta.showColor == false) {
+                      meta.action.changeVisColor(true);
+                    } else {
+                      meta.action.changeVisColor(false);
+                    }
+                  }}
+                />
+                <input
+                  type="text"
+                  class="font-medium w-full  bg-white text-gray-600 tracking-widest text-sm"
+                  value={meta.identityColor}
+                  disabled={true}
+                />
+              </div>
+              {meta.showColor && (
+                <colorpicker
+                  color={meta.identityColor}
+                  onChange={(e) => meta.action.changeColor(e)}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div class="flex self-stretch items-start justify-start px-5">

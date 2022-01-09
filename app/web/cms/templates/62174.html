@@ -6,6 +6,8 @@
       jenis_ticket: "",
       deskripsi_jenis_ticket: "",
       message: "",
+      identityColor: "#fff",
+      showColor: false,
       validationCheck() {
         this.message =
           this.jenis_ticket === "" || this.jenis_ticket === null
@@ -38,6 +40,7 @@
           meta.value = e;
         });
       meta.jenis_ticket = meta.value.jenis_ticket;
+      meta.identityColor = meta.value.identityColor;
       meta.deskripsi_jenis_ticket = meta.value.deskripsi_jenis_ticket;
       meta.action = {
         jenisTicketChange: (e) => {
@@ -50,6 +53,18 @@
           runInAction(() => {
             meta.deskripsi_jenis_ticket = e.target.value;
             console.log(meta.deskripsi_jenis_ticket);
+          });
+        },
+        changeColor: (e) => {
+          runInAction(() => {
+            meta.identityColor = e.hex;
+            console.log("identityColor:" + meta.identityColor);
+            meta.showColor = false;
+          });
+        },
+        changeVisColor: (e) => {
+          runInAction(() => {
+            meta.showColor = e;
           });
         },
         tryAgain: () => {
@@ -69,6 +84,7 @@
               id_jenis_ticket: meta.id_jenis_ticket,
               jenis_ticket: meta.jenis_ticket,
               deskripsi_jenis_ticket: meta.deskripsi_jenis_ticket,
+              identityColor: meta.identityColor,
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {
@@ -109,6 +125,39 @@
               class="flex self-stretch items-center font-medium w-full justify-start py-2 pl-4 pr-5 bg-gray-100 rounded-lg text-sm text-gray-600 tracking-widest focus:bg-white focus:border-gray-500 border focus:outline-none focus:shadow-outline"
               placeholder="type your ticket type here ..."
             />
+          </div>
+        </div>
+        <div class="flex self-stretch items-center justify-center pl-5">
+          <div class="flex flex-1 items-start justify-start ">
+            <div class="flex items-center w-48 justify-start text-md font-bold text-gray-800">
+              Identity Color
+            </div>
+            <div class="input w-full mr-5">
+              <div class="flex self-stretch items-center bg-gray-100 w-full justify-start py-2 pl-4 pr-5 rounded-lg focus:border-gray-500 border focus:outline-none focus:shadow-outline space-x-3">
+                <inputcolor
+                  color={meta.identityColor}
+                  onClick={() => {
+                    if (meta.showColor == false) {
+                      meta.action.changeVisColor(true);
+                    } else {
+                      meta.action.changeVisColor(false);
+                    }
+                  }}
+                />
+                <input
+                  type="text"
+                  class="font-medium w-full bg-gray-100 text-gray-600 tracking-widest text-sm"
+                  value={meta.identityColor}
+                  disabled={true}
+                />
+              </div>
+              {meta.showColor && (
+                <colorpicker
+                  color={meta.identityColor}
+                  onChange={(e) => meta.action.changeColor(e)}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div class="flex self-stretch items-start justify-start px-5">
