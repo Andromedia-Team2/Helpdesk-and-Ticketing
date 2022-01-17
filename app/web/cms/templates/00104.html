@@ -532,7 +532,7 @@
                         </div>
                       </m-button>
                     </div>
-                    <div class="text-xs tracking-wide leading-none text-gray-500">
+                    <div class="flex text-xs tracking-wide leading-none text-gray-500 mt-2">
                       Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf,
                       .zip, .csv, .sql, .tar, .gz
                     </div>
@@ -729,7 +729,7 @@
               <m-link
                 class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
                 style=" height: 37px; "
-                tabLink="#edit"
+                tabLink="#editprof"
               >
                 Edit Profile
               </m-link>
@@ -742,6 +742,14 @@
                 Change Password
               </m-link>
 
+              <m-link
+                class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
+                style="height: 37px;"
+                tabLink="#"
+              >
+                Download Guide Lines
+              </m-link>
+
               <m-button
                 class="flex flex-1 items-center justify-center px-4 py-2 bg-white shadow-lg border rounded-full border-red-900 w-full text-sm font-medium tracking-wide leading-tight text-red-900"
                 onClick={() => {
@@ -749,6 +757,7 @@
                 }}
               >
                 Sign out
+                <img src="/fimgs/1484_2539.x1.png" style="padding-left:12px;" />
               </m-button>
             </div>
           </div>
@@ -757,171 +766,176 @@
           class={
             "flex self-stretch flex-col items-center justif-center w-full h-full"
           }
-          id="edit"
+          id="editprof"
         >
-          <div class="flex flex-1 self-stretch flex-col items-start justify-start">
-            <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
-              <div class="flex self-stretch items-start justify-start p-2">
-                <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
-                  PROFILE - EDIT PROFILE
-                </div>
-              </div>
-              <div class="flex self-stretch flex-col items-center justify-start p-6 bg-white shadow rounded-lg">
-                <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
-                  <div class="flex self-stretch items-center justify-center ">
-                    {/*<label*/}
-                    {/*for="file-upload"*/}
-                    {/*class={`flex flex-col items-start justify-start items-center`}*/}
-                    {/*>*/}
-                    {/*<input*/}
-                    {/*type={`file`}*/}
-                    {/*onChange={(e) => {*/}
-                    {/*runInAction(async () => {*/}
-                    {/*const upload = await meta.upload(e.target.files[0]);*/}
-                    {/*runInAction(() => {*/}
-                    {/*console.log(upload.path);*/}
-                    {/*meta.attachment = upload.path;*/}
-                    {/*});*/}
-                    {/*meta.action.uploadProfile();*/}
-                    {/*});*/}
-                    {/*}}*/}
-                    {/*id="file-upload"*/}
-                    {/*style="visibility:hidden;"*/}
-                    {/*/>*/}
-                    {/*<img*/}
-                    {/*src={meta.photo}*/}
-                    {/*class="flex flex-col items-center justify-center p-2.5 rounded-full"*/}
-                    {/*style="width: 120px; min-width: 120px; max-width: 120px; height: 120px; min-height: 120px; max-height: 120px;"*/}
-                    {/*/>*/}
-                    {/*</label>*/}
-                  </div>
-                  <div class="flex self-stretch flex-col space-y-2 items-start justify-start">
-                    <div class="flex self-stretch flex-col items-start justify-start">
-                      <div class="flex self-stretch items-start justify-start p-2.5">
-                        <label class="text-sm tracking-wide leading-tight text-gray-500">
-                          Display Name
-                        </label>
-                      </div>
-                      <m-input
-                        class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                        style="height:35px"
-                        type="text"
-                        placeholder="Full Name"
-                        value={meta.name}
-                        onChange={(e) => meta.action.namaChange(e)}
-                        required={true}
-                      />
-                    </div>
-                    <div class="flex self-stretch flex-col items-start justify-start">
-                      <div class="flex self-stretch items-start justify-start p-2.5">
-                        <label class="text-sm tracking-wide leading-tight text-gray-500">
-                          Email
-                        </label>
-                      </div>
-                      <m-input
-                        class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                        style="height:35px"
-                        type="email"
-                        placeholder="Email"
-                        value={meta.email}
-                        onChange={(e) => meta.action.emailChange(e)}
-                        required={true}
-                      />
-                    </div>
+          <div class="flex flex-col items-start justify-start bg-gray-50  self-stretch w-screen mb-20">
+            <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+              <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
+                <div class="flex self-stretch items-start justify-start p-2">
+                  <div class="text-base font-medium tracking-wide leading-normal text-center text-gray-800">
+                    PROFILE - EDIT PROFILE
                   </div>
                 </div>
-              </div>
-              <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-6 bg-white shadow rounded-lg">
-                <div class="flex self-stretch flex-col items-start justify-start">
+                <div class="flex self-stretch flex-col items-center justify-start p-6 bg-white shadow rounded-lg">
+                  <div class="flex self-stretch flex-col space-y-3 items-center justify-start">
+                    <div class="flex self-stretch items-center justify-center ">
+                      <label
+                        // for="file-upload"
+                        class={`flex flex-col items-start justify-start items-center`}
+                      >
+                        <input
+                          type={`file`}
+                          // onChange={(e) => {
+                          //   runInAction(async () => {
+                          //     const upload = await meta.upload(
+                          //       e.target.files[0]
+                          //     );
+                          //     runInAction(() => {
+                          //       console.log(upload.path);
+                          //       meta.attachment = upload.path;
+                          //     });
+                          //     meta.action.uploadProfile();
+                          //   });
+                          // }}
+                          id="file-upload"
+                          style="visibility:hidden;"
+                        />
+                        {}
+                        <img
+                          src="/fimgs/1036_1928.x1.svg"
+                          class="flex flex-col items-center justify-center p-2.5 rounded-full"
+                          style="width: 120px;height: 120px; "
+                        />
+                      </label>
+                    </div>
+                    <div class="flex self-stretch flex-col space-y-2 items-start justify-start">
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Display Name
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="text"
+                          placeholder="Full Name"
+                          value={meta.name}
+                          onChange={(e) => meta.action.namaChange(e)}
+                          required={true}
+                        />
+                      </div>
+                      <div class="flex self-stretch flex-col items-start justify-start">
+                        <div class="flex self-stretch items-start justify-start p-2.5">
+                          <label class="text-sm tracking-wide leading-tight text-gray-500">
+                            Email
+                          </label>
+                        </div>
+                        <m-input
+                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                          style="height:35px"
+                          type="email"
+                          placeholder="Email"
+                          value={meta.email}
+                          onChange={(e) => meta.action.emailChange(e)}
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-6 bg-white shadow rounded-lg">
                   <div class="flex self-stretch flex-col items-start justify-start">
                     <div class="flex self-stretch flex-col items-start justify-start">
                       <div class="flex self-stretch flex-col items-start justify-start">
                         <div class="flex self-stretch flex-col items-start justify-start">
+                          <div class="flex self-stretch flex-col items-start justify-start">
+                            <div class="flex self-stretch items-start justify-start p-2.5">
+                              <label class="text-sm tracking-wide leading-tight text-gray-500">
+                                Username
+                              </label>
+                            </div>
+                            <m-input
+                              class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                              style="height:35px"
+                              type="text"
+                              placeholder="startrek11"
+                              value={meta.username}
+                              onChange={(e) => meta.action.usernameChange(e)}
+                              required={true}
+                            />
+                          </div>
+                        </div>
+                        <div class="flex self-stretch flex-col items-start justify-start">
                           <div class="flex self-stretch items-start justify-start p-2.5">
                             <label class="text-sm tracking-wide leading-tight text-gray-500">
-                              Username
+                              Company
                             </label>
                           </div>
                           <m-input
                             class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                             style="height:35px"
                             type="text"
-                            placeholder="startrek11"
-                            value={meta.username}
-                            onChange={(e) => meta.action.usernameChange(e)}
+                            placeholder="Company"
+                            value={meta.company}
+                            onChange={(e) => meta.action.lokasiChange(e)}
+                            required={true}
+                          />
+                        </div>
+                        <div class="flex self-stretch flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-start p-2.5">
+                            <label class="text-sm tracking-wide leading-tight text-gray-500">
+                              Phone
+                            </label>
+                          </div>
+                          <m-input
+                            class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                            style="height:35px"
+                            type="number"
+                            placeholder="Phone Number"
+                            value={meta.phone}
+                            onChange={(e) => meta.action.nomorChange(e)}
+                            required={true}
+                          />
+                        </div>
+                        <div class="flex self-stretch flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-start p-2.5">
+                            <label class="text-sm tracking-wide leading-tight text-gray-500">
+                              Address
+                            </label>
+                          </div>
+                          <m-input
+                            class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                            style="height:35px"
+                            type="text"
+                            placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
+                            value={meta.address}
+                            onChange={(e) => meta.action.addressChange(e)}
                             required={true}
                           />
                         </div>
                       </div>
-                      <div class="flex self-stretch flex-col items-start justify-start">
-                        <div class="flex self-stretch items-start justify-start p-2.5">
-                          <label class="text-sm tracking-wide leading-tight text-gray-500">
-                            Company
-                          </label>
-                        </div>
-                        <m-input
-                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                          style="height:35px"
-                          type="text"
-                          placeholder="Company"
-                          value={meta.company}
-                          onChange={(e) => meta.action.lokasiChange(e)}
-                          required={true}
-                        />
-                      </div>
-                      <div class="flex self-stretch flex-col items-start justify-start">
-                        <div class="flex self-stretch items-start justify-start p-2.5">
-                          <label class="text-sm tracking-wide leading-tight text-gray-500">
-                            Phone
-                          </label>
-                        </div>
-                        <m-input
-                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                          style="height:35px"
-                          type="number"
-                          placeholder="Phone Number"
-                          value={meta.phone}
-                          onChange={(e) => meta.action.nomorChange(e)}
-                          required={true}
-                        />
-                      </div>
-                      <div class="flex self-stretch flex-col items-start justify-start">
-                        <div class="flex self-stretch items-start justify-start p-2.5">
-                          <label class="text-sm tracking-wide leading-tight text-gray-500">
-                            Address
-                          </label>
-                        </div>
-                        <m-input
-                          class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                          style="height:35px"
-                          type="text"
-                          placeholder="Jl Raya Psr Minggu Bl C/11-16, Dki Jakarta"
-                          value={meta.address}
-                          onChange={(e) => meta.action.addressChange(e)}
-                          required={true}
-                        />
-                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="flex self-stretch space-x-6 items-start justify-center">
-                  <div class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500">
-                    <m-link href="/m/view-profile">
-                      <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
-                        cancel
-                      </div>
-                    </m-link>
-                  </div>
-                  <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
-                    <m-link
-                      onClick={() => {
-                        meta.action.editData();
-                      }}
-                    >
-                      <div class="text-sm font-medium tracking-wide leading-tight text-white">
-                        save changes
-                      </div>
-                    </m-link>
+                  <div class="flex self-stretch space-x-6 items-start justify-center">
+                    <div class="flex items-center justify-start px-3 py-2 border rounded-full border-gray-500">
+                      <m-link href="/m/view-profile">
+                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
+                          cancel
+                        </div>
+                      </m-link>
+                    </div>
+                    <div class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full">
+                      <m-link
+                        onClick={() => {
+                          meta.action.editData();
+                        }}
+                      >
+                        <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                          save changes
+                        </div>
+                      </m-link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -956,26 +970,27 @@
                             Current Password
                           </label>
                         </div>
-                        <m-input
-                          class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10"
-                          style="height:35px"
-                          type="password"
-                          value={meta.password}
-                          onChange={(e) => meta.action.passwordChange(e)}
-                          placeholder="Password"
-                          required
-                        >
-                          {/*<a class="">*/}
-                          {/*<svg*/}
-                          {/*xmlns="http://www.w3.org/2000/svg"*/}
-                          {/*width="16"*/}
-                          {/*height="16"*/}
-                          {/*viewBox="0 0 24 24"*/}
-                          {/*>*/}
-                          {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
-                          {/*</svg>*/}
-                          {/*</a>*/}
-                        </m-input>
+                        <div class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 ">
+                          <m-input
+                            class="text-sm tracking-wide leading-tight text-gray-700 w-full "
+                            // value={meta.password}
+                            // onChange={(e) => meta.action.passwordChange(e)}
+                            placeholder="Password"
+                            type="password"
+                            required={true}
+                          />
+                          <m-button
+                            class="flex items-center justify-center "
+                            // onClick={() => {
+                            //   meta.action.showHidePass();
+                            // }}
+                          >
+                            <img
+                              src="/fimgs/I109_191_2_8.x1.svg"
+                              style="width: 22px;height: 22px; "
+                            />
+                          </m-button>
+                        </div>
                       </div>
                       <div class="flex self-stretch flex-col items-start justify-start">
                         <div class="flex self-stretch items-start justify-start p-2.5">
@@ -983,26 +998,27 @@
                             New Password
                           </label>
                         </div>
-                        <m-input
-                          class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10 w-full"
-                          style="height:35px"
-                          type="password"
-                          value={meta.newPassword}
-                          onChange={(e) => meta.action.newChange(e)}
-                          placeholder="New Password"
-                          required
-                        >
-                          {/*<a class="">*/}
-                          {/*<svg*/}
-                          {/*xmlns="http://www.w3.org/2000/svg"*/}
-                          {/*width="16"*/}
-                          {/*height="16"*/}
-                          {/*viewBox="0 0 24 24"*/}
-                          {/*>*/}
-                          {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
-                          {/*</svg>*/}
-                          {/*</a>*/}
-                        </m-input>
+                        <div class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 ">
+                          <m-input
+                            class="text-sm tracking-wide leading-tight text-gray-700 w-full "
+                            // value={meta.newPassword}
+                            // onChange={(e) => meta.action.newChange(e)}
+                            placeholder="Password"
+                            type="password"
+                            required={true}
+                          />
+                          <m-button
+                            class="flex items-center justify-center "
+                            // onClick={() => {
+                            //   meta.action.showHidePass();
+                            // }}
+                          >
+                            <img
+                              src="/fimgs/I109_191_2_8.x1.svg"
+                              style="width: 22px;height: 22px; "
+                            />
+                          </m-button>
+                        </div>
                       </div>
                       <div class="flex self-stretch flex-col items-start justify-start">
                         <div class="flex self-stretch items-start justify-start p-2.5">
@@ -1010,26 +1026,27 @@
                             Confirm New Password
                           </label>
                         </div>
-                        <m-input
-                          class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700 h-10"
-                          style="height:35px"
-                          type="password"
-                          value={meta.confirmPassword}
-                          onChange={(e) => meta.action.confirmChange(e)}
-                          placeholder="type your password here ..."
-                          required
-                        >
-                          {/*<a class="">*/}
-                          {/*<svg*/}
-                          {/*xmlns="http://www.w3.org/2000/svg"*/}
-                          {/*width="16"*/}
-                          {/*height="16"*/}
-                          {/*viewBox="0 0 24 24"*/}
-                          {/*>*/}
-                          {/*<path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />*/}
-                          {/*</svg>*/}
-                          {/*</a>*/}
-                        </m-input>
+                        <div class="flex self-stretch space-x-2.5 items-center justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 ">
+                          <m-input
+                            class="text-sm tracking-wide leading-tight text-gray-700 w-full "
+                            // value={meta.confirmPassword}
+                            // onChange={(e) => meta.action.confirmChange(e)}
+                            placeholder="Password"
+                            type="password"
+                            required={true}
+                          />
+                          <m-button
+                            class="flex items-center justify-center "
+                            // onClick={() => {
+                            //   meta.action.showHidePass();
+                            // }}
+                          >
+                            <img
+                              src="/fimgs/I109_191_2_8.x1.svg"
+                              style="width: 22px;height: 22px; "
+                            />
+                          </m-button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1064,14 +1081,92 @@
         ></m-tab>
         <m-tab
           class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
+          id="rating"
+        >
+          <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start p-4 mb-4">
+            <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
+              <div class="flex flex-1 self-stretch flex-col space-y-3 items-center justify-start px-3">
+                <div class="flex flex-1 self-stretch flex-col items-start justify-start">
+                  <div class="flex flex-1 self-stretch flex-col space-y-4 items-center justify-start px-6 py-12">
+                    <div class="flex flex-col items-center justify-start">
+                      <img
+                        src="/fimgs/1744_2711.x2.png"
+                        style="width: 184.50px; min-width: 184.50px; max-width: 184.50px; height: 180px; min-height: 180px; max-height: 180px;"
+                      />
+                      <div class="flex items-start justify-start p-2.5">
+                        <div class="text-lg font-medium tracking-wide leading-relaxed text-justify text-gray-800">
+                          Rate your experience
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-start justify-start px-2"
+                      style="width: 280px; min-width: 280px; max-width: 280px; height: 40px; min-height: 40px; max-height: 40px;"
+                    >
+                      <img
+                        src="/fimgs/1744_2715.x2.png"
+                        style="width: 56px;  height: 40px; "
+                      />
+                      <img
+                        src="/fimgs/1744_2715.x2.png"
+                        style="width: 56px;  height: 40px; "
+                      />
+                      <img
+                        src="/fimgs/1744_2715.x2.png"
+                        style="width: 56px;  height: 40px; "
+                      />
+                      <img
+                        src="/fimgs/1744_2715.x2.png"
+                        style="width: 56px;  height: 40px; "
+                      />
+                      <img
+                        src="/fimgs/1744_2715.x2.png"
+                        style="width: 56px;  height: 40px; "
+                      />
+                    </div>
+                    <m-input
+                      class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                      type="text"
+                      placeholder="Lorem ipsum sit amet dolor."
+                      // value={...}
+                      // onChange={...}
+                    />
+
+                    <div class="flex space-x-6 items-start justify-start">
+                      <m-link
+                        class="flex items-center justify-start px-4 py-2 border rounded-full border-gray-500"
+                        tabLink="#dashboard"
+                        // onClick={() => {}}
+                      >
+                        <div class="text-sm font-medium tracking-wide leading-tight text-gray-700">
+                          Maybe later
+                        </div>
+                      </m-link>
+                      <m-link
+                        class="flex items-center justify-start px-4 py-2 bg-red-900 shadow rounded-full"
+                        tabLink="#dashboard"
+                      >
+                        <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                          Send rating
+                        </div>
+                      </m-link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </m-tab>
+        <m-tab
+          class={`flex self-stretch flex-col items-center justify-center w-full h-full`}
           id="progress"
         >
           <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start p-4 mb-4">
             <div class="flex flex-1 self-stretch flex-col space-y-3 items-start justify-start">
               <div class="flex flex-1 self-stretch flex-col space-y-3 items-center justify-start px-3">
                 <div class="flex self-stretch flex-col space-y-3 items-center justify-start py-1 bg-white shadow rounded-lg">
-                  <div class="flex self-stretch items-center justify-between px-3 py-2 rounded-lg">
-                    <div class="text-sm font-medium tracking-wide leading-normal text-center text-gray-800">
+                  <div class="flex self-stretch items-center justify-between px-3  rounded-lg">
+                    <div class="text-sm font-medium tracking-wide leading-normal text-center text-gray-800 pr-8">
                       MY TICKET - VIEW TICKET
                     </div>
 
@@ -1086,16 +1181,39 @@
                       </div>
                     </div>
                   </div>
-                  <img src="/fimgs/909_1612.x1.png" />
-                  <div class="flex self-stretch items-center justify-start px-3">
-                    <div class="flex space-x-2.5 items-center justify-start pb-2">
-                      <div class="text-xs tracking-wide leading-none text-gray-700 ">
-                        Ticket Type:
-                      </div>
-                      <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
-                        Maintenance ticket
+                  <img
+                    src="/fimgs/909_1612.x1.png"
+                    style="padding-left:6px;padding-right:6px;"
+                  />
+                  <div class="flex self-stretch space-x-3 items-center justify-between px-3 py-1">
+                    <div class="flex flex-1 items-center justify-start">
+                      <div class="flex flex-1 space-x-2.5 items-center justify-start">
+                        <div class="text-xs tracking-wide leading-none text-gray-700">
+                          Ticket Type:
+                        </div>
+                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
+                          Maintenance ticket
+                        </div>
                       </div>
                     </div>
+                    <m-link
+                      class="flex space-x-2 items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full"
+                      tabLink="#rating"
+                      // onClick={() => {
+                      //   window.mobileApp.app.dialog.preloader(),
+                      //     setTimeout(function () {
+                      //       window.mobileApp.app.dialog.close();
+                      //     }, 1000);
+                      // }}
+                    >
+                      <div class="text-xs font-medium tracking-wide leading-none text-white">
+                        done
+                      </div>
+                      <img
+                        src="/fimgs/1755_2774.x1.svg"
+                        style="width: 15px; min-width: 15px; max-width: 15px; height: 15px; min-height: 15px; max-height: 15px;"
+                      />
+                    </m-link>
                   </div>
                 </div>
 
@@ -1105,7 +1223,7 @@
                       <div class="flex flex-1 space-x-3 items-center justify-start">
                         <img
                           src="/fimgs/907_1561.x3.png"
-                          style="width: 44px; min-width: 44px; max-width: 44px; height: 46px; min-height: 46px; max-height: 46px;background-image: url('/fimgs/bg-57fb28d4e5806027cbc1f1d9326b9965c9861ee1');background-size:100% 100%;background-repeat:no-repeat;"
+                          style="width: 44px; min-width: 44px; max-width: 44px; height: 46px; min-height: 46px; max-height: 46px;"
                         />
                         <div class="flex flex-1 flex-col items-start justify-start">
                           <div class="flex self-stretch items-start justify-between">
@@ -1359,7 +1477,7 @@
             tabLinkActive={meta.tabActive === "profile"}
           >
             {meta.tabActive === "profile" && (
-              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-red-900">
+              <div class="flex flex-col items-center justify-center pr-2 text-xs font-medium tracking-wide leading-none text-red-900">
                 <img
                   src="/fimgs/I1484_2483_1484_2249.x1.png"
                   style={`width: 30px; height: 30px; `}
@@ -1368,7 +1486,7 @@
               </div>
             )}
             {meta.tabActive !== "profile" && (
-              <div class="flex flex-col items-center justify-center pl-4 text-xs font-medium tracking-wide leading-none text-gray-400">
+              <div class="flex flex-col items-center justify-center pr-2 text-xs font-medium tracking-wide leading-none text-gray-400">
                 <img
                   src="/fimgs/I1484_2420_1484_2117.x1.png"
                   style={`width: 30px; height: 30px; `}
