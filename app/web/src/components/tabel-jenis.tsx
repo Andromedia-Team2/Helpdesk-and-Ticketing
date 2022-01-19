@@ -20,7 +20,7 @@ export default () => {
                     "sWidth": "10%",
                     "sClass": "center",
                     "mRender": function (data, type, full) { 
-                        return "<div class='flex items-center justify-center w-full'><button class='space-x-3 items-center border border-gray-400 justify-center px-2 my-2 mr-1 py-1 bg-white rounded-lg'><a class='text-sm font-sm text-gray-400' href='/jenis-data/edit/" + full.id_jenis_ticket + "'>"+
+                        return "<div class='flex items-center justify-center w-16'><button class='space-x-3 items-center border border-gray-400 justify-center px-2 my-2 mr-1 py-1 bg-white rounded-lg'><a class='text-sm font-sm text-gray-400' href='/jenis-data/edit/" + full.id_jenis_ticket + "'>"+
                         "<svg class='w-5 h-5' aria-hidden='true' fill='currentColor' viewBox='0 0 20 20'>"+
                         "<path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>"+
                         "</svg></a></button>&nbsp"+
@@ -39,7 +39,7 @@ export default () => {
             <table className="stripe w-full" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th className="py-3">Type Name</th>
+                        <th className="py-3 type-name" >Type Name</th>
                         <th className="py-3">Description</th>
                         <th className="px-4 py-3">Action</th>
                     </tr>

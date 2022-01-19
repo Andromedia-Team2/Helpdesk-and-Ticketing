@@ -148,4 +148,7 @@ export default {
   "inputcolor": () => [
     import("./components/input-color"),
   ],
+  "ratingstar": () => [
+    import("./components/ratingstart"),
+  ],
 };
