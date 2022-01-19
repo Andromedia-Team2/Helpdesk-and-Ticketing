@@ -27,7 +27,7 @@ export default () => {
             <table className="stripe w-full" id="dtable">
                 <thead>
                     <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th className="py-3">Level Name</th>
+                        <th className="py-3 level-name">Level Name</th>
                         <th className="py-3">Description</th>
                     </tr>
                 </thead>
