@@ -151,4 +151,13 @@ export default {
   "ratingstar": () => [
     import("./components/ratingstart"),
   ],
+  "linechart-employee-level-high": () => [
+    import("./components/linechart-employee-level-high"),
+  ],
+  "linechart-employee-level-medium": () => [
+    import("./components/linechart-employee-level-medium"),
+  ],
+  "linechart-employee-level-low": () => [
+    import("./components/linechart-employee-level-low"),
+  ],
 };
