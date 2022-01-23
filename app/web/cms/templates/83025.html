@@ -1,22 +1,43 @@
 <>
   <effect
     meta={{
-      newpass: "",
-      confirmpass: "",
+      newPassword: "",
+      confirmPassword: "",
+      message: "",
       pass_type: "password",
+      pass_type1: "password",
+      task: "",
+
+      validationCheck() {
+        this.message =
+          this.newPassword === "" || this.newPassword === null
+            ? "Your new password is empty. Make sure all forms are filled and try again."
+            : !validatePass(this.newPassword)
+            ? "Password length 8-16, Include Uppercase, Lowercase & No space"
+            : this.confirmPassword === "" || this.confirmPassword === null
+            ? "Your confirmation password is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
     }}
     run={async () => {
       meta.action = {
-        newpassChange: (e) => {
+        newChange: (e) => {
           runInAction(() => {
-            meta.newpass = e.target.value;
-            console.log(meta.newpass);
+            meta.newPassword = e.target.value;
+            console.log(meta.newPassword);
           });
         },
-        confirmpassChange: (e) => {
+        confirmChange: (e) => {
           runInAction(() => {
-            meta.confirmpass = e.target.value;
-            console.log(meta.confirmpass);
+            meta.confirmPassword = e.target.value;
+            console.log(meta.confirmPassword);
           });
         },
         showHidePass: () => {
@@ -25,6 +46,40 @@
               ? (meta.pass_type = "text")
               : (meta.pass_type = "password");
           });
+        },
+        showHidePass1: () => {
+          runInAction(() => {
+            meta.pass_type1 === "password"
+              ? (meta.pass_type1 = "text")
+              : (meta.pass_type1 = "password");
+          });
+        },
+        editData: (e) => {
+          let error_msg = meta.validationCheck();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            meta.data = {
+              newPassword: meta.newPassword,
+              confirmPassword: meta.confirmPassword,
+            };
+            meta.task = "otp";
+            api("/api/password/edit", {
+              data: { ...meta.data },
+              task: meta.task,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                navigate("/m/login");
+                meta.timeOut(1000);
+              } else {
+                meta.message = e.message;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
+              }
+            });
+          }
         },
       };
     }}
@@ -54,10 +109,9 @@
             <m-input
               class="text-sm tracking-wide leading-tight text-gray-500 w-full"
               placeholder="*****"
-              type="password"
-              required={true}
-              // value={meta.newpass}
-              // onChange={(e) => meta.action.newpassChange(e)}
+              type={meta.pass_type}
+              value={meta.newPassword}
+              onChange={(e) => meta.action.newChange(e)}
             />
             <m-button
               class="flex items-center justify-center "
@@ -80,15 +134,14 @@
             <m-input
               class="text-sm tracking-wide leading-tight text-gray-500 w-full"
               placeholder="*****"
-              type="password"
-              required={true}
-              // value={meta.confirmpass}
-              // onChange={(e) => meta.action.confirmpassChange(e)}
+              type={meta.pass_type1}
+              value={meta.confirmPassword}
+              onChange={(e) => meta.action.confirmChange(e)}
             />
             <m-button
               class="flex items-center justify-center "
               onClick={() => {
-                meta.action.showHidePass();
+                meta.action.showHidePass1();
               }}
             >
               <img
@@ -102,11 +155,7 @@
       <m-button
         class="flex items-center justify-start px-4 py-6 bg-red-900 shadow rounded-3xl shadow-xl text-sm font-medium tracking-wide leading-loose text-white"
         onClick={() => {
-          window.mobileApp.app.dialog.preloader(),
-            setTimeout(function () {
-              window.mobileApp.app.dialog.close();
-            }, 1000);
-          navigate("/m/alert");
+          meta.action.editData();
         }}
       >
         Reset Password

@@ -2,6 +2,21 @@
   <effect
     meta={{
       email: "",
+      validationCheck() {
+        this.message =
+          this.email === "" || this.email === null
+            ? "Your vendor email is empty. Make sure all forms are filled and try again."
+            : !validateEmail(this.email)
+            ? "Invalid email format. Make sure your email format like (abc@def.com)"
+            : false;
+        return this.message;
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
     }}
     run={async () => {
       meta.action = {
@@ -10,6 +25,29 @@
             meta.email = e.target.value;
             console.log(meta.email);
           });
+        },
+        sendEmail: (e) => {
+          let error_msg = meta.validationCheck();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            api("/api/send-email", {
+              email: meta.email,
+              task: "mobile",
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                navigate("/m/verif");
+                meta.timeOut(1000);
+                console.log(e);
+              } else {
+                meta.message = e.message;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
+              }
+            });
+          }
         },
       };
     }}
@@ -65,11 +103,7 @@
           <m-button
             class="flex items-center justify-center px-6 py-4 bg-red-900 shadow rounded-2xl shadow-lg text-xs font-medium tracking-wide leading-loose text-white"
             onClick={() => {
-              window.mobileApp.app.dialog.alert(
-                "Check Your Email",
-                "Information"
-              ),
-                navigate("/m/verif");
+              meta.action.sendEmail();
             }}
           >
             Send

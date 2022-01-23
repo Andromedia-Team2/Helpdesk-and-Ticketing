@@ -1,5 +1,91 @@
 <>
-  <effect meta={{}} run={async () => {}} />
+  <effect
+    meta={{
+      code_1: "",
+      code_2: "",
+      code_3: "",
+      code_4: "",
+      code_5: "",
+      code_6: "",
+      code: "",
+
+      async onChange(key, e) {
+        let value = e.target.value;
+        runInAction(() => (this[key] = value));
+        console.log(key + " : " + value);
+      },
+
+      async nextFocus(key1, key2) {
+        if (this[key1] !== "") {
+          document.querySelectorAll(key2)[0].focus();
+        }
+      },
+
+      timeOut(timer) {
+        setTimeout(function () {
+          window.mobileApp.app.dialog.close();
+        }, timer);
+      },
+
+      validationCheck() {
+        let msg =
+          this.code_1 === "" || this.code_1 === null
+            ? "Please, Fill all the fields!"
+            : this.code_2 === "" || this.code_2 === null
+            ? "Please, Fill all the fields!"
+            : this.code_3 === "" || this.code_3 === null
+            ? "Please, Fill all the fields!"
+            : this.code_4 === "" || this.code_4 === null
+            ? "Please, Fill all the fields!"
+            : this.code_5 === "" || this.code_5 === null
+            ? "Please, Fill all the fields!"
+            : this.code_6 === "" || this.code_6 === null
+            ? "Please, Fill all the fields!"
+            : false; // console.log(msg);
+
+        return msg;
+      },
+    }}
+    run={async () => {
+      meta.action = {
+        emailChange: (e) => {
+          runInAction(() => {
+            meta.email = e.target.value;
+            console.log(meta.email);
+          });
+        },
+        verifOtp: () => {
+          let error_msg = meta.validationCheck();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            meta.code =
+              meta.code_1 +
+              meta.code_2 +
+              meta.code_3 +
+              meta.code_4 +
+              meta.code_5 +
+              meta.code_6;
+            api("/api/otp", {
+              code: meta.code,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                navigate("/m/reset-pass");
+                meta.timeOut(1000);
+                console.log(e);
+              } else {
+                meta.message = e.message;
+                meta.timeOut(1000);
+                window.mobileApp.app.dialog.alert(null, meta.message);
+              }
+            });
+          }
+        },
+      };
+    }}
+  />
   <div class="flex items-start justify-start h-full">
     <div class="flex  self-stretch flex-col items-start justify-start ml-2 mr-2 pt-6 bg-gray-50">
       <div
@@ -29,73 +115,77 @@
           </div>
           <div class="flex self-stretch items-start justify-between space-x-2 px-1 mr-4">
             <m-input
-              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 "
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 code_1"
               style="width: 50px;height: 50px;padding-left:15px;"
               type="number"
+              onInput={(e) => {
+                e.target.value = e.target.value.slice(0, 1);
+                meta.onChange("code_1", e);
+                meta.nextFocus("code_1", ".code_2");
+              }}
+              value={meta.code_1}
               required={true}
-              maxlength="1"
-
-              // value={...}
-              //     onChange={(e) => {
-              //       ...
-              //     }}
+              autoFocus={true}
             />
 
             <m-input
-              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 "
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 code_2"
               style="width: 50px;height: 50px; padding-left:15px;"
               type="number"
+              onInput={(e) => {
+                e.target.value = e.target.value.slice(0, 1);
+                meta.onChange("code_2", e);
+                meta.nextFocus("code_2", ".code_3");
+              }}
+              value={meta.code_2}
               required={true}
-              maxlength="1"
-
-              // value={...}
-              //     onChange={(e) => {
-              //       ...
-              //     }}
             />
             <m-input
-              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 code_3"
               style="width: 50px;height: 50px; padding-left:15px;"
               type="number"
+              onInput={(e) => {
+                e.target.value = e.target.value.slice(0, 1);
+                meta.onChange("code_3", e);
+                meta.nextFocus("code_3", ".code_4");
+              }}
+              value={meta.code_3}
               required={true}
-              maxlength="1"
-              // value={...}
-              //     onChange={(e) => {
-              //       ...
-              //     }}
             />
             <m-input
-              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 code_4"
               style="width: 50px;height: 50px; padding-left:15px;"
               type="number"
+              onInput={(e) => {
+                e.target.value = e.target.value.slice(0, 1);
+                meta.onChange("code_4", e);
+                meta.nextFocus("code_4", ".code_5");
+              }}
+              value={meta.code_4}
               required={true}
-              maxlength="1"
-              // value={...}
-              //     onChange={(e) => {
-              //       ...
-              //     }}
             />
             <m-input
-              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 code_5"
               style="width: 50px;height: 50px; padding-left:15px;"
               type="number"
+              onInput={(e) => {
+                e.target.value = e.target.value.slice(0, 1);
+                meta.onChange("code_5", e);
+                meta.nextFocus("code_5", ".code_6");
+              }}
+              value={meta.code_5}
               required={true}
-              maxlength="1"
-              // value={...}
-              //     onChange={(e) => {
-              //       ...
-              //     }}
             />
             <m-input
-              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700"
+              class="flex items-center justify-center bg-white border rounded-lg border-gray-800 text-3xl tracking-wide leading-10 text-gray-700 code_6"
               style="width: 50px;height: 50px; padding-left:15px;"
               type="number"
+              onInput={(e) => {
+                e.target.value = e.target.value.slice(0, 1);
+                meta.onChange("code_6", e);
+              }}
+              value={meta.code_6}
               required={true}
-              maxlength="1"
-              // value={...}
-              //     onChange={(e) => {
-              //       ...
-              //     }}
             />
           </div>
           <div class="flex self-stretch space-x-3 items-start justify-center">
@@ -125,11 +215,7 @@
           class="flex items-center justify-center px-4 py-2 bg-red-900 shadow rounded-2xl text-xl font-medium tracking-wide leading-loose text-white"
           style="height: 46px; min-height: 46px; max-height: 46px;"
           onClick={() => {
-            window.mobileApp.app.dialog.preloader(),
-              setTimeout(function () {
-                window.mobileApp.app.dialog.close();
-              }, 1500);
-            navigate("/m/reset-pass");
+            meta.action.verifOtp();
           }}
         >
           Verify
