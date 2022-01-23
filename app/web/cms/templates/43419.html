@@ -41,6 +41,7 @@
             loading.style.display = "block";
             api("/api/send-email", {
               email: meta.email,
+              task: "web",
             }).then((e) => {
               console.log(e);
               if (e.status == "SUCCESS") {

@@ -34,6 +34,33 @@ const sendVerifEmail = (email, value) => {
     });
 }
 
+const sendToken = (email, value) => {
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'duckysquishy@gmail.com', // fill your mail
+            pass: 'hspnflejntkyokod' // fill your password
+        }
+    });
+
+    var mailOptions = {
+        from: 'duckysquishy@gmail.com', // fill your mail
+        to: email,
+        subject: 'Reset Password Token',
+        text: 'Your Token: ' + value
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            return false;
+        } else {
+            console.log('Email sent: ' + info.response);
+            return true;
+        }
+    });
+}
+
 const sendUserInfo = (email, username, password) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -89,8 +116,7 @@ const sendNotif = (email, message) => {
 }
 
 const generateToken = () => {
-    //Math.floor(100000 + Math.random() * 900000)
-    const mToken = Math.random().toString(36).substring(2, 8) + Math.random().toString(36).substring(2, 8);
+    var mToken = Math.floor(100000 + Math.random() * 900000).toString();
     return mToken;
 }
 
@@ -167,5 +193,5 @@ const minutesDifference = (date1, date2) => {
 }
 
 export const ext = {
-    argon2, sendVerifEmail, sendUserInfo, sendNotif, generateToken, generateLongToken, formatD, format, tahun, bulan, pump, fs, path, daysDifference, hoursDifference, minutesDifference
+    argon2, sendVerifEmail, sendToken, sendUserInfo, sendNotif, generateToken, generateLongToken, formatD, format, tahun, bulan, pump, fs, path, daysDifference, hoursDifference, minutesDifference
 }
