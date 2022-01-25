@@ -4,11 +4,11 @@ var validator = require('validator');
 var passwordValidator = require('password-validator');
 
 export const formatSeparatorDec = (value: any, decimal?: number) => {
-    if (decimal || decimal === 0) value = Number(value).toFixed(decimal)
-    return parseFloat((value || 0).toString().replace(/,/g, ''))
-      .toLocaleString('en')
-      .replace(/,/gi, ',')
-  }
+  if (decimal || decimal === 0) value = Number(value).toFixed(decimal)
+  return parseFloat((value || 0).toString().replace(/,/g, ''))
+    .toLocaleString('en')
+    .replace(/,/gi, ',')
+}
 
 export const dateFormat = (
   value: any,
@@ -74,9 +74,23 @@ const formatDate = (date) => {
   return myFormattedDate;
 }
 
+const formatD = (date) => {
+  date = new Date(date);
+  const day = ('0' + date.getDate()).slice(-2);
+  const monthIndex = ('0' + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+  const myFormattedDate = day + "/" + (monthIndex) + "/" + year;
+  return myFormattedDate;
+}
+
 export const globalVar = {
-  _FormData, 
+  _FormData,
   validateEmail,
   validatePass,
+  formatD,
   formatDate,
-  formatDay}
+  formatDay
+}
