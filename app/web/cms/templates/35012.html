@@ -26,20 +26,6 @@
         return this.msg;
       },
 
-      validationCheck1() {
-        this.msg =
-          this.id_department === "" ||
-          this.id_department === null ||
-          this.id_department === 0
-            ? "Your department name is empty. Make sure all forms are filled and try again."
-            : this.id_level_ticket === "" ||
-              this.id_level_ticket === null ||
-              this.id_level_ticket === 0
-            ? "Your level ticket is empty. Make sure all forms are filled and try again."
-            : false;
-        return this.msg;
-      },
-
       async upload(file) {
         const formData = _FormData();
 
@@ -189,7 +175,7 @@
                   Status:
                 </div>
                 <div
-                  class="flex items-start justify-center px-3 py-1 bg-red-500 rounded-lg"
+                  class="flex items-start justify-center px-3 py-1 rounded-lg"
                   id="status"
                 >
                   <div class="text-xs font-medium tracking-wide leading-none text-white">
@@ -277,97 +263,187 @@
               </div>
             </div>
           </div>
-          <div class="flex self-stretch flex-col items-start justify-start p-2 bg-gray-100 shadow rounded-lg">
-            <div class="flex self-stretch flex-col space-y-5 items-start justify-start">
-              <div class="flex self-stretch items-end justify-start">
-                <div class="flex flex-1 space-x-3 items-center justify-start">
-                  <div class="flex flex-1 flex-col items-start justify-start">
-                    <div class="flex self-stretch items-start justify-end">
-                      <div class="text-sm font-medium tracking-wide leading-tight text-center text-gray-700">
-                        Imam Kurfian
-                      </div>
-                    </div>
-                    <div class="flex self-stretch items-center justify-between">
-                      <div class="text-xs tracking-wide leading-none text-gray-700">
-                        21/10/2021 10:20
-                      </div>
-                      <div class="text-xs tracking-wide leading-none text-center text-gray-500">
-                        imam.12@tech.com
-                      </div>
-                    </div>
-                  </div>
-                  <img
-                    src="/fimgs/907_1562.x3.png"
-                    class="flex items-start justify-center shadow rounded-full"
-                    style="width: 40px; min-width: 40px; max-width: 40px; height: 40px; min-height: 40px; max-height: 40px;"
-                  />
-                </div>
-              </div>
-              <div class="flex self-stretch flex-col items-start justify-start">
-                <div class="text-sm tracking-wide leading-tight text-gray-700">
-                  Disable your wordpress plugins.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex self-stretch items-start justify-start bg-white shadow rounded-lg">
-            <div class="flex flex-1 flex-col items-start justify-start px-6 py-3">
-              <div class="flex self-stretch flex-col space-y-3 items-center justify-start ">
-                <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
-                  <div class="flex self-stretch flex-col space-y-3 items-start justify-start">
-                    <m-input
-                      class="flex self-stretch items-start justify-start px-3 py-2 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
-                      style="height:101px;"
-                      placeholder="Lorem Ipsum"
-                      type="text"
-                    />
+          {meta.chat &&
+            meta.talks?.map((p) => (
+              <div class="flex self-stretch flex-col items-start justify-start p-2 bg-white shadow rounded-lg">
+                {p.id_user === user.dataUser.id_user && (
+                  <div class="flex self-stretch flex-col space-y-5 items-start justify-start">
+                    <div class="flex self-stretch items-end justify-start">
+                      <div class="flex flex-1 space-x-3 items-center justify-start">
+                        <div class="flex flex-1 flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-end">
+                            <div class="text-sm font-medium tracking-wide leading-tight text-center text-gray-700">
+                              {p.users.id_role === 3 &&
+                                meta.value?.client?.nama_client}
+                              {p.users.id_role === 4 &&
+                                meta.value?.employee?.nama_employee}
+                            </div>
+                          </div>
+                          <div class="flex self-stretch items-center justify-between">
+                            <div class="text-xs tracking-wide leading-none text-gray-700">
+                              {formatDay(p.tanggal_waktu_percakapan)}
+                            </div>
+                            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                              {p.users.id_role === 3 &&
+                                meta.value?.client?.users.email}
 
-                    <div class="flex self-stretch items-start justify-start">
-                      <div class="flex flex-1 items-start justify-start">
-                        <div class="flex items-center justify-center px-2.5 py-2 bg-gray-200 border rounded-tl-lg rounded-bl-lg border-gray-500">
-                          <div class="text-sm tracking-wide leading-tight text-gray-700">
-                            Select File
+                              {p.users.id_role === 4 &&
+                                meta.value?.employee?.users.email}
+                            </div>
                           </div>
                         </div>
-                        <m-input
-                          class="flex flex-1 items-center justify-start py-1.5 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
-                          style="height:36px;"
-                          type="text"
-                          placeholder="No File Selected"
-                          // value={meta.message}
-                          // onChange={(e) => meta.action.messageChange(e)}
-                        />
-                        {/*<div class="flex flex-1 items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500">*/}
-                        {/*<div class="text-sm tracking-wide leading-tight text-gray-700">*/}
-                        {/*No File Selected*/}
-                        {/*</div>*/}
-                        {/*</div>*/}
+                        {p.users.id_role === 3 && (
+                          <img
+                            src={
+                              meta.value?.client?.foto_profile
+                                ? meta.value?.client?.foto_profile
+                                : meta.photo
+                            }
+                            class="shadow rounded-full"
+                            style="width: 40px; height: 40px;"
+                          />
+                        )}
+                        {p.users.id_role === 4 && (
+                          <img
+                            src={
+                              meta.value?.employee?.foto_profile
+                                ? meta.value?.employee?.foto_profile
+                                : meta.photo
+                            }
+                            class="shadow rounded-full"
+                            style="width: 40px; height: 40px;"
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        {p.isi_percakapan}
                       </div>
                     </div>
                   </div>
-                  <div class="text-xs tracking-wide leading-none text-gray-500">
-                    Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf,
-                    .zip, .csv, .sql, .tar, .gz
+                )}
+                {p.id_user !== user.dataUser.id_user && (
+                  <div class="flex self-stretch flex-col space-y-5 items-start justify-start">
+                    <div class="flex self-stretch items-end justify-start">
+                      <div class="flex flex-1 space-x-3 items-center justify-start">
+                        {p.users.id_role === 3 && (
+                          <img
+                            src={
+                              meta.value?.client?.foto_profile
+                                ? meta.value?.client?.foto_profile
+                                : meta.photo
+                            }
+                            class="shadow rounded-full"
+                            style="width: 40px; height: 40px;"
+                          />
+                        )}
+                        {p.users.id_role === 4 && (
+                          <img
+                            src={
+                              meta.value?.employee?.foto_profile
+                                ? meta.value?.employee?.foto_profile
+                                : meta.photo
+                            }
+                            class="shadow rounded-full"
+                            style="width: 40px; height: 40px;"
+                          />
+                        )}
+                        <div class="flex flex-1 flex-col items-start justify-start">
+                          <div class="flex self-stretch items-start justify-start">
+                            <div class="text-sm font-medium tracking-wide leading-tight text-center text-gray-700">
+                              {p.users.id_role === 3 &&
+                                meta.value?.client?.nama_client}
+                              {p.users.id_role === 4 &&
+                                meta.value?.employee?.nama_employee}
+                            </div>
+                          </div>
+                          <div class="flex self-stretch items-center justify-between">
+                            <div class="text-xs tracking-wide leading-none text-center text-gray-500">
+                              {p.users.id_role === 3 &&
+                                meta.value?.client?.users.email}
+
+                              {p.users.id_role === 4 &&
+                                meta.value?.employee?.users.email}
+                            </div>
+                            <div class="text-xs tracking-wide leading-none text-gray-700">
+                              {formatDay(p.tanggal_waktu_percakapan)}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex self-stretch flex-col items-start justify-start">
+                      <div class="text-sm tracking-wide leading-tight text-gray-700">
+                        {p.isi_percakapan}
+                      </div>
+                    </div>
                   </div>
+                )}
+              </div>
+            ))}
+          {meta.value?.status_ticket?.status_ticket !== "RESOLVED" && (
+            <div class="flex self-stretch items-start justify-start bg-white shadow rounded-lg">
+              <div class="flex flex-1 flex-col items-start justify-start px-6 py-3">
+                <div class="flex self-stretch flex-col space-y-3 items-center justify-start ">
+                  <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
+                    <div class="flex self-stretch flex-col space-y-3 items-start justify-start">
+                      <m-input
+                        class="flex self-stretch items-start justify-start px-3 py-2 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
+                        style="height:101px;"
+                        placeholder="Lorem Ipsum"
+                        type="text"
+                        value={meta.message}
+                        onChange={(e) => meta.action.messageChange(e)}
+                      />
+
+                      <div class="flex self-stretch items-start justify-start">
+                        <div class="flex flex-1 items-start justify-start">
+                          <m-input
+                            class="flex flex-1 items-center justify-start py-1.5 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
+                            style="height:36px;"
+                            type="file"
+                            placeholder="No File Selected"
+                            onChange={(e) => {
+                              runInAction(async () => {
+                                const upload = await meta.upload(
+                                  e.target.files[0]
+                                );
+                                runInAction(() => {
+                                  console.log(upload.path);
+                                  meta.attachment = upload.path;
+                                });
+                              });
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-xs tracking-wide leading-none text-gray-500">
+                      Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf,
+                      .zip, .csv, .sql, .tar, .gz
+                    </div>
+                  </div>
+                  <m-link
+                    class="flex space-x-3 items-center justify-start px-3 py-2 bg-red-900 rounded-full"
+                    onClick={() => {
+                      meta.action.addMessage();
+                    }}
+                  >
+                    <div class="text-sm font-medium tracking-wide leading-tight text-white">
+                      send
+                    </div>
+                    <div class="flex items-center justify-center">
+                      <img
+                        src="/fimgs/712_1154.x1.svg"
+                        style="width: 10px; min-width: 10px; max-width: 10px; height: 10px; min-height: 10px; max-height: 10px;background-image: url('/fimgs/bg-2bfa9fe2ca84d0e11b66dd721fd0a69eac8f96bb');background-size:100% 100%;background-repeat:no-repeat;"
+                      />
+                    </div>
+                  </m-link>
                 </div>
-                <m-link
-                  class="flex space-x-3 items-center justify-start px-3 py-2 bg-red-900 rounded-full"
-                  // href="/m/dashboard"
-                  tabLink="#dashboard"
-                >
-                  <div class="text-sm font-medium tracking-wide leading-tight text-white">
-                    send
-                  </div>
-                  <div class="flex items-center justify-center">
-                    <img
-                      src="/fimgs/712_1154.x1.svg"
-                      style="width: 10px; min-width: 10px; max-width: 10px; height: 10px; min-height: 10px; max-height: 10px;background-image: url('/fimgs/bg-2bfa9fe2ca84d0e11b66dd721fd0a69eac8f96bb');background-size:100% 100%;background-repeat:no-repeat;"
-                    />
-                  </div>
-                </m-link>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
