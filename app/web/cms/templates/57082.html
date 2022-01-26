@@ -70,12 +70,11 @@
         })
         .then((e) => {
           meta.value = e;
-
+          meta.email = meta.value.email;
           meta.username = meta.value.username;
           meta.password = meta.value.password;
         });
       meta.name = user.dataUser.nama_client;
-      meta.email = user.dataUser.email_client;
       meta.company = user.dataUser.perusahaan_client;
       meta.phone = user.dataUser.nomor_client;
       meta.address = user.dataUser.lokasi_client;
@@ -173,7 +172,7 @@
       };
     }}
   />
-  <div class="flex flex-col items-start justify-start bg-gray-50  self-stretch w-screen mb-20">
+  <div class="flex flex-col items-start justify-start bg-gray-50  self-stretch w-screen pb-5">
     <div class="flex flex-1 self-stretch flex-col items-start justify-start">
       <div class="flex flex-1 self-stretch flex-col space-y-2.5 items-start justify-start px-6 py-2.5">
         <div class="flex self-stretch items-start justify-start p-2">
