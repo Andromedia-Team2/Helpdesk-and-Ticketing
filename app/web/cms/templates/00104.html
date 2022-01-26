@@ -11,6 +11,16 @@
       newPassword: "",
       confirmPassword: "",
       listTicket: [],
+      value: [],
+      count: 0,
+      name_client: "",
+      email: "",
+      company: "",
+      phone: "",
+      address: "",
+      username: "",
+      photo: "uploads/profiles/default.png",
+      value_client: {},
 
       pass_type1: "password",
       pass_type2: "password",
@@ -42,9 +52,39 @@
       },
     }}
     run={async () => {
+      window.mobileApp.app.dialog.preloader();
+      meta.id_user = user.dataUser.id_user;
+      meta.name_client = user.dataUser.nama_client;
+      meta.company = user.dataUser.perusahaan_client;
+      meta.phone = user.dataUser.nomor_client;
+      meta.address = user.dataUser.lokasi_client;
+      user.dataUser.foto_profile !== null
+        ? (meta.photo = "uploads/" + user.dataUser.foto_profile)
+        : (meta.photo = "uploads/profiles/default.png");
+
       await api("/api/get-ticket").then((e) => {
         meta.listTicket = e;
       });
+      await api("/api/notifications", {
+        id_notif: 0,
+        task: "all",
+      }).then((e) => {
+        meta.value = e.data;
+        meta.count = e.count;
+      });
+
+      await db.users
+        .findUnique({
+          where: {
+            id_user: meta.id_user,
+          },
+        })
+        .then((e) => {
+          meta.value_client = e;
+          meta.timeOut(1000);
+        });
+      meta.username = meta.value_client.username;
+      meta.email = meta.value_client.email;
       meta.action = {
         nameChange: (e) => {
           runInAction(() => {
@@ -69,6 +109,19 @@
         },
         change: (e) => {
           window.location.replace("/m/change-pass");
+        },
+        readAll: () => {
+          api("/api/notifications", {
+            id_notif: 0,
+            task: "read all",
+          }).then((e) => {
+            console.log(e);
+            if (e.status == "SUCCESS") {
+              window.location.reload();
+            } else {
+              console.log(e);
+            }
+          });
         },
         signout: (e) => {
           window.mobileApp.app.dialog.preloader(),
@@ -251,12 +304,11 @@
                     </div>
                   </m-cardcontent>
                 </div>
-                {meta.listTicket?.data?.map((p, index) => (
+                {meta.listTicket?.data?.map((p) => (
                   <m-link
                     class="flex self-stretch flex-col items-center justify-start p-3"
-                    tabLink="#progress"
                     onClick={() => {
-                      meta.action.move();
+                      navigate("/m/view-ticket/" + p.id_ticket);
                     }}
                   >
                     <div
@@ -566,57 +618,83 @@
                   </div>
                 </div>
 
-                <m-button class="flex items-center justify-center px-8 py-1 bg-white shadow rounded-sm ">
+                <m-button
+                  class="flex items-center justify-center px-8 py-1 bg-white shadow rounded-sm "
+                  onClick={() => {
+                    meta.action.readAll();
+                  }}
+                >
                   <div class="text-xs font-medium tracking-wide leading-none text-red-900">
                     mark all as read
                   </div>
                 </m-button>
               </div>
-              <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow">
-                <div class="flex self-stretch space-x-3 items-center justify-start">
-                  <div class="flex flex text-sm tracking-wide leading-tight text-gray-700 w-full">
-                    Ticket that you sent on 19 Oktober 2021 has been resolved
-                  </div>
-                  <div
-                    class=" items-center justify-center bg-green-500 rounded-full"
-                    style="width: 9px; height: 9px; "
-                  />
+              {meta.value?.map((p) => (
+                <div>
+                  {p.status_notifications === "Diterima" && (
+                    <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow">
+                      <div class="flex self-stretch space-x-3 items-center justify-start">
+                        <div class="flex flex text-sm tracking-wide leading-tight text-gray-700 w-full">
+                          {p.type_notification === "Ticket Entrance" &&
+                            "There is new open ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              ". Ready to assign to related department."}
+                          {p.type_notification === "Ticket Assign" &&
+                            "There is new assign ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              " to your Department. Please check it immediately."}
+                          {p.type_notification === "Ticket Solved" &&
+                            "Your ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              " Has been solved. Please check it immediately and give us your review."}
+                          {p.type_notification === "Message" &&
+                            "your ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              " just got a reply . Please check it immediately."}
+                        </div>
+                        <div
+                          class=" items-center justify-center bg-green-500 rounded-full"
+                          style="width: 9px; height: 9px; "
+                        />
+                      </div>
+                      <div class="flex self-stretch items-center justify-end">
+                        <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                          {formatDay(p.date_notification)}
+                        </div>
+                      </div>
+                    </m-cardcontent>
+                  )}
+                  {p.status_notifications === "Dibaca" && (
+                    <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-gray-200 shadow">
+                      <div class="flex self-stretch items-center justify-start">
+                        <div class="text-sm tracking-wide leading-tight text-gray-700">
+                          {p.type_notification === "Ticket Entrance" &&
+                            "There is new open ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              ". Ready to assign to related department."}
+                          {p.type_notification === "Ticket Assign" &&
+                            "There is new assign ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              " to your Department. Please check it immediately."}
+                          {p.type_notification === "Ticket Solved" &&
+                            "Your ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              " Has been solved. Please check it immediately and give us your review."}
+                          {p.type_notification === "Message" &&
+                            "your ticket with subject: " +
+                              p.history_ticket.ticket.judul_ticket +
+                              " just got a reply . Please check it immediately."}
+                        </div>
+                      </div>
+                      <div class="flex self-stretch items-center justify-end">
+                        <div class="text-xs tracking-wide leading-none text-right text-gray-700">
+                          {formatDay(p.date_notification)}
+                        </div>
+                      </div>
+                    </m-cardcontent>
+                  )}
                 </div>
-                <div class="flex self-stretch items-center justify-end">
-                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
-                    22/10/2021 14:20
-                  </div>
-                </div>
-              </m-cardcontent>
-
-              <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-white shadow">
-                <div class="flex self-stretch space-x-3 items-center justify-start">
-                  <div class="flex flex text-sm tracking-wide leading-tight text-gray-700 w-full">
-                    Your ticket has been answered
-                  </div>
-                  <div
-                    class=" items-center justify-center bg-green-500 rounded-full"
-                    style="width: 9px; height: 9px; "
-                  />
-                </div>
-                <div class="flex self-stretch items-center justify-end">
-                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
-                    22/10/2021 14:20
-                  </div>
-                </div>
-              </m-cardcontent>
-              <m-cardcontent class="flex self-stretch flex-col space-y-1 items-start justify-start px-6 py-3 bg-gray-200 shadow">
-                <div class="flex self-stretch items-center justify-start">
-                  <div class="text-sm tracking-wide leading-tight text-gray-700">
-                    Your ticket has been answered
-                  </div>
-                </div>
-                <div class="flex self-stretch items-center justify-end">
-                  <div class="text-xs tracking-wide leading-none text-right text-gray-700">
-                    21/10/2021 10:20
-                  </div>
-                </div>
-              </m-cardcontent>
+              ))}
             </div>
           </div>
         </m-tab>
@@ -643,10 +721,10 @@
                   </div>
                   <div class="flex flex-1 flex-col space-y-1 items-start justify-start">
                     <div class="text-3xl font-medium tracking-wide leading-10 text-gray-700">
-                      Han Solo
+                      {meta.name_client}
                     </div>
                     <div class="text-sm tracking-wide leading-tight text-red-900">
-                      han.solo@startrek.com
+                      {meta.email}
                     </div>
                   </div>
                 </div>
@@ -662,7 +740,7 @@
                             Username
                           </div>
                           <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
-                            startrek11
+                            {meta.username}
                           </div>
                         </div>
                       </li>
@@ -675,7 +753,7 @@
                             Company
                           </div>
                           <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
-                            Startrek Ent.
+                            {meta.company}
                           </div>
                         </div>
                       </li>
@@ -688,7 +766,7 @@
                             Phone
                           </div>
                           <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
-                            012345678
+                            {meta.phone}
                           </div>
                         </div>
                       </li>
@@ -701,7 +779,7 @@
                             Address
                           </div>
                           <div class="flex items-start justify-start p-1 text-sm tracking-wide leading-tight text-gray-700">
-                            California
+                            {meta.address}
                           </div>
                         </div>
                       </li>
@@ -712,7 +790,9 @@
               <m-link
                 class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
                 style=" height: 37px; "
-                tabLink="#editprof"
+                onClick={() => {
+                  navigate("/m/edit-profile");
+                }}
               >
                 Edit Profile
               </m-link>
@@ -720,7 +800,9 @@
               <m-link
                 class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
                 style="height: 37px;"
-                tabLink="#pass"
+                onClick={() => {
+                  navigate("/m/change-pass");
+                }}
               >
                 Change Password
               </m-link>
@@ -728,7 +810,9 @@
               <m-link
                 class="flex flex-1 items-center justify-center px-4 py-2 bg-red-900 shadow-lg rounded-full w-full text-sm font-medium tracking-wide leading-tight text-white"
                 style="height: 37px;"
-                tabLink="#"
+                onClick={() => {
+                  window.open("/uploads/guide/guide.docx");
+                }}
               >
                 Download Guide Lines
               </m-link>
