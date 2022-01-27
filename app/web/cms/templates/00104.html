@@ -1,6 +1,17 @@
 <>
   <effect
     meta={{
+      dataLevel: [],
+      dataType: {},
+      dataTotal: [],
+      dataSummary: {},
+      dateLevel: null,
+      dateTot: null,
+      dateVal: "",
+      dateType: null,
+      dateVal1: "",
+      sumLevel: 0,
+      sumType: 0,
       tabActive: "dashboard",
       tabLink: "",
       name: "",
@@ -61,7 +72,26 @@
       user.dataUser.foto_profile !== null
         ? (meta.photo = "uploads/" + user.dataUser.foto_profile)
         : (meta.photo = "uploads/profiles/default.png");
-
+      await api("/api/get-stats", {
+        dateLevel: meta.dateLevel,
+        task: "both",
+      }).then((e) => {
+        meta.dataLevel = e.data.stats;
+        meta.dataType = e.data.types;
+        meta.sumLevel = e.data.stats[0] + e.data.stats[1] + e.data.stats[2];
+        meta.sumType = e.data.types.iData.reduce((a, b) => a + b, 0);
+        console.log(meta.dataLevel);
+      });
+      await api("/api/get-tot", {
+        date: meta.dateTot,
+      }).then((e) => {
+        meta.dataTotal = e.data;
+        console.log(meta.dataTotal);
+      });
+      await api("/api/get-sum").then((e) => {
+        meta.dataSummary = e.data;
+        console.log(meta.dataSummary);
+      });
       await api("/api/get-ticket").then((e) => {
         meta.listTicket = e;
       });
@@ -110,7 +140,55 @@
         change: (e) => {
           window.location.replace("/m/change-pass");
         },
+        dateLevelChange: (e) => {
+          window.mobileApp.app.dialog.preloader();
+          runInAction(() => {
+            meta.dateVal = e.target.value;
+            meta.dateLevel = new Date(e.target.value);
+            console.log(meta.dateLevel);
+            api("/api/get-stats", {
+              dateLevel: meta.dateLevel,
+              task: "level",
+            }).then((e) => {
+              meta.dataLevel = e.data.stats;
+              meta.sumLevel =
+                e.data.stats[0] + e.data.stats[1] + e.data.stats[2];
+              console.log(meta.dataLevel);
+              meta.timeOut(1000);
+            });
+          });
+        },
+        dateTypeChange: (e) => {
+          window.mobileApp.app.dialog.preloader();
+          runInAction(() => {
+            meta.dateVal1 = e.target.value;
+            meta.dateType = new Date(e.target.value);
+            console.log(meta.dateLevel);
+            api("/api/get-stats", {
+              dateLevel: meta.dateType,
+              task: "type",
+            }).then((e) => {
+              meta.dataType = e.data.types;
+              meta.sumType = e.data.types.iData.reduce((a, b) => a + b, 0);
+              console.log(meta.dataType);
+              meta.timeOut(1000);
+            });
+          });
+        },
+        dateTotChange: (e) => {
+          window.mobileApp.app.dialog.preloader();
+          runInAction(() => {
+            meta.dateTot = new Date(e.target.value);
+            api("/api/get-tot", {
+              date: meta.dateTot,
+            }).then((e) => {
+              meta.dataTotal = e.data;
+              meta.timeOut(1000);
+            });
+          });
+        },
         readAll: () => {
+          window.mobileApp.app.dialog.preloader();
           api("/api/notifications", {
             id_notif: 0,
             task: "read all",
@@ -118,19 +196,21 @@
             console.log(e);
             if (e.status == "SUCCESS") {
               window.location.reload();
+              meta.timeOut(1000);
             } else {
               console.log(e);
+              meta.timeOut(1000);
             }
           });
         },
         signout: (e) => {
-          window.mobileApp.app.dialog.preloader(),
-            api("/api/logout").then((e) => {
-              console.log(e);
-              //mengara ke home page
-              window.mobileApp.app.dialog.close();
-              window.location.replace("/m/login");
-            });
+          window.mobileApp.app.dialog.preloader();
+          api("/api/logout").then((e) => {
+            console.log(e);
+            //mengara ke home page
+            window.mobileApp.app.dialog.close();
+            window.location.replace("/m/login");
+          });
         },
       };
     }}
@@ -170,7 +250,7 @@
                         Open
                       </div>
                       <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
-                        1
+                        {meta.dataSummary?.open}
                       </div>
                     </div>
                     <img
@@ -184,7 +264,7 @@
                         In Progress
                       </div>
                       <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
-                        4
+                        {meta.dataSummary?.progress}
                       </div>
                     </div>
                     <img
@@ -198,7 +278,7 @@
                         Resolved
                       </div>
                       <div class="text-lg font-medium tracking-wide leading-relaxed text-gray-500">
-                        3
+                        {meta.dataSummary?.resolved}
                       </div>
                     </div>
                     <img
@@ -216,9 +296,12 @@
                     </div>
                     <div class="flex flex-1 items-center justify-start border rounded-lg border-gray-500">
                       <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
-                          November 2021
-                        </div>
+                        <m-input
+                          type="date"
+                          value={meta.dateVal}
+                          class="text-xs font-medium tracking-wide leading-none text-gray-600"
+                          onChange={(e) => meta.action.dateLevelChange(e)}
+                        />
                       </div>
                       <div class="flex flex-col items-center justify-center transform -rotate-90">
                         <div
@@ -230,7 +313,9 @@
                   </div>
                   <hr class=" w-full mt-4 pb-4"></hr>
                   <div class="container">
-                    <doghnutchart-m-level />
+                    {meta.sumLevel !== 0 && (
+                      <doghnutchart data={meta.dataLevel} />
+                    )}
                   </div>
                 </div>
                 <div class="flex self-stretch flex-col space-y-3 items-center justify-start p-3 bg-white shadow rounded-lg">
@@ -242,9 +327,12 @@
                     </div>
                     <div class="flex flex-1 items-center justify-start border rounded-lg border-gray-500">
                       <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
-                          November 2021
-                        </div>
+                        <m-input
+                          type="date"
+                          value={meta.dateVal1}
+                          class="text-xs font-medium tracking-wide leading-none text-gray-600"
+                          onChange={(e) => meta.action.dateTypeChange(e)}
+                        />
                       </div>
                       <div class="flex flex-col items-center justify-center transform -rotate-90">
                         <div
@@ -256,7 +344,9 @@
                   </div>
                   <hr class=" w-full mt-4 pb-4"></hr>
                   <div class="container">
-                    <doghnutchart-m-type />
+                    {meta.sumType !== 0 && (
+                      <doghnutchart-dtype data={meta.dataType} />
+                    )}
                   </div>
                 </div>
                 <div class="flex self-stretch flex-col space-y-3 items-start justify-start p-3 bg-white shadow rounded-lg">
@@ -268,9 +358,12 @@
                     </div>
                     <div class="flex items-center justify-start border rounded-lg border-gray-500">
                       <div class="flex items-start justify-start px-4 py-2 rounded-lg">
-                        <div class="text-xs font-medium tracking-wide leading-none text-gray-600">
-                          2021
-                        </div>
+                        <m-input
+                          type="date"
+                          value={meta.dateTot}
+                          class="text-xs font-medium tracking-wide leading-none text-gray-600"
+                          onChange={(e) => meta.action.dateTotChange(e)}
+                        />
                       </div>
                       <div class="flex flex-col items-center justify-center transform -rotate-90">
                         <div
@@ -283,7 +376,7 @@
                   </div>
                   <hr class=" w-full mt-4 pb-4"></hr>
                   <div class="container mb-96	">
-                    <barchart-m-totalticket />
+                    <barchart-totalticket data={meta.dataTotal} />
                   </div>
                 </div>
               </div>
