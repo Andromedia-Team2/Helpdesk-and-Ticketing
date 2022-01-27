@@ -36,6 +36,43 @@
       pass_type1: "password",
       pass_type2: "password",
       pass_type3: "password",
+      ticketType: [],
+      namaClient: "",
+      id_client: 0,
+      id_jenis_ticket: 0,
+      judul_ticket: "",
+      deskripsi_ticket: "",
+      attachment: "",
+      id_vendor: 0,
+      vendor: {},
+      id_notif: 0,
+      email2: "",
+
+      validationCheck2() {
+        this.message =
+          this.id_jenis_ticket === "" ||
+          this.id_jenis_ticket === null ||
+          this.id_jenis_ticket === 0
+            ? "Your ticket type is empty. Make sure all forms are filled and try again."
+            : this.judul_ticket === "" || this.judul_ticket === null
+            ? "Your ticket subject is empty. Make sure all forms are filled and try again."
+            : this.deskripsi_ticket === "" || this.deskripsi_ticket === null
+            ? "Your text is empty. Make sure all forms are filled and try again."
+            : false;
+        return this.message;
+      },
+
+      async upload(file) {
+        const formData = _FormData();
+
+        formData.append("path", "attachment");
+        formData.append("file", file);
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        return await response.json();
+      },
 
       validationCheck() {
         this.message =
@@ -64,6 +101,9 @@
     }}
     run={async () => {
       window.mobileApp.app.dialog.preloader();
+      meta.namaClient = user.dataUser.nama_client;
+      meta.id_client = user.dataUser.id_client;
+      meta.id_vendor = user.dataUser.id_vendor;
       meta.id_user = user.dataUser.id_user;
       meta.name_client = user.dataUser.nama_client;
       meta.company = user.dataUser.perusahaan_client;
@@ -102,7 +142,19 @@
         meta.value = e.data;
         meta.count = e.count;
       });
-
+      meta.vendor = await db.vendor.findUnique({
+        where: {
+          id_vendor: meta.id_vendor,
+        },
+        include: {
+          users: true,
+        },
+      });
+      meta.id_notif = meta.vendor?.id_user;
+      meta.email = meta.vendor?.users?.email;
+      await api("/api/get-jenis").then((e) => {
+        meta.ticketType = e;
+      });
       await db.users
         .findUnique({
           where: {
@@ -132,6 +184,30 @@
           runInAction(() => {
             meta.message = e.target.value;
             console.log(meta.message);
+          });
+        },
+        ticketTypeChange: (e, f) => {
+          runInAction(() => {
+            meta.id_jenis_ticket = parseInt(e);
+            console.log(meta.id_jenis_ticket);
+          });
+        },
+        judulTicketChange: (e) => {
+          runInAction(() => {
+            meta.judul_ticket = e.target.value;
+            console.log(meta.judul_ticket);
+          });
+        },
+        deskripsiTicketChange: (e) => {
+          runInAction(() => {
+            meta.deskripsi_ticket = e.target.value;
+            console.log(meta.deskripsi_ticket);
+          });
+        },
+        attachmentChange: (e) => {
+          runInAction(() => {
+            meta.attachment = e.target.value;
+            console.log(meta.attachment);
           });
         },
         edit: (e) => {
@@ -202,6 +278,35 @@
               meta.timeOut(1000);
             }
           });
+        },
+        addData: (e) => {
+          let error_msg = meta.validationCheck2();
+          if (error_msg) {
+            window.mobileApp.app.dialog.alert(null, error_msg);
+          } else {
+            window.mobileApp.app.dialog.preloader();
+            api("/api/ticket-data/add", {
+              judul_ticket: meta.judul_ticket,
+              deskripsi_ticket: meta.deskripsi_ticket,
+              tanggal_masuk: new Date(),
+              attachment: meta.attachment,
+              id_jenis_ticket: meta.id_jenis_ticket,
+              id_status_ticket: 1,
+              id_client: meta.id_client,
+              id_vendor: meta.id_vendor,
+              id_notif: meta.id_notif,
+              email: meta.email,
+            }).then((e) => {
+              console.log(e);
+              if (e.status == "SUCCESS") {
+                meta.timeOut(1000);
+                window.location.reload();
+              } else {
+                meta.timeOut(1000);
+                console.log(e);
+              }
+            });
+          }
         },
         signout: (e) => {
           window.mobileApp.app.dialog.preloader();
@@ -521,10 +626,8 @@
                         class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                         style="height:35px"
                         type="text"
-                        placeholder="Han Solo"
-                        value={meta.name}
-                        onChange={(e) => meta.action.nameChange(e)}
-                        required={true}
+                        value={meta.namaClient}
+                        readOnly
                       />
                     </div>
 
@@ -532,21 +635,6 @@
                       <div class="item-media">
                         <i class="icon demo-list-icon"></i>
                       </div>
-                      {/*<div class="flex self-stretch flex-col items-start justify-start item-inner">*/}
-                      {/*<div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500">*/}
-                      {/*Ticket Type*/}
-                      {/*</div>*/}
-                      {/*<div*/}
-                      {/*class=" item-input-wrap input-dropdown-wrap border rounded-lg border-gray-500"*/}
-                      {/*style="height:35px;"*/}
-                      {/*>*/}
-                      {/*<select class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 ">*/}
-                      {/*<option>Technical Issue</option>*/}
-                      {/*<option>System Bug</option>*/}
-                      {/*</select>*/}
-                      {/*</div>*/}
-                      {/*</div>*/}
-
                       <div class="flex self-stretch p-2.5 item-title item-label text-sm tracking-wide leading-tight text-gray-500 w-full">
                         Ticket Type
                       </div>
@@ -555,9 +643,27 @@
                         class="border rounded-lg border-gray-500 input-dropdown-wrap w-full"
                         style="height:35px;"
                       >
-                        <select class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 w-full">
-                          <option style="width:100px;">Technical Issue</option>
-                          <option style="width:100px;">System Bug</option>
+                        <select
+                          name="id_jenis_ticket"
+                          class="flex self-stretch items-start justify-start py-2 pl-5 pr-2.5 item-input-wrap input-dropdown-wrap pt-3 w-full"
+                          onChange={(e) => {
+                            meta.action.ticketTypeChange(
+                              e.target.value,
+                              "id_jenis_ticket"
+                            );
+                          }}
+                        >
+                          <option key="" value="">
+                            Select ticket type ...
+                          </option>
+                          {meta.ticketType?.data?.map((p) => (
+                            <option
+                              key={p.id_jenis_ticket}
+                              value={p.id_jenis_ticket}
+                            >
+                              {p.jenis_ticket}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -583,10 +689,9 @@
                           class="flex self-stretch w-full items-start justify-start py-2 pl-5 pr-2.5 border rounded-lg border-gray-500 text-sm tracking-wide leading-tight text-gray-700"
                           style="height:35px"
                           type="text"
-                          placeholder="Lorem Ipsum"
-                          value={meta.subject}
-                          onChange={(e) => meta.action.subjectChange(e)}
-                          required={true}
+                          value={meta.judul_ticket}
+                          onChange={(e) => meta.action.judulTicketChange(e)}
+                          placeholder="Ticket Subject"
                         />
                       </div>
                     </div>
@@ -602,9 +707,8 @@
                           style="height:35px"
                           type="text"
                           placeholder="Enter Your Text Here"
-                          value={meta.message}
-                          onChange={(e) => meta.action.messageChange(e)}
-                          required={true}
+                          value={meta.deskripsi_ticket}
+                          onChange={(e) => meta.action.deskripsiTicketChange(e)}
                         />
                       </div>
                     </div>
@@ -641,24 +745,24 @@
                           // onChange={(e) => meta.action.messageChange(e)}
                         />
                       </div>
-                      <m-button
-                        class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"
-                        style="height:30px"
-                        onClick={() => {
-                          window.mobileApp.app.dialog.preloader(),
-                            setTimeout(function () {
-                              window.mobileApp.app.dialog.close();
-                            }, 1500);
-                        }}
-                      >
-                        <img
-                          src="/fimgs/688_1787.x1.svg"
-                          style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;"
-                        />
-                        <div class="text-sm font-medium tracking-wide leading-tight text-white">
-                          Add
-                        </div>
-                      </m-button>
+                      {/*<m-button*/}
+                      {/*class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"*/}
+                      {/*style="height:30px"*/}
+                      {/*onClick={() => {*/}
+                      {/*window.mobileApp.app.dialog.preloader(),*/}
+                      {/*setTimeout(function () {*/}
+                      {/*window.mobileApp.app.dialog.close();*/}
+                      {/*}, 1500);*/}
+                      {/*}}*/}
+                      {/*>*/}
+                      {/*<img*/}
+                      {/*src="/fimgs/688_1787.x1.svg"*/}
+                      {/*style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;"*/}
+                      {/*/>*/}
+                      {/*<div class="text-sm font-medium tracking-wide leading-tight text-white">*/}
+                      {/*Add*/}
+                      {/*</div>*/}
+                      {/*</m-button>*/}
                     </div>
                     <div class="flex text-xs tracking-wide leading-none text-gray-500 mt-2">
                       Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf,
@@ -679,13 +783,8 @@
                   <m-link
                     class="flex items-center justify-start px-3 py-2 bg-red-900 shadow rounded-full"
                     onClick={() => {
-                      window.mobileApp.app.dialog.confirm(
-                        "Apakah data yang anda masukkan sudah benar?",
-                        "Konfirmasi",
-                        () => {}
-                      );
+                      meta.action.addData();
                     }}
-                    tabLink="#dashboard"
                   >
                     <div class="text-sm font-medium tracking-wide leading-tight text-white">
                       create ticket
