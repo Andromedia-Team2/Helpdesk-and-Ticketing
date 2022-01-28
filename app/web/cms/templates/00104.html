@@ -739,30 +739,20 @@
                         <m-input
                           class="flex  items-center justify-start py-2 pl-5 pr-2.5 border rounded-tr-lg rounded-br-lg border-gray-500"
                           style="height:53px;"
-                          type="text"
-                          placeholder="No File Selected"
-                          // value={meta.message}
-                          // onChange={(e) => meta.action.messageChange(e)}
+                          type="file"
+                          onChange={(e) => {
+                            runInAction(async () => {
+                              const upload = await meta.upload(
+                                e.target.files[0]
+                              );
+                              runInAction(() => {
+                                console.log(upload.path);
+                                meta.attachment = upload.path;
+                              });
+                            });
+                          }}
                         />
                       </div>
-                      {/*<m-button*/}
-                      {/*class="flex space-x-3 items-center justify-center px-3 py-2 bg-red-500 shadow rounded-full"*/}
-                      {/*style="height:30px"*/}
-                      {/*onClick={() => {*/}
-                      {/*window.mobileApp.app.dialog.preloader(),*/}
-                      {/*setTimeout(function () {*/}
-                      {/*window.mobileApp.app.dialog.close();*/}
-                      {/*}, 1500);*/}
-                      {/*}}*/}
-                      {/*>*/}
-                      {/*<img*/}
-                      {/*src="/fimgs/688_1787.x1.svg"*/}
-                      {/*style="width: 11.25px; min-width: 11.25px; max-width: 11.25px; height: 15px; min-height: 15px; max-height: 15px;"*/}
-                      {/*/>*/}
-                      {/*<div class="text-sm font-medium tracking-wide leading-tight text-white">*/}
-                      {/*Add*/}
-                      {/*</div>*/}
-                      {/*</m-button>*/}
                     </div>
                     <div class="flex text-xs tracking-wide leading-none text-gray-500 mt-2">
                       Allowed File Extensions: .jpg, .gif, .jpeg, .png, .pdf,
