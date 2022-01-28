@@ -321,7 +321,15 @@
                     target="_blank"
                     id="user-menu-item-1"
                     onClick={() => {
-                      window.open("/uploads/guide/guide.docx");
+                      if (user.role === "Client") {
+                        window.open(
+                          "/uploads/guide/BukuPetunjukAndroDesk(Client).pdf"
+                        );
+                      } else {
+                        window.open(
+                          "/uploads/guide/BukuPetunjukAndroDesk(Perusahaan).pdf"
+                        );
+                      }
                     }}
                   >
                     <i class="fas fa-cog mr-2"></i>
