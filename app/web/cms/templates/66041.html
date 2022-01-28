@@ -2,15 +2,25 @@
   <effect
     meta={{
       value: null,
-      date: null,
+      // Data
       dataOverall: null,
       dataLevel: null,
       dataType: null,
       dataDep: null,
+      dataOverallEmployee: null,
+      dataEmployeeLow: null,
+      dataEmployeeMedium: null,
+      dataEmployeeHigh: null,
+      // Date
+      date: null,
       dateOverall: null,
       dateLevel: null,
       dateType: null,
       dateDep: null,
+      dateOverallEmployee: null,
+      dateEmployeeLow: null,
+      dateEmployeeMedium: null,
+      dateEmployeeHigh: null,
     }}
     run={async () => {
       let modal = document.getElementById("my-modal");
@@ -30,6 +40,7 @@
       meta.dataLevel = meta.value?.level;
       meta.dataType = meta.value?.mType;
       meta.dataDep = meta.value?.department;
+      meta.dataOverallEmployee = meta.value?.listEmployee1;
 
       meta.action = {
         dateOverallChange: (e) => {
@@ -96,6 +107,24 @@
             });
           });
         },
+        // Overall Employee
+        dateOverallEmployeeChange: (e) => {
+          modal.style.display = "block";
+          initiate.style.display = "block";
+          runInAction(() => {
+            meta.dateOverallEmployee = e.target.value;
+            meta.date = new Date(e.target.value);
+            api("/api/ticket-report", {
+              date: meta.date,
+              task: "overallEmployee1",
+            }).then((e) => {
+              meta.dateOverallEmployee = e.data.overallEmployee1;
+              modal.style.display = "none";
+              initiate.style.display = "none";
+            });
+          });
+        },
+        // Employee Low
       };
     }}
   />
@@ -103,31 +132,6 @@
     <div class="flex flex-1 self-stretch flex-col items-start justify-start">
       <div class="flex flex-1 self-stretch items-start justify-start px-12">
         <div class="flex flex-1 self-stretch flex-col space-y-1 items-start justify-start pt-6 rounded-2xl">
-          <div class="flex self-stretch flex-col space-y-1 items-start justify-start">
-            <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
-              Navigation
-            </div>
-            <div />
-          </div>
-          <div class="flex self-stretch flex-col items-start justify-start px-5 pb-6 bg-white shadow rounded-lg">
-            <div class="flex self-stretch items-center pt-3">
-              <div class="flex items-center justify-start">
-                <div class="flex items-start justify-start p-1">
-                  <div class="text-xs tracking-wide leading-none text-gray-700"></div>
-                </div>
-              </div>
-              <div class="1xl">List Of Content</div>
-            </div>
-            <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container ml-4">
-              <ol class="list-decimal">
-                <a onClick=""></a>
-                <li>
-                  <a href="#rateofservice">Rate of Service</a>
-                </li>
-              </ol>
-            </div>
-          </div>
           <div class="flex self-stretch flex-col space-y-6 items-start justify-start">
             <div class="text-2xl font-medium tracking-wide leading-loose text-center text-gray-800">
               Ticket Report
@@ -259,56 +263,28 @@
                   <div class="text-xs tracking-wide leading-none text-gray-700"></div>
                 </div>
               </div>
-              <div
-                class="text-base tracking-wide leading-normal text-center text-gray-700"
-                id="overall-employee"
-              >
+              <div class="text-base tracking-wide leading-normal text-center text-gray-700">
                 Overall Employee
               </div>
-              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                    by years
-                  </div>
-                </div>
-                <img
-                  src="/fimgs/1415_2851.x3.png"
-                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                />
-              </div>
-            </div>
-            <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container">
-              <linechart-overallemployee />
-            </div>
-          </div>
-          <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
-            <div class="flex self-stretch items-center justify-between pt-3">
               <div class="flex items-center justify-start">
-                <div class="flex items-start justify-start p-1">
-                  <div class="text-xs tracking-wide leading-none text-gray-700"></div>
+                <div class="flex flex-1 items-start justify-start py-2">
+                  <input
+                    type="date"
+                    value={meta.dateOverallEmployee}
+                    class="text-xs font-medium tracking-wide w-full leading-none text-gray-600 py-1 pl-2 pr-2 bg-white rounded-lg tracking-widest focus:border-gray-500 border border-gray-500 focus:outline-none focus:shadow-outline"
+                    onChange={(e) => meta.action.dateOverallEmployeeChange(e)}
+                  />
                 </div>
-              </div>
-              <div class="text-base tracking-wide leading-normal text-center text-gray-700">
-                Employee Performance (Tickets By Level : Low)
-              </div>
-              <div class="flex items-center justify-start pr-2 border rounded-lg border-gray-500">
-                <div class="flex flex-1 items-start justify-start px-4 py-2 rounded-lg">
-                  <div class="text-sm font-medium tracking-wide leading-tight text-gray-600">
-                    by years
-                  </div>
-                </div>
-                <img
-                  src="/fimgs/1415_2851.x3.png"
-                  style="width: 16px; min-width: 16px; max-width: 16px; height: 16px; min-height: 16px; max-height: 16px;background-image: url('/fimgs/bg-c4e54028b75dfc1576ddca1dbb03337aa7e664d1');background-size:100% 100%;background-repeat:no-repeat;"
-                />
               </div>
             </div>
             <hr class=" w-full mt-4 pb-4"></hr>
-            <div class="container">
-              <linechart-employee-level-low />
-            </div>
+            {meta.dataOverallEmployee !== null && (
+              <div class="container">
+                <linechart-overallemployee data={meta.dataOverallEmployee} />
+              </div>
+            )}
           </div>
+
           <div class="flex self-stretch flex-col items-start justify-start px-6 pb-6 bg-white shadow rounded-lg">
             <div class="flex self-stretch items-center justify-between pt-3">
               <div class="flex items-center justify-start">
